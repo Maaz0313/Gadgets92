@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadgets92</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .card {
+            border: 1px solid #ddd;
+        }
+        .container {
+            clear: both;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .column {
+            display: table-cell;
+            vertical-align: bottom;
+            text-align: center;
+            padding-right: 4px;
+        }
+        .mini {
+            font-size: 14px;
+            color: gray;
+        }
+        .inp{
+            width: 100%;
+            height: 32px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 5px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        .go-btn{
+            width: 100%;
+            height: 32px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin: 0;
+            background-color: #00b0f0;
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .form-check-input{
+          border-color: gray;
+        }
+        @media (max-width: 767px) {
+          .sidebar{
+            display: none;
+          }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md bg-secondary">
+            <div class="container">
+                <!-- Logo and Brand -->
+                <a class="navbar-brand" href="#">
+                    Gadgets92
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#navbarOffcanvas" aria-controls="offcanvasWithBothOptions" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse">
+                    <!-- Centered Search Bar -->
+                    <form class="d-flex mx-auto">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </form>
+
+                    <!-- Login/Signup Buttons -->
+                    <div class="d-flex">
+                        <a href="login.html" class="btn btn-info text-white me-2">Login</a>
+                        <a href="signup.html" class="btn btn-primary">Signup</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Search bar shown on mobile screens only -->
+        <form class="py-3 d-flex justify-content-end d-md-none custom-form" style="background-color:#FFDB58;">
+            <input class="form-control w-50 ms-auto" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-success custom-btn me-auto " type="submit">Search</button>
+        </form>
+
+        <nav class="navbar navbar-expand-md bg-md">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Mobiles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Laptops</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Televisions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Smart Watches</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Headsets</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Shown on mobile screens -->
+        <!-- Offcanvas nav menu -->
+        <div data-bs-theme="dark" class="offcanvas offcanvas-start text-light w-75 " data-bs-backdrop="true"
+            data-bs-scroll="true" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title ms-3" id="navbarOffcanvasLabel">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Offcanvas menu items -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link ms-3" href="#">Mobiles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-3" href="#">Laptops</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-3" href="#">Televisions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-3" href="#">Smart Watches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-3" href="#">Headsets</a>
+                    </li>
+                    <li class="nav-item mt-3 ms-3">
+                        <a href="login.html" class="btn btn-info text-white me-2">Login</a>
+                        <a href="signup.html" class="btn btn-primary">Signup</a>
+                    </li>
+                    <li class="nav-item mt-4 ms-3">
+                        <form class="d-flex mx-auto">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-success" type="submit">Search</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Offcanvas nav menu ends-->
+    </header>
+    <main class="box pb-3">
+        <!-- intro -->
+        <div class="bg-white container-lg mb-1">
+            <nav class="p-1 pb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Mobiles</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Mobile Finder</li>
+                </ol>
+            </nav>
+            <div class="row">
+                <h4 class="fw-bold">Mobile Finder - Find Your Desired Mobile</h4>
+            </div>
+            <div class="row">
+                <p>Ditch the decision fatigue. Find a mobile that suits your needs using our comprehensive mobile finder tool.</p>
+            </div>
+        </div>
+        <!-- filters shown on mobile screens only -->
+        <div class="container-lg bg-white mb-1 d-md-none d-lg-none d-xl-none">
+          <div class="row">
+            <div class="col py-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+              <span class="d-flex-center d-flex-justify-center">
+                <span class="d-flex-center pe-1">
+                  <svg fill="#111" width="15px" height="15px" viewBox="0 -2.5 29 29" xmlns="http://www.w3.org/2000/svg"><path d="m11.2 24 6.4-4v-6.4l11.2-13.6h-28.8l11.2 13.6z"></path></svg>
+                </span>
+                Filters</span>
+            </div>
+            <!-- offcanvas starts -->
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasRightLabel">Filters</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        Search
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                      <div class="accordion-body">
+                        <form role="search" action="" method="post">
+                          <input type="search" name="s" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        Price
+                      </button>
+                    </h2>
+                    <div id="price" class="accordion-collapse collapse">
+                      <div class="accordion-body p-0 p-2 d-table w-100">
+                          <div class="column">
+                              <div class="mini">Min</div>
+                              <input type="number" class="inp" value="0">
+                          </div>
+                          <div class="column">
+                              <div class="mini">Max</div>
+                              <input type="number" class="inp" value="196900">
+                          </div>
+                          <div class="column">
+                              <button class="go-btn">Go</button>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Availability" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        Availability
+                      </button>
+                    </h2>
+                    <div id="Availability" class="accordion-collapse collapse">
+                      <div class="accordion-body">
+                          <div class="form-check">
+                              <input class="form-check-input shadow-none" type="checkbox" value="" id="Instock">
+                              <label class="form-check-label" for="Instock">
+                                Instock
+                              </label>
+                          </div>
+                          <div class="form-check">
+                              <input class="form-check-input shadow-none" type="checkbox" value="" id="OutofStock">
+                              <label class="form-check-label" for="OutofStock">
+                                Out of Stock
+                              </label>
+                          </div>
+                          <div class="form-check">
+                              <input class="form-check-input shadow-none" type="checkbox" value="" id="Upcoming">
+                              <label class="form-check-label" for="Upcoming">Upcoming</label></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                          Brands
+                        </button>
+                      </h2>
+                      <div id="brands" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
+                            <div class="form-check">
+                                <input class="form-check-input shadow-none" type="checkbox" value="" id="google">
+                                <label class="form-check-label" for="google">
+                                  Google
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input shadow-none" type="checkbox" value="" id="xiamo">
+                                <label class="form-check-label" for="xiamo">
+                                  Xiaomi
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input shadow-none" type="checkbox" value="" id="nothing">
+                                <label class="form-check-label" for="nothing">
+                                  Nothing
+                                </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input shadow-none" type="checkbox" value="" id="samsung">
+                              <label class="form-check-label" for="samsung">
+                                Samsung
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input shadow-none" type="checkbox" value="" id="vivo">
+                              <label class="form-check-label" for="vivo">
+                                Vivo
+                              </label>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ram" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                          RAM
+                        </button>
+                      </h2>
+                      <div id="ram" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <div class="form-check">
+                                <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
+                                <label class="form-check-label" for="2gb">
+                                  2 GB
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
+                                <label class="form-check-label" for="4gb">
+                                  4 GB
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
+                                <label class="form-check-label" for="6gb">
+                                  6 GB
+                                </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
+                              <label class="form-check-label" for="8gb">
+                                8 GB
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
+                              <label class="form-check-label" for="12gb">
+                                12 GB
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input shadow-none" type="checkbox" value="" id="18gb">
+                              <label class="form-check-label" for="18gb">
+                                16 GB
+                              </label>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#battery" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        Battery Capacity
+                      </button>
+                    </h2>
+                    <div id="battery" class="accordion-collapse collapse">
+                      <div class="accordion-body">
+                          <div class="form-check">
+                              <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
+                              <label class="form-check-label" for="2gb">
+                                3000 mAh & Above
+                              </label>
+                          </div>
+                          <div class="form-check">
+                              <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
+                              <label class="form-check-label" for="4gb">
+                                4000 mAh & Above
+                              </label>
+                          </div>
+                          <div class="form-check">
+                              <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
+                              <label class="form-check-label" for="6gb">
+                                5000 mAh & Above
+                              </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
+                            <label class="form-check-label" for="8gb">
+                              6000 mAh & Above
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
+                            <label class="form-check-label" for="12gb">
+                              7000 mAh & Above
+                            </label>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <!-- offcanvas ends -->
+            <div class="col py-2">
+              <span class="d-flex-center d-flex-justify-center position-relative">
+                <span class="d-flex-center pe-1">
+                  <svg width="15px" height="15px" viewBox="0.1 0.07 0.2 0.26" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#111" d="M0.275 0.175h-0.15l0.075 -0.1z"></path><path fill="#111" d="M0.125 0.225h0.15l-0.075 0.1z"></path></svg>
+                </span>
+                Sort By
+                <select class="position-absolute top-0 start-0 d-block opacity-0 " name="" id="">
+                  <option value="">Latest</option>
+                  <option value="">Lowest Price</option>
+                  <option value="">Highest Price</option>
+                </select>
+              </span>
+                
+            </div>
+          </div>
+        </div>
+        <!-- list -->
+        <div class="container-lg pt-md-3 mb-3">
+            <div class="row gx-3">
+                <aside class="col-3 bg-white py-2 sidebar">
+                    <div class="accordion" id="accordionPanelsStayOpenExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                              Search
+                            </button>
+                          </h2>
+                          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                              <form role="search" action="" method="post">
+                                <input type="search" name="s" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                              Price
+                            </button>
+                          </h2>
+                          <div id="price" class="accordion-collapse collapse">
+                            <div class="accordion-body p-0 p-2 d-table w-100">
+                                <div class="column">
+                                    <div class="mini">Min</div>
+                                    <input type="number" class="inp" value="0">
+                                </div>
+                                <div class="column">
+                                    <div class="mini">Max</div>
+                                    <input type="number" class="inp" value="196900">
+                                </div>
+                                <div class="column">
+                                    <button class="go-btn">Go</button>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Availability" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                              Availability
+                            </button>
+                          </h2>
+                          <div id="Availability" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="Instock">
+                                    <label class="form-check-label" for="Instock">
+                                      Instock
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="OutofStock">
+                                    <label class="form-check-label" for="OutofStock">
+                                      Out of Stock
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="Upcoming">
+                                    <label class="form-check-label" for="Upcoming">Upcoming</label></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Brands
+                              </button>
+                            </h2>
+                            <div id="brands" class="accordion-collapse collapse">
+                              <div class="accordion-body">
+                                  <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
+                                  <div class="form-check">
+                                      <input class="form-check-input shadow-none" type="checkbox" value="" id="google">
+                                      <label class="form-check-label" for="google">
+                                        Google
+                                      </label>
+                                  </div>
+                                  <div class="form-check">
+                                      <input class="form-check-input shadow-none" type="checkbox" value="" id="xiamo">
+                                      <label class="form-check-label" for="xiamo">
+                                        Xiaomi
+                                      </label>
+                                  </div>
+                                  <div class="form-check">
+                                      <input class="form-check-input shadow-none" type="checkbox" value="" id="nothing">
+                                      <label class="form-check-label" for="nothing">
+                                        Nothing
+                                      </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="samsung">
+                                    <label class="form-check-label" for="samsung">
+                                      Samsung
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="vivo">
+                                    <label class="form-check-label" for="vivo">
+                                      Vivo
+                                    </label>
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ram" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                RAM
+                              </button>
+                            </h2>
+                            <div id="ram" class="accordion-collapse collapse">
+                              <div class="accordion-body">
+                                  <div class="form-check">
+                                      <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
+                                      <label class="form-check-label" for="2gb">
+                                        2 GB
+                                      </label>
+                                  </div>
+                                  <div class="form-check">
+                                      <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
+                                      <label class="form-check-label" for="4gb">
+                                        4 GB
+                                      </label>
+                                  </div>
+                                  <div class="form-check">
+                                      <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
+                                      <label class="form-check-label" for="6gb">
+                                        6 GB
+                                      </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
+                                    <label class="form-check-label" for="8gb">
+                                      8 GB
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
+                                    <label class="form-check-label" for="12gb">
+                                      12 GB
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="18gb">
+                                    <label class="form-check-label" for="18gb">
+                                      16 GB
+                                    </label>
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#battery" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                              Battery Capacity
+                            </button>
+                          </h2>
+                          <div id="battery" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
+                                    <label class="form-check-label" for="2gb">
+                                      3000 mAh & Above
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
+                                    <label class="form-check-label" for="4gb">
+                                      4000 mAh & Above
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
+                                    <label class="form-check-label" for="6gb">
+                                      5000 mAh & Above
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
+                                  <label class="form-check-label" for="8gb">
+                                    6000 mAh & Above
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
+                                  <label class="form-check-label" for="12gb">
+                                    7000 mAh & Above
+                                  </label>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                </aside>
+                <div class="col-md-9 bg-white py-2">
+                    <div class="card mb-3 p-3" >
+                        <div class="row g-0">
+                          <div class="col-3 text-center">
+                            <img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="https://cdn.findprix.com/media/mobiles/poco-m6-pro-5g-8gb-ram-256gb.webp" style="width: auto; height:150px">
+                            <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
+                          </div>
+                          <div class="col-9">
+                            <div class="card-body p-0">
+                              <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
+                                <div class="text-start">Poco M6</div>
+                                <div class="text-end " style="font-size: 17px;">Rs. 14,500</div>
+                              </h5>
+                              <p class="card-text">
+                                <div class="key-specs row row-cols-1 row-cols-md-2 gx-4 ms-lg-0 ms-2 ">
+                                  <div>• 8GB RAM</div>
+                                  <div>• 1TB Internal Storage</div>
+                                  <div>• 6.7 inches, Super Retina XDR Display</div>
+                                  <div>• 12MP Front Camera</div>
+                                  <div>• 48MP + 12MP + 12MP Rear Camera</div>
+                                  <div>• Apple A17 Pro Processor</div>
+                                  <div>• iOS v17 Operating System</div>
+                                </div>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3 p-3" >
+                      <div class="row g-0">
+                        <div class="col-3 text-center">
+                          <img class="bd-placeholder-img img-fluid rounded-start" src="https://cdn.findprix.com/media/mobiles/poco-m6-pro-5g-8gb-ram-256gb.webp" style="width: auto; height:150px">
+                          <div class="row d-flex justify-content-center mt-3 fw-bold cursor-pointer cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
+                        </div>
+                        <div class="col-9">
+                          <div class="card-body p-0">
+                            <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
+                              <div class="text-start">Poco M6</div>
+                              <div class="text-end " style="font-size: 17px;">Rs. 14,500</div>
+                            </h5>
+                            <p class="card-text">
+                              <ul class="key-specs row row-cols-2 gx-4">
+                                <li>8GB RAM</li>
+                                <li>1TB Internal Storage</li>
+                                <li>6.7 inches, Super Retina XDR Display</li>
+                                <li>12MP Front Camera</li>
+                                <li class="ps-3">48MP + 12MP + 12MP Rear Camera</li>
+                                <li class="ps-3">Apple A17 Pro Processor</li>
+                                <li class="ps-3">iOS v17 Operating System</li>
+                              </ul>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card mb-3 p-3" >
+                      <div class="row g-0">
+                        <div class="col-3 text-center">
+                          <img class="bd-placeholder-img img-fluid rounded-start" src="https://cdn.findprix.com/media/mobiles/poco-m6-pro-5g-8gb-ram-256gb.webp" style="width: auto; height:150px">
+                          <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
+                        </div>
+                        <div class="col-9">
+                          <div class="card-body p-0">
+                            <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
+                              <div class="text-start">Poco M6</div>
+                              <div class="text-end" style="font-size: 17px;">Rs. 14,500</div>
+                            </h5>
+                            <p class="card-text">
+                              <ul class="key-specs row row-cols-2 gx-4">
+                                <li>8GB RAM</li>
+                                <li>1TB Internal Storage</li>
+                                <li>6.7 inches, Super Retina XDR Display</li>
+                                <li>12MP Front Camera</li>
+                                <li class="ps-3">48MP + 12MP + 12MP Rear Camera</li>
+                                <li class="ps-3">Apple A17 Pro Processor</li>
+                                <li class="ps-3">iOS v17 Operating System</li>
+                              </ul>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- Pagination -->
+                  <nav aria-label="...">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">2</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-primary bg-gradient text-white">
+        <div class="container">
+            <div class="pt-4">
+                <div class="row">
+                    <div class="col-6 col-md-5 mb-3">
+                        <h5>Gadgets92</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2 nav-link p-0 text-white">Uncover Excellence, Navigate Value: Gadgets92 – Your Ultimate Destination for Mobile Marvels and Affordable Innovation!</li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-md-auto mb-3">
+                        <h5>Categories</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Mobiles</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Laptops</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Televisions</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Smart Watches</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Headsets</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-md-auto  mb-3">
+                        <h5>Quick Links</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Home</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Contact Us</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">About</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="d-flex flex-column flex-sm-row justify-content-between pt-4 border-top">
+                    <p class="mt-1">&copy; 2024 Company, Inc. All rights reserved.</p>
+                    <ul class="list-unstyled d-flex mt-1">
+                        <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="mt-1"
+                                    xmlns="http://www.w3.org/2000/svg" height="25" width="25" fill="#fff"
+                                    viewBox="0 0 512 512">
+                                    <path
+                                        d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
+                                </svg></i></a></li>
+                        <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="mt-1"
+                                    xmlns="http://www.w3.org/2000/svg" height="25" width="25" fill="#fff"
+                                    viewBox="0 0 448 512">
+                                    <path
+                                        d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-25.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-25.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 25.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 25.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                                </svg></i></a></li>
+                        <li class="ms-3"><a class="link-body-emphasis" href="#"><svg xmlns="http://www.w3.org/2000/svg"
+                                    height="30" width="30" fill="#fff" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z">
+                                    </path>
+                                </svg></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/unveil.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="js/index.js"></script>
+<script>
+  $(document).ready(function() {
+    // Add an input event listener to the search input
+    $('#brands input[type="search"]').on('input', function() {
+      // Get the search query
+      var searchQuery = $(this).val().toLowerCase();
+
+      // Hide all brand checkboxes
+      $('#brands .form-check').hide();
+
+      // Show only the checkboxes that match the search query
+      $('#brands .form-check').filter(function() {
+        return $(this).text().toLowerCase().includes(searchQuery);
+      }).show();
+    });
+  });
+</script>
+
+</html>

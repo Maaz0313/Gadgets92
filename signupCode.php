@@ -1,0 +1,73 @@
+<?php
+session_start();
+include('dbcon.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
+
+function sendemail_verify($name, $email, $verify_token)
+{
+    $mail = new PHPMailer(true);
+    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                    //Enable verbose debug output
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->SMTPAuth = true;                                   //Enable SMTP authentication         
+    $mail->Host = 'smtp.gmail.com';                   //Set the SMTP server to send through
+    $mail->Username = 'gadgets92.web@gmail.com';                //SMTP username
+    $mail->Password = 'vgfncqofrefttnfw';                             //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;        //Enable implicit TLS encryption
+    $mail->Port = 587;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+    //Recipients
+    $mail->setFrom('gadgets92.web@gmail.com', 'Gadgets92');
+    $mail->addAddress($email);
+
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = 'Email Verification from Gadgets92';
+    $email_template = "
+    <h2>You have registered with Gadgets92</h2>
+    <h5>Verify your email address to Login with the link given below</h5>
+    <br>
+    <a style='text-align:center' href='http://gadgets92.test/verify-email.php?token=$verify_token'>Click here to verify</a>
+    ";
+    $mail->Body = $email_template;
+    $mail->send();
+    // echo 'Message has been sent';
+}
+
+if (isset($_POST['register_btn'])) {
+    $name = htmlspecialchars($_POST['name']);
+    $email = htmlspecialchars($_POST['email']);
+    $password = htmlspecialchars($_POST['pwd']);
+    $verify_token = md5(rand());
+    if (!empty($name) && !empty($email) && !empty($password)) {
+        // Email exists or not
+        $email_check_query = "SELECT `email` FROM `users` WHERE `email` = '$email' LIMIT 1";
+        $email_check_query_run = mysqli_query($con, $email_check_query);
+        if (mysqli_num_rows($email_check_query_run) > 0) {
+            $_SESSION['status'] = 'Email Already Exists';
+            header('Location: signup.php');
+        } else {
+            $insert_query = "INSERT INTO `users` (`name`, `email`, `password`, `verify_token`) VALUES ('$name', '$email', '$password', '$verify_token')";
+            $insert_query_run = mysqli_query($con, $insert_query);
+
+            if ($insert_query_run) {
+                sendemail_verify("$name", "$email", "$verify_token");
+                $_SESSION['status'] = 'Registration Successful! Please check your inbox or spam folder to verify your Email Address.';
+                header('Location: login.php');
+            } else {
+                $_SESSION['status'] = "Registration Failed";
+                header('Location: signup.php');
+            }
+        }
+    }
+    else
+    {
+        $_SESSION['status'] = "Please fill all the fields";
+        header('Location: signup.php');
+        exit(0);
+    }
+}

@@ -1,8 +1,8 @@
 <?php
-require('../inc/header.php');
-require('../dbcon.php');
-require('../inc/functions.inc.php');
-$id = mysqli_real_escape_string($con, $_GET['id']);
+require('inc/header.php');
+require('dbcon.php');
+require('inc/functions.inc.php');
+$id = mysqli_real_escape_string($con, $_GET['product_id']);
 // var_dump($_SESSION['auth_user']['email']);
 $sql = "SELECT *
     FROM products
@@ -736,5 +736,5 @@ if (isset($_SESSION['status'])) {
     </div>
 </div>
 <?php
-require '../inc/footer.php';
+require 'inc/footer.php';
 ?>

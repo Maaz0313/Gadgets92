@@ -7,11 +7,33 @@ include('inc/functions.inc.php');
 $s1 = $_REQUEST["n"];
 $select_query = "select * from products where product_name like '%" . $s1 . "%'";
 $sql = mysqli_query($con, $select_query) or die(mysqli_error($con));
+$row = mysqli_fetch_array($sql);
+
 $s = "";
 while ($row = mysqli_fetch_array($sql)) {
+    switch ($row['category_id']) {
+        case 1:
+            $url = "/mobiles";
+            break;
+        case 2:
+            $url = "/laptops";
+            break;
+        case 3:
+            $url = "/headsets";
+            break;
+        case 4:
+            $url = "/watches";
+            break;
+        case 5:
+            $url = "/televisions";
+            break;
+        default:
+            $url = "/";
+            break;
+    }
     $s .= "
     <li class='p-3'>
-        <a class='link-p-colr' href='view.php?product=" . $row['product_id'] . "'>
+        <a class='link-p-colr' href='" . $base_url . $url ."/product.php?id=" . $row['product_id'] . "'>
             <div class='live-outer'>
                 <div class='live-im'>
                     <img style='width: fit-content; height: 60px;' src='" . $base_url . "/admin/images/products/" . $row['product_image'] . "'/>

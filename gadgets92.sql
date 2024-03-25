@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 22, 2024 at 08:21 AM
+-- Generation Time: Mar 25, 2024 at 11:17 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.3.2
 
@@ -398,10 +398,20 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `verify_token`, `verify_
 
 CREATE TABLE `user_reviews` (
   `id` int NOT NULL,
+  `product_id` int NOT NULL,
   `user_id` int NOT NULL,
-  `review_heading` int NOT NULL,
-  `review_summary` int NOT NULL
+  `review_heading` varchar(50) NOT NULL,
+  `review_summary` text NOT NULL,
+  `created_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `user_reviews`
+--
+
+INSERT INTO `user_reviews` (`id`, `product_id`, `user_id`, `review_heading`, `review_summary`, `created_at`) VALUES
+(1, 3, 1, 'Amazing Mobile', 'Very nice mobile phone ', '2024-03-25 11:00:32'),
+(2, 3, 3, 'High performance mobile ', 'The mobile\'s performance is very good for gamers.', '2024-03-25 11:14:19');
 
 --
 -- Indexes for dumped tables
@@ -484,7 +494,9 @@ ALTER TABLE `users`
 -- Indexes for table `user_reviews`
 --
 ALTER TABLE `user_reviews`
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `user_reviews_ibfk_2` (`product_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -557,6 +569,12 @@ ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `user_reviews`
+--
+ALTER TABLE `user_reviews`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -601,7 +619,8 @@ ALTER TABLE `tv_specs`
 -- Constraints for table `user_reviews`
 --
 ALTER TABLE `user_reviews`
-  ADD CONSTRAINT `user_reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_reviews_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

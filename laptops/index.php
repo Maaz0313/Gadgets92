@@ -16,7 +16,7 @@ $adjacents = "2";
 $result_count = mysqli_query(
     $con,
     "SELECT COUNT(*) AS total_records FROM products
-    INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id"
+    INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id"
 );
 $total_records = mysqli_fetch_array($result_count);
 $total_records = $total_records['total_records'];
@@ -32,7 +32,7 @@ if ($searchTerm) {
 }
 $sql = "SELECT *
     FROM products
-    INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id" . $whereClause . "
+    INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id" . $whereClause . "
     LIMIT $offset, $total_records_per_page";
 $result = mysqli_query($con, $sql);
 if (!$result) {
@@ -119,15 +119,15 @@ if (isset($_SESSION['status'])) {
         <nav class="p-1 pb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Mobiles</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Mobile Finder</li>
+                <li class="breadcrumb-item"><a href="#">Laptops</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Laptop Finder</li>
             </ol>
         </nav>
         <div class="row">
-            <h4 class="fw-bold">Mobile Finder - Find Your Desired Mobile</h4>
+            <h4 class="fw-bold">Laptop Finder - Find Your Desired Laptop</h4>
         </div>
         <div class="row">
-            <p>Ditch the decision fatigue. Find a mobile that suits your needs using our comprehensive mobile finder tool.</p>
+            <p>Ditch the decision fatigue. Find a laptop that suits your needs using our comprehensive mobile finder tool.</p>
         </div>
     </div>
     <!-- filters shown on mobile screens only -->
@@ -597,7 +597,7 @@ if (isset($_SESSION['status'])) {
                                         </div>
                                     </div>
                                     </p>
-                                    <a href="<?= $base_url . '/mobiles/product.php?id=' . $row['product_id'] ?>" class="stretched-link opacity-0" style="height:0;width:0;">Show</a>
+                                    <a href="<?= $base_url . '/laptops/product.php?id=' . $row['product_id'] ?>" class="stretched-link opacity-0" style="height:0;width:0;">Show</a>
                                 </div>
                             </div>
                         </div>

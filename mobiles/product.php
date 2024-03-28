@@ -223,7 +223,7 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                     <h6 class="fw-bolder ">Key Specifications</h6>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="row">
                             <div class="d-flex align-items-center ">
                                 <i class="bi bi-calendar-date-fill"></i>
@@ -272,7 +272,7 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                             <span style="padding-left: 37px;" class="key-spec-value"><?= $row['front_camera']; ?></span>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="row">
                             <div class="d-flex align-items-center ">
                                 <i class="bi bi-camera-fill"></i>
@@ -316,7 +316,7 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
     </div>
     <!-- complete features -->
     <div class="container bg-light p-3 mb-3">
-        <h5 class="fw-bold pb-2">Realme Narzo N53 Full Specifications</h5>
+        <h5 class="fw-bold pb-2"><?= $row['product_name']; ?> Full Specifications</h5>
         <div class="category">
             <h3 class="">General (5)
                 <span class="icon"><i class="bi bi-chevron-down"></i></span>
@@ -336,7 +336,7 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                             Release Date
                         </th>
                         <td>
-                            <?= $row['release_date']; ?>
+                        <?= date("d M Y", strtotime($row['release_date']));  ?>
                         </td>
                     </tr>
                     <tr>

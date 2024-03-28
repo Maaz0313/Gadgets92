@@ -89,13 +89,13 @@ if (session_status() === PHP_SESSION_NONE) {
                             <a class="nav-link text-white" href="<?= $base_url; ?>/laptops/">Laptops</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Televisions</a>
+                            <a class="nav-link text-white" href="<?= $base_url; ?>/televisions/">Televisions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Smart Watches</a>
+                            <a class="nav-link text-white" href="<?= $base_url; ?>/watches/">Smart Watches</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Headsets</a>
+                            <a class="nav-link text-white" href="<?= $base_url; ?>/headsets/">Headsets</a>
                         </li>
                     </ul>
                 </div>
@@ -112,19 +112,19 @@ if (session_status() === PHP_SESSION_NONE) {
                 <!-- Offcanvas menu items -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link ms-3" href="#">Mobiles</a>
+                        <a class="nav-link ms-3" href="<?= $base_url; ?>/mobiles/">Mobiles</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3" href="#">Laptops</a>
+                        <a class="nav-link ms-3" href="<?= $base_url; ?>/laptops/">Laptops</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3" href="#">Televisions</a>
+                        <a class="nav-link ms-3" href="<?= $base_url; ?>/televisions/">Televisions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3" href="#">Smart Watches</a>
+                        <a class="nav-link ms-3" href="<?= $base_url; ?>/watches/">Smart Watches</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3" href="#">Headsets</a>
+                        <a class="nav-link ms-3" href="<?= $base_url; ?>/headsets/">Headsets</a>
                     </li>
                     <li class="nav-item mt-3 ms-3">
                         <?php

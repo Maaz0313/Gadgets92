@@ -1,28 +1,79 @@
 <?php
-require('inc/header.php');
-require('dbcon.php');
-require('inc/functions.inc.php');
-$id = mysqli_real_escape_string($con, $_GET['product_id']);
-// var_dump($_SESSION['auth_user']['email']);
+date_default_timezone_set('Asia/Karachi');
+require('../inc/header.php');
+require('../dbcon.php');
+require('../inc/functions.inc.php');
+
+$id = isset($_GET['id']) ? mysqli_real_escape_string($con, $_GET['id']) : '';
+if (empty($id)) {
+?>
+    <script>
+        window.location.href = $base_url;
+    </script>
+<?php
+    exit;
+}
+
 $sql = "SELECT *
     FROM products
-    INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id 
+    INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id 
     INNER JOIN brands ON products.brand_id = brands.brand_id
-    WHERE products.product_id = $id;";
+    WHERE products.product_id = $id";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
+if ($row === null) {
 ?>
-<?php
-if (isset($_SESSION['status'])) {
-?>
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <strong><?= $_SESSION['status']; ?></strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-<?php
-    unset($_SESSION['status']);
+    <script>
+        window.location.href = $base_url;
+    </script>
+    <?php
+    exit;
 }
-?>
+
+if (isset($_POST['submit'])) {
+    $heading = isset($_POST['heading']) ? mysqli_real_escape_string($con, $_POST['heading']) : '';
+    $summary = isset($_POST['summary']) ? mysqli_real_escape_string($con, $_POST['summary']) : '';
+    if (isset($_SESSION['auth_user']['user_id']) && !empty($heading) && !empty($summary)) {
+        $created_at = date('Y-m-d H:i:s');
+        $sql = "INSERT INTO user_reviews (product_id, user_id, review_heading, review_summary, created_at) VALUES ($id, "
+            . "{$_SESSION['auth_user']['user_id']}, '$heading', '$summary', '$created_at')";
+        $res = mysqli_query($con, $sql);
+        if ($res) {
+            $_SESSION['success_msg'] = 'Review submitted successfully';
+    ?><script>
+                window.location.href = 'product.php?id=<?= $id ?>';
+            </script><?php
+                        exit;
+                    } else {
+                        $_SESSION['fail_msg'] = 'There was an error with your submission. Please try again.';
+                        ?><script>
+                window.location.href = 'product.php?id=<?= $id ?>';
+            </script><?php
+                        exit;
+                    }
+                }
+            }
+
+            $review_sql = "SELECT * FROM user_reviews WHERE product_id = $id";
+            $review_result = mysqli_query($con, $review_sql);
+            if ($review_result === false) {
+                // handle the error
+            }
+
+            if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
+                if (isset($_SESSION['success_msg'])) {
+                    echo '<div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+        ' . $_SESSION['success_msg'] . '</div>';
+                    unset($_SESSION['success_msg']);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+        ' . $_SESSION['fail_msg'] . '</div>';
+                    unset($_SESSION['fail_msg']);
+                }
+            }
+                        ?>
 <div class="box pb-3">
     <!-- features overview -->
     <div class="bg-light container mb-3">
@@ -183,10 +234,10 @@ if (isset($_SESSION['status'])) {
                     <h6 class="fw-bolder ">Key Specifications</h6>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="row">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-calendar-date-fill"></i>
+                                <i class="bi bi-calendar-date"></i>
                                 <span style="padding-left: 9px;" class="key-spec-name">Release Date</span>
                             </div>
                         </div>
@@ -205,51 +256,11 @@ if (isset($_SESSION['status'])) {
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
                                 <i class="bi bi-hdd-rack"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name">Storage</span>
+                                <span style="padding-left: 9px;" class="key-spec-name">SSD Storage</span>
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['internal_storage']; ?></span>
-                        </div>
-                        <div class="row pt-md-2 ">
-                            <div class="d-flex align-items-center ">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="33" version="1.1" x="0px" y="0px" viewBox="0 0 90 112.5" xml:space="preserve">
-                                    <path d="M64.9,7.2H25.4c-2.1,0-3.8,1.7-3.8,3.8v59.1c0,2.1,1.7,3.8,3.8,3.8h39.6c2.1,0,3.8-1.7,3.8-3.8V11  C68.8,8.9,67.1,7.2,64.9,7.2z M64.8,70H25.5V11.2h39.3V70z M27.3,22.1v-7.4c0,0,0,0,0,0c0,0,0-0.1,0-0.1c0-0.1,0-0.1,0-0.1  c0,0,0-0.1,0-0.1c0,0,0-0.1,0-0.1c0,0,0-0.1,0-0.1c0,0,0-0.1,0-0.1c0,0,0-0.1,0.1-0.1c0,0,0,0,0-0.1c0,0,0,0,0-0.1  c0,0,0-0.1,0.1-0.1c0,0,0.1-0.1,0.1-0.1c0,0,0.1-0.1,0.1-0.1c0,0,0,0,0.1-0.1c0,0,0.1-0.1,0.1-0.1c0,0,0.1-0.1,0.1-0.1  c0,0,0.1,0,0.1-0.1c0,0,0,0,0,0c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1-0.1c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0  c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0c0,0,0,0,0.1,0c0,0,0,0,0,0c0,0,0.1,0,0.1,0c0.1,0,0.1,0,0.2,0c0,0,0.1,0,0.1,0  c0,0,0.1,0,0.1,0c0.1,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0.1c0,0,0,0,0.1,0l7.1,4c1,0.5,1.3,1.8,0.7,2.7  c-0.4,0.6-1,1-1.7,1c-0.3,0-0.7-0.1-1-0.3L35,20.3l24.1,39.8v-1.4c0-1.1,0.9-2,2-2s2,0.9,2,2v7.4c0,0.2,0,0.3-0.1,0.5  c0.1,0.4,0.1,0.9-0.1,1.4c-0.3,0.7-1.1,1.1-1.8,1.1c-0.3,0-0.6-0.1-0.9-0.2l-7.4-3.6c-1-0.5-1.4-1.7-0.9-2.7c0.5-1,1.7-1.4,2.7-0.9  l1.1,0.6L31.3,21.9v0.3c0,1.1-0.9,2-2,2S27.3,23.2,27.3,22.1z M70.4,0.7H20c-3,0-5.4,2.4-5.4,5.4v78.3c0,3,2.4,5.4,5.4,5.4h50.4  c3,0,5.4-2.4,5.4-5.4V6.1C75.8,3.1,73.4,0.7,70.4,0.7z M71.8,84.4c0,0.8-0.6,1.4-1.4,1.4H20c-0.8,0-1.4-0.6-1.4-1.4V6.1  c0-0.8,0.6-1.4,1.4-1.4h50.4c0.8,0,1.4,0.6,1.4,1.4V84.4z" />
-                                </svg>
-                                <span style="padding-left: 5px;" class="key-spec-name">Display</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['display']; ?></span>
-                        </div>
-                        <div class="row pt-md-2 ">
-                            <div class="d-flex align-items-center ">
-                                <i class="bi bi-camera2"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name">Front Camera</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['front_camera']; ?></span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="d-flex align-items-center ">
-                                <i class="bi bi-camera-fill"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name">Rear Camera</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['rear_camera']; ?></span>
-                        </div>
-                        <div class="row pt-md-2 ">
-                            <div class="d-flex align-items-center ">
-                                <i class="bi bi-cpu"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name">Processor</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['chipset']; ?></span>
+                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['ssd_storage']; ?></span>
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
@@ -260,10 +271,46 @@ if (isset($_SESSION['status'])) {
                         <div class="row">
                             <span style="padding-left: 37px;" class="key-spec-value"><?= $row['battery']; ?></span>
                         </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="d-flex align-items-center ">
+                                <i class="fa fa-laptop"></i>
+                                <span style="padding-left: 9px;" class="key-spec-name">Display</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['display']; ?></span>
+                        </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-android"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name">OS (Operating System)</span>
+                                <i class="bi bi-cpu"></i>
+                                <span style="padding-left: 9px;" class="key-spec-name">Processor</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['processor']; ?></span>
+                        </div>
+                        <div class="row pt-md-2 ">
+                            <div class="d-flex align-items-center ">
+                                <i class="bi bi-gpu-card"></i>
+                                <span style="padding-left: 8px;" class="key-spec-name">GPU</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['graphics']; ?></span>
+                        </div>
+                        <div class="row pt-md-2 ">
+                            <div class="d-flex align-items-center ">
+                                <svg height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                                    <g fill="#333" stroke="none" transform="translate(0.000000,24.000000) scale(0.006977,-0.006977)">
+                                        <path d="M1556 3299 c-551 -58 -1029 -396 -1267 -894 -381 -799 -40 -1749 763 -2125 417 -195 919 -195 1336 0 676 317 1041 1052 882 1781 -101 465 -411 863 -835 1074 -286 142 -575 196 -879 164z m444 -168 c442 -89 819 -380 1015 -786 54 -113 87 -210 116 -345 32 -151 32 -409 0 -560 -125 -582 -549 -1007 -1131 -1131 -138 -30 -398 -32 -535 -6 -589 114 -1031 549 -1156 1137 -30 142 -33 389 -5 535 85 457 377 840 793 1041 147 71 276 108 488 138 67 10 324 -4 415 -23z"></path>
+                                        <path d="M2208 2268 c-192 -25 -325 -204 -278 -373 29 -104 121 -170 344 -245 205 -69 266 -109 266 -175 0 -63 -25 -101 -89 -132 -124 -61 -327 -20 -371 74 -15 32 -16 33 -87 33 -40 0 -73 -4 -73 -8 0 -5 7 -32 16 -61 39 -132 180 -211 382 -212 134 -2 218 28 289 103 81 84 104 229 51 319 -51 86 -111 123 -321 196 -153 53 -213 81 -246 117 -20 22 -23 32 -19 77 5 44 11 58 41 85 21 20 59 40 94 50 50 15 69 16 136 6 97 -14 155 -45 182 -95 l20 -37 73 0 c39 0 72 4 72 8 0 5 -7 32 -16 61 -44 149 -243 238 -466 209z"></path>
+                                        <path d="M1069 2247 c-122 -42 -198 -112 -256 -232 -46 -97 -66 -213 -59 -335 20 -331 191 -511 486 -511 248 0 411 132 466 377 23 105 16 312 -15 406 -43 133 -142 243 -261 290 -43 17 -81 22 -175 25 -105 3 -128 1 -186 -20z m308 -147 c162 -71 237 -292 181 -530 -46 -191 -217 -295 -406 -246 -113 29 -184 98 -228 221 -25 71 -25 279 0 350 58 161 175 241 338 231 38 -3 88 -14 115 -26z"></path>
+                                    </g>
+                                </svg>
+                                <span style="padding-left: 7px;" class="key-spec-name">OS (Operating System)</span>
                             </div>
                         </div>
                         <div class="row">
@@ -276,13 +323,22 @@ if (isset($_SESSION['status'])) {
     </div>
     <!-- complete features -->
     <div class="container bg-light p-3 mb-3">
-        <h5 class="fw-bold pb-2">Realme Narzo N53 Full Specifications</h5>
+        <h5 class="fw-bold pb-2"><?= $row['product_name']; ?> Full Specifications</h5>
         <div class="category">
-            <h3 class="">General (5)
+            <h3 class="">General (4)
                 <span class="icon"><i class="bi bi-chevron-down"></i></span>
             </h3>
             <table>
                 <tbody>
+                    <tr>
+                        <th>
+                            Release Date
+                        </th>
+                        <td>
+                            <?= date("d M Y", strtotime($row['release_date']));  ?>
+                        </td>
+                    </tr>
+                    <tr>
                     <tr>
                         <th>
                             Brand
@@ -291,29 +347,12 @@ if (isset($_SESSION['status'])) {
                             <?= $row['brand_name']; ?>
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            Release Date
-                        </th>
-                        <td>
-                            <?= $row['release_date']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Device Type
-                        </th>
-                        <td>
-                            <?= $row['device_type']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            SIM
-                        </th>
-                        <td>
-                            <?= $row['sim']; ?>
-                        </td>
+                    <th>
+                        Model
+                    </th>
+                    <td>
+                        <?= $row['model']; ?>
+                    </td>
                     </tr>
                     <tr>
                         <th>
@@ -327,7 +366,7 @@ if (isset($_SESSION['status'])) {
             </table>
         </div>
         <div class="category">
-            <h3>Design (5) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Design (3) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>
@@ -344,22 +383,6 @@ if (isset($_SESSION['status'])) {
                         </th>
                         <td>
                             <?= $row['weight']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Water Resistance
-                        </th>
-                        <td>
-                            <?= $row['waterproof']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Build Material
-                        </th>
-                        <td>
-                            <?= $row['build_material']; ?>
                         </td>
                     </tr>
                     <tr>
@@ -390,7 +413,7 @@ if (isset($_SESSION['status'])) {
                             Touch Screen
                         </th>
                         <td>
-                            <?= $row['touch_screen']; ?>
+                            <?= $row['touch_screen'] == 1 ? 'Yes' : 'No'; ?>
                         </td>
                     </tr>
                     <tr>
@@ -411,80 +434,72 @@ if (isset($_SESSION['status'])) {
                     </tr>
                     <tr>
                         <th>
-                            Bezel-less Display
+                            Display Features
                         </th>
                         <td>
-                            <?= $row['bezel_less_display']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Screen Protection
-                        </th>
-                        <td>
-                            <?= $row['screen_protection']; ?>
+                            <?= $row['display_features']; ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="category">
-            <h3>Camera (6) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Performance (6) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>
                         <th>
-                            Back Camera
+                            Processor
                         </th>
                         <td>
-                            <?= $row['rear_camera']; ?>
+                            <?= $row['processor']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Camera Sensor
+                            Processor Variant
                         </th>
                         <td>
-                            <?= $row['sensor']; ?>
+                            <?= $row['processor_variant']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Flash
+                            Clock Speed
                         </th>
                         <td>
-                            <?= $row['flash']; ?>
+                            <?= $row['clock_speed']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Rear Video Recording
+                            No. of Cores
                         </th>
                         <td>
-                            <?= $row['rear_video_recording']; ?>
+                            <?= $row['cores']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Rear Features
+                            Graphics
                         </th>
                         <td>
-                            <?= $row['rear_features']; ?>
+                            <?= $row['graphics']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Front Camera
+                            System Architecture
                         </th>
                         <td>
-                            <?= $row['front_camera']; ?>
+                            <?= $row['sys_arch']; ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="category">
-            <h3>Performance (4) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Storage (4) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>
@@ -497,49 +512,26 @@ if (isset($_SESSION['status'])) {
                     </tr>
                     <tr>
                         <th>
-                            GPU
+                            RAM Frequency
                         </th>
                         <td>
-                            <?= $row['gpu']; ?>
+                            <?= $row['ram_frequency']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Processor
+                            Cache
                         </th>
                         <td>
-                            <?= $row['chipset']; ?>
+                            <?= $row['cache']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            CPU Cores
+                            SSD Storage
                         </th>
                         <td>
-                            <?= $row['cpu_cores']; ?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="category">
-            <h3>Storage (2) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>
-                            Internal Storage
-                        </th>
-                        <td>
-                            <?= $row['internal_storage']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Memory Card Slot
-                        </th>
-                        <td>
-                            <?= $row['sd_card_slot']; ?>
+                            <?= $row['ssd_storage']; ?>
                         </td>
                     </tr>
                 </tbody>
@@ -559,27 +551,19 @@ if (isset($_SESSION['status'])) {
                     </tr>
                     <tr>
                         <th>
-                            Fast Charging
+                            Power Supply
                         </th>
                         <td>
-                            <?= $row['fast_charging']; ?>
+                            <?= $row['power_supply']; ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="category">
-            <h3>Network & Connectivity (6) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Network & Connectivity (2) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
-                    <tr>
-                        <th>
-                            Network Support
-                        </th>
-                        <td>
-                            <?= $row['network_support']; ?>
-                        </td>
-                    </tr>
                     <tr>
                         <th>
                             Bluetooth
@@ -596,40 +580,32 @@ if (isset($_SESSION['status'])) {
                             <?= $row['wifi']; ?>
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            USB
-                        </th>
-                        <td>
-                            <?= $row['usb']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            GPS
-                        </th>
-                        <td>
-                            <?= $row['gps']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            NFC
-                        </th>
-                        <td>
-                            <?= $row['nfc']; ?>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
         <div class="category">
-            <h3>Extra Features (5) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Ports (5) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>
                         <th>
-                            Audio Jack
+                            Ethernet Port
+                        </th>
+                        <td>
+                            <?= $row['ethernet_port']; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            USB Port
+                        </th>
+                        <td>
+                            <?= $row['usb_port']; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Headset Jack
                         </th>
                         <td>
                             <?= $row['audio_jack']; ?>
@@ -637,34 +613,83 @@ if (isset($_SESSION['status'])) {
                     </tr>
                     <tr>
                         <th>
-                            FM Radio
+                            HDMI Port
                         </th>
                         <td>
-                            <?= $row['fm_radio']; ?>
+                            <?= $row['hdmi_port']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Loud Speaker
+                            Multi Card Slot
                         </th>
                         <td>
-                            <?= $row['loud_speaker'] == 1 ? 'Yes' : 'No'; ?>
+                            <?= $row['multi_card_slot']; ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="category">
+            <h3>Multimedia (3) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>
+                            Webcam
+                        </th>
+                        <td>
+                            <?= $row['webcam'] ? 'Yes' : 'No'; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Finger Print Sensor
+                            Mic
                         </th>
                         <td>
-                            <?= $row['fingerprint_sensor']; ?>
+                            <?= $row['mic'] ? 'Yes' : 'No'; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Other Sensors
+                            Headset Jack
                         </th>
                         <td>
-                            <?= $row['other_sensors']; ?>
+                            <?= $row['audio_jack']; ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="category">
+            <h3>Features (2) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <table>
+                <tbody>
+                <!-- Disk Drive -->
+                    <tr>
+                        <th>
+                            Disk Drive
+                        </th>
+                        <td>
+                            <?= $row['disk_drive'] ? 'Yes' : 'No'; ?>
+                        </td>
+                    </tr>
+                    <!-- Keyboard -->
+                    <tr>
+                        <th>
+                            Keyboard
+                        </th>
+                        <td>
+                            <?= $row['keyboard']; ?>
+                        </td>
+                    </tr>
+                    <!-- Backlit Keyboard -->
+                    <tr>
+                        <th>
+                            Backlit Keyboard
+                        </th>
+                        <td>
+                            <?= $row['backlit_keyboard'] ? 'Yes' : 'No'; ?>
                         </td>
                     </tr>
                 </tbody>
@@ -683,7 +708,7 @@ if (isset($_SESSION['status'])) {
             <?php
             } else {
             ?>
-                <a class="btn btn-primary fw-medium text-end" href="../login.php">Login to Review</a>
+                <a class="btn btn-primary fw-medium text-end" href="../login.php?continue=<?php echo $link ?>">Login to Review</a>
             <?php
             }
             ?>
@@ -699,18 +724,20 @@ if (isset($_SESSION['status'])) {
                 <form action="#" method="post">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Review Heading</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1">
+                        <input type="text" class="form-control" name="heading" id="exampleFormControlInput1">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Review Summary</label>
-                        <textarea class="form-control h-100 " id="exampleFormControlTextarea1" rows="5"></textarea>
+                        <textarea class="form-control h-100 " name="summary" id="exampleFormControlTextarea1" rows="5"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                    <button type="submit" name="submit" class="btn btn-primary">Submit Review</button>
                 </form>
             </div>
         </div>
         <!-- offcanvas ends -->
-        <div class="mt-2">
+        <?php
+        while ($review_row = mysqli_fetch_assoc($review_result)) {
+        ?>
             <div class="d-flex flex-row p-3">
 
                 <img src="https://i.ibb.co/DgxpBYp/agRGhBc.jpg" width="40" height="40" class="rounded-circle me-2">
@@ -718,23 +745,19 @@ if (isset($_SESSION['status'])) {
                 <div class="w-100">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex flex-row align-items-center">
-                            <span class="me-2">Seltos Majito</span>
+                            <span class="me-2"><?= $_SESSION['auth_user']['username'] ?></span>
                         </div>
-                        <small>2h ago</small>
+                        <small><?= facebook_time_ago($review_row['created_at']) ?></small>
                     </div>
-                    <h5 style="font-size: 15px;" class="fw-bold ">Very Good Mobile</h5>
-                    <p class="text-justify comment-text mb-0">Tellus in hac habitasse platea dictumst vestibulum.
-                        Lectus nulla
-                        at volutpat diam ut venenatis tellus. Aliquam etiam erat velit scelerisque in dictum non
-                        consectetur.
-                        Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo nec. Tellus cras adipiscing
-                        enim eu turpis
-                        egestas pretium aenean pharetra. Aliquam faucibus purus in massa.</p>
+                    <h5 style="font-size: 15px;" class="fw-bold "><?= $review_row['review_heading'] ?></h5>
+                    <p class="text-justify comment-text mb-0"><?= $review_row['review_summary'] ?></p>
                 </div>
             </div>
-        </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
 <?php
-require 'inc/footer.php';
+require '../inc/footer.php';
 ?>

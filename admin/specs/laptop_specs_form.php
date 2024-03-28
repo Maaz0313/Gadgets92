@@ -10,61 +10,62 @@ $productId = isset($_GET['product_id']) ? sanitize_data($_GET['product_id']) : 0
 
 if (isset($_POST['submit'])) {
     // Retrieve data from the form
-    $product_id = $_POST['product_id'];
-    $model = $_POST['model'];
-    $os = $_POST['os'];
+    $product_id = mysqli_real_escape_string($con, $_POST['product_id']);
+    $model = mysqli_real_escape_string($con, $_POST['model']);
+    $os = mysqli_real_escape_string($con, $_POST['os']);
     $touch_screen = isset($_POST['touch_screen']) ? 1 : 0;
 
     // Display Information
-    $screen_size = $_POST['screen_size'];
-    $screen_resolution = $_POST['screen_resolution'];
-    $display = $_POST['display'];
-    $display_features = $_POST['display_features'];
+    $screen_size = mysqli_real_escape_string($con, $_POST['screen_size']);
+    $screen_resolution = mysqli_real_escape_string($con, $_POST['screen_resolution']);
+    $display = mysqli_real_escape_string($con, $_POST['display']);
+    $display_features = mysqli_real_escape_string($con, $_POST['display_features']);
 
     // Processor Information
-    $processor = $_POST['processor'];
-    $processor_variant = $_POST['processor_variant'];
-    $graphics = $_POST['graphics'];
-    $clock_speed = $_POST['clock_speed'];
-    $cores = $_POST['cores'];
-    $cache = $_POST['cache'];
-    $sys_arch = $_POST['sys_arch'];
+    $processor = mysqli_real_escape_string($con, $_POST['processor']);
+    $processor_variant = mysqli_real_escape_string($con, $_POST['processor_variant']);
+    $graphics = mysqli_real_escape_string($con, $_POST['graphics']);
+    $clock_speed = mysqli_real_escape_string($con, $_POST['clock_speed']);
+    $cores = mysqli_real_escape_string($con, $_POST['cores']);
+    $cache = mysqli_real_escape_string($con, $_POST['cache']);
+    $sys_arch = mysqli_real_escape_string($con, $_POST['sys_arch']);
 
     // Memory and Storage
-    $ram = $_POST['ram'];
-    $ram_frequency = $_POST['ram_frequency'];
-    $ssd_storage = $_POST['ssd_storage'];
-    $hdd_storage = $_POST['hdd_storage'];
+    $ram = mysqli_real_escape_string($con, $_POST['ram']);
+    $ram_frequency = mysqli_real_escape_string($con, $_POST['ram_frequency']);
+    $ssd_storage = mysqli_real_escape_string($con, $_POST['ssd_storage']);
+    $hdd_storage = mysqli_real_escape_string($con, $_POST['hdd_storage']);
 
     // Battery Information
-    $battery = $_POST['battery'];
-    $power_supply = $_POST['power_supply'];
+    $battery = mysqli_real_escape_string($con, $_POST['battery']);
+    $power_supply = mysqli_real_escape_string($con, $_POST['power_supply']);
 
     // Connectivity
-    $bluetooth = $_POST['bluetooth'];
-    $wifi = $_POST['wifi'];
-    $ethernet_port = $_POST['ethernet_port'];
+    $bluetooth = mysqli_real_escape_string($con, $_POST['bluetooth']);
+    $wifi = mysqli_real_escape_string($con, $_POST['wifi']);
+    $ethernet_port = mysqli_real_escape_string($con, $_POST['ethernet_port']);
 
     // Ports and Other Features
-    $usb_port = $_POST['usb_port'];
-    $hdmi_port = $_POST['hdmi_port'];
-    $headset_jack = $_POST['headset_jack'];
+    $usb_port = mysqli_real_escape_string($con, $_POST['usb_port']);
+    $hdmi_port = mysqli_real_escape_string($con, $_POST['hdmi_port']);
+    $headset_jack = isset($_POST['headset_jack']) ? 1 : 0;
     $webcam = isset($_POST['webcam']) ? 1 : 0;
     $mic = isset($_POST['mic']) ? 1 : 0;
+    $speakers = mysqli_real_escape_string($con, $_POST['speakers']);
 
     // Keyboard Information
-    $keyboard = $_POST['keyboard'];
+    $keyboard = mysqli_real_escape_string($con, $_POST['keyboard']);
     $backlit_keyboard = isset($_POST['backlit_keyboard']) ? 1 : 0;
     $disk_drive = isset($_POST['disk_drive']) ? 1 : 0;
 
     // Insert data into laptop_specs table
     $sql = "INSERT INTO laptop_specs (product_id, model, os, touch_screen, screen_size, screen_resolution, display, display_features, 
-            processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram, ram_frequency, ssd_storage, hdd_storage, battery, power_supply, 
-            bluetooth, wifi, ethernet_port, usb_port, hdmi_port, headset_jack, webcam, mic, disk_drive, keyboard, backlit_keyboard) 
+            processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram, ram_frequency, ssd_storage, battery, power_supply, 
+            bluetooth, wifi, ethernet_port, usb_port, hdmi_port, headset_jack, webcam, mic, speakers, disk_drive, keyboard, backlit_keyboard) 
             VALUES ('$product_id', '$model', '$os', '$touch_screen', '$screen_size', '$screen_resolution', '$display', '$display_features', 
-            '$processor', '$processor_variant', '$graphics', '$clock_speed', '$cores', '$cache', '$sys_arch', '$ram', '$ram_frequency', '$ssd_storage', '$hdd_storage', 
+            '$processor', '$processor_variant', '$graphics', '$clock_speed', '$cores', '$cache', '$sys_arch', '$ram', '$ram_frequency', '$ssd_storage',
             '$battery', '$power_supply', '$bluetooth', '$wifi', '$ethernet_port', '$usb_port', '$hdmi_port', '$headset_jack', '$webcam', '$mic', 
-            '$disk_drive','$keyboard', '$backlit_keyboard')";
+            '$speakers', '$disk_drive','$keyboard', '$backlit_keyboard')";
 
     $result = mysqli_query($con, $sql);
 
@@ -131,6 +132,23 @@ if (isset($_POST['submit'])) {
                             <div class="form-check">
                                 <input type="checkbox" id="touch_screen" class="form-check-input" name="touch_screen">
                                 <label for="touch_screen" class="form-check-label">Touch Screen</label>
+                            </div>
+
+                            <!-- Design Information -->
+                            <h3 class="my-3">Design Information</h3>
+                            <div class="form-group">
+                                <label for="dimensions" class="form-label">Dimensions:</label>
+                                <input type="text" name="dimensions" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="weight" class="form-label">Weight:</label>
+                                <input type="text" name="weight" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="colors" class="form-label">Colors:</label>
+                                <input type="text" name="colors" class="form-control" required>
                             </div>
 
                             <!-- Display Information -->
@@ -209,11 +227,6 @@ if (isset($_POST['submit'])) {
                                 <input type="text" name="ssd_storage" class="form-control" required>
                             </div>
 
-                            <div class="form-group">
-                                <label for="hdd_storage" class="form-label">HDD Storage:</label>
-                                <input type="text" name="hdd_storage" class="form-control" required>
-                            </div>
-
                             <!-- Battery Information -->
                             <h3 class="my-3">Battery Information</h3>
                             <div class="form-group">
@@ -254,10 +267,16 @@ if (isset($_POST['submit'])) {
                                 <label for="hdmi_port" class="form-label">HDMI Port:</label>
                                 <input type="text" name="hdmi_port" class="form-control" required>
                             </div>
+                            <!-- multi card slot -->
 
                             <div class="form-group">
-                                <label for="headset_jack" class="form-label">Headset Jack:</label>
-                                <input type="text" name="headset_jack" class="form-control" required>
+                                <label for="multi_card_slot" class="form-label">Multi Card Slot:</label>
+                                <input type="text" name="multi_card_slot" class="form-control" required>
+                            </div>
+
+                            <div class="form-check">
+                                <input type="checkbox" id="headset_jack" class="form-check-input" name="headset_jack">
+                                <label for="headset_jack" class="form-label">Headset Jack</label>
                             </div>
 
                             <div class="form-check">
@@ -268,6 +287,11 @@ if (isset($_POST['submit'])) {
                             <div class="form-check">
                                 <input type="checkbox" id="mic" class="form-check-input" name="mic">
                                 <label for="mic" class="form-check-label">Microphone</label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="speakers" class="form-label">Speakers:</label>
+                                <input type="text" name="speakers" class="form-control" required>
                             </div>
 
                             <!-- Keyboard Information -->

@@ -39,7 +39,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <nav class="navbar navbar-expand-md bg-secondary">
             <div class="container">
                 <!-- Logo and Brand -->
-                <a class="navbar-brand d-flex align-items-center" href="index.php">
+                <a class="navbar-brand d-flex align-items-center" href="<?= $base_url; ?>">
                     <img src="<?php echo $base_url; ?>/img/logo/logo.png" alt="Logo" height="50" class="d-inline-block align-text-top">
                     <span class="fs-2" style="color: #122f42;">Gadgets<span style="color: #44a8eb;">92</span></span>
                 </a>
@@ -103,9 +103,14 @@ if (session_status() === PHP_SESSION_NONE) {
         </nav>
         <!-- Shown on mobile screens -->
         <!-- Offcanvas nav menu -->
-        <div data-bs-theme="dark" class="offcanvas offcanvas-start text-light" data-bs-backdrop="true" data-bs-scroll="true" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+        <div class="offcanvas offcanvas-start bg-secondary" data-bs-backdrop="true" data-bs-scroll="true" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title ms-3" id="navbarOffcanvasLabel">Menu</h5>
+                <h5 class="offcanvas-title ms-3" id="navbarOffcanvasLabel">
+                    <a class="navbar-brand d-flex align-items-center" href="<?= $base_url; ?>">
+                        <img src="<?php echo $base_url; ?>/img/logo/logo.png" alt="Logo" height="50" class="d-inline-block align-text-top">
+                        <span class="fs-2" style="color: #122f42;">Gadgets<span style="color: #44a8eb;">92</span></span>
+                    </a>
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">

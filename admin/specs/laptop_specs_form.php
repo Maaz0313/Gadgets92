@@ -13,6 +13,9 @@ if (isset($_POST['submit'])) {
     $product_id = mysqli_real_escape_string($con, $_POST['product_id']);
     $model = mysqli_real_escape_string($con, $_POST['model']);
     $os = mysqli_real_escape_string($con, $_POST['os']);
+    $dimensions = mysqli_real_escape_string($con, $_POST['dimensions']);
+    $weight = mysqli_real_escape_string($con, $_POST['weight']);
+    $colors = mysqli_real_escape_string($con, $_POST['colors']);
     $touch_screen = isset($_POST['touch_screen']) ? 1 : 0;
 
     // Display Information
@@ -34,7 +37,6 @@ if (isset($_POST['submit'])) {
     $ram = mysqli_real_escape_string($con, $_POST['ram']);
     $ram_frequency = mysqli_real_escape_string($con, $_POST['ram_frequency']);
     $ssd_storage = mysqli_real_escape_string($con, $_POST['ssd_storage']);
-    $hdd_storage = mysqli_real_escape_string($con, $_POST['hdd_storage']);
 
     // Battery Information
     $battery = mysqli_real_escape_string($con, $_POST['battery']);
@@ -48,6 +50,7 @@ if (isset($_POST['submit'])) {
     // Ports and Other Features
     $usb_port = mysqli_real_escape_string($con, $_POST['usb_port']);
     $hdmi_port = mysqli_real_escape_string($con, $_POST['hdmi_port']);
+    $multi_card_slot = mysqli_real_escape_string($con, $_POST['multi_card_slot']);
     $headset_jack = isset($_POST['headset_jack']) ? 1 : 0;
     $webcam = isset($_POST['webcam']) ? 1 : 0;
     $mic = isset($_POST['mic']) ? 1 : 0;
@@ -59,27 +62,31 @@ if (isset($_POST['submit'])) {
     $disk_drive = isset($_POST['disk_drive']) ? 1 : 0;
 
     // Insert data into laptop_specs table
-    $sql = "INSERT INTO laptop_specs (product_id, model, os, touch_screen, screen_size, screen_resolution, display, display_features, 
+    $sql = "INSERT INTO laptop_specs (product_id, model, os, dimensions, `weight`, colors, touch_screen, screen_size, screen_resolution, display, display_features, 
             processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram, ram_frequency, ssd_storage, battery, power_supply, 
-            bluetooth, wifi, ethernet_port, usb_port, hdmi_port, headset_jack, webcam, mic, speakers, disk_drive, keyboard, backlit_keyboard) 
-            VALUES ('$product_id', '$model', '$os', '$touch_screen', '$screen_size', '$screen_resolution', '$display', '$display_features', 
+            bluetooth, wifi, ethernet_port, usb_port, hdmi_port, multi_card_slot, headset_jack, webcam, mic, speakers, disk_drive, keyboard, backlit_keyboard) 
+            VALUES ('$product_id', '$model', '$os', '$dimensions', '$weight', '$colors', '$touch_screen', '$screen_size', '$screen_resolution', '$display', '$display_features', 
             '$processor', '$processor_variant', '$graphics', '$clock_speed', '$cores', '$cache', '$sys_arch', '$ram', '$ram_frequency', '$ssd_storage',
-            '$battery', '$power_supply', '$bluetooth', '$wifi', '$ethernet_port', '$usb_port', '$hdmi_port', '$headset_jack', '$webcam', '$mic', 
+            '$battery', '$power_supply', '$bluetooth', '$wifi', '$ethernet_port', '$usb_port', '$hdmi_port', '$multi_card_slot', '$headset_jack', '$webcam', '$mic', 
             '$speakers', '$disk_drive','$keyboard', '$backlit_keyboard')";
 
     $result = mysqli_query($con, $sql);
 
     if ($result) {
         $_SESSION['success_msg'] = "Record inserted successfully";
-        ?><script>window.location.href = "../products/index.php"</script><?php
-        exit();
-    } else {
-        $_SESSION['fail_msg'] = "Error inserting record: " . mysqli_error($con);
-        ?><script>window.location.href = "../products/index.php"</script><?php
-        exit();
-    }
-}
-?>
+?><script>
+            window.location.href = "../products/index.php"
+        </script><?php
+                    exit();
+                } else {
+                    $_SESSION['fail_msg'] = "Error inserting record: " . mysqli_error($con);
+                    ?><script>
+            window.location.href = "../products/index.php"
+        </script><?php
+                    exit();
+                }
+            }
+                    ?>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
@@ -251,13 +258,13 @@ if (isset($_POST['submit'])) {
                                 <input type="text" name="wifi" class="form-control" required>
                             </div>
 
+                            <!-- Ports and Other Features -->
+                            <h3 class="my-3">Ports and Other Features</h3>
                             <div class="form-group">
                                 <label for="ethernet_port" class="form-label">Ethernet Port:</label>
                                 <input type="text" name="ethernet_port" class="form-control" required>
                             </div>
 
-                            <!-- Ports and Other Features -->
-                            <h3 class="my-3">Ports and Other Features</h3>
                             <div class="form-group">
                                 <label for="usb_port" class="form-label">USB Ports:</label>
                                 <input type="text" name="usb_port" class="form-control" required>
@@ -288,7 +295,7 @@ if (isset($_POST['submit'])) {
                                 <input type="checkbox" id="mic" class="form-check-input" name="mic">
                                 <label for="mic" class="form-check-label">Microphone</label>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="speakers" class="form-label">Speakers:</label>
                                 <input type="text" name="speakers" class="form-control" required>
@@ -320,5 +327,5 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
-    <!-- END MAIN CONTENT-->
-    <?php require '../inc/footer.php'; ?>
+<!-- END MAIN CONTENT-->
+<?php require '../inc/footer.php'; ?>

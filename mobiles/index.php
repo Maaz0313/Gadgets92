@@ -30,9 +30,15 @@ if ($searchTerm) {
 } else {
     $whereClause = '';
 }
+if(isset($_GET['go']) && isset($_GET['min']) && isset($_GET['max']) && !empty($_GET['min']) && !empty($_GET['max'])) {
+    $min = mysqli_real_escape_string($con, $_GET['min']);
+    $max = mysqli_real_escape_string($con, $_GET['max']);
+    $whereClause .= " AND products.price BETWEEN $min AND $max";
+}
 $sql = "SELECT *
     FROM products
-    INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id" . $whereClause . "
+    INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id
+    WHERE products.status = 1 " . $whereClause . "
     LIMIT $offset, $total_records_per_page";
 $result = mysqli_query($con, $sql);
 if (!$result) {
@@ -311,32 +317,32 @@ if (isset($_SESSION['status'])) {
                             <div id="battery" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
-                                        <label class="form-check-label" for="2gb">
+                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="3000">
+                                        <label class="form-check-label" for="3000">
                                             3000 mAh & Above
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
-                                        <label class="form-check-label" for="4gb">
+                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="4000">
+                                        <label class="form-check-label" for="4000">
                                             4000 mAh & Above
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
-                                        <label class="form-check-label" for="6gb">
+                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="5000">
+                                        <label class="form-check-label" for="5000">
                                             5000 mAh & Above
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
-                                        <label class="form-check-label" for="8gb">
+                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="6000">
+                                        <label class="form-check-label" for="6000">
                                             6000 mAh & Above
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
-                                        <label class="form-check-label" for="12gb">
+                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="7000">
+                                        <label class="form-check-label" for="7000">
                                             7000 mAh & Above
                                         </label>
                                     </div>
@@ -392,19 +398,19 @@ if (isset($_SESSION['status'])) {
                             </button>
                         </h2>
                         <div id="price" class="accordion-collapse collapse">
-                            <div class="accordion-body p-0 p-2 d-table w-100">
+                            <form class="accordion-body p-0 p-2 d-table w-100" method="get">
                                 <div class="column">
                                     <div class="mini">Min</div>
-                                    <input type="number" class="inp" value="0">
+                                    <input type="number" class="inp" name="min" value="0">
                                 </div>
                                 <div class="column">
                                     <div class="mini">Max</div>
-                                    <input type="number" class="inp" value="196900">
+                                    <input type="number" class="inp" name="max" value="196900">
                                 </div>
                                 <div class="column">
-                                    <button class="go-btn">Go</button>
+                                    <button type="submit" name="go" class="go-btn">Go</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     <div class="accordion-item">
@@ -440,41 +446,78 @@ if (isset($_SESSION['status'])) {
                                 Brands
                             </button>
                         </h2>
+
                         <div id="brands" class="accordion-collapse collapse">
-                            <div class="accordion-body">
+                            <form class="accordion-body" method="get" id="brand-filter-form">
                                 <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="google">
-                                    <label class="form-check-label" for="google">
-                                        Google
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="xiamo">
-                                    <label class="form-check-label" for="xiamo">
-                                        Xiaomi
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="nothing">
-                                    <label class="form-check-label" for="nothing">
-                                        Nothing
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="samsung">
-                                    <label class="form-check-label" for="samsung">
-                                        Samsung
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="vivo">
-                                    <label class="form-check-label" for="vivo">
-                                        Vivo
-                                    </label>
-                                </div>
-                            </div>
+                                <?php
+                                function getBrands()
+                                {
+                                    global $con;
+                                    $sql = "SELECT * FROM brands WHERE cat_id = 1";
+                                    $result = mysqli_query($con, $sql);
+                                    $brands = [];
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $brands[] = $row;
+                                    }
+                                    return $brands;
+                                }
+                                $brands = getBrands();
+                                foreach ($brands as $brand) {
+                                ?>
+                                    <div class="form-check">
+                                        <input class="form-check-input shadow-none" type="checkbox" name="brands[]" value="<?= $brand['brand_name'] ?>" id="<?= $brand['brand_id'] ?>">
+                                        <label class="form-check-label" for="<?= $brand['brand_id'] ?>">
+                                            <?= $brand['brand_name'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+
+                            </form>
                         </div>
+                        <script>
+                            document.getElementById('brand-filter-form').addEventListener('change', updateUrl);
+
+                            function updateUrl() {
+                                const selectedBrands = document.querySelectorAll('input[name="brands[]"]:checked');
+
+                                let url = new URL(window.location.href);
+                                url.searchParams.delete('brand');
+
+                                if (selectedBrands.length > 0) {
+                                    const brandIds = [];
+                                    for (const checkbox of selectedBrands) {
+                                        brandIds.push(checkbox.value);
+                                    }
+                                    url.searchParams.set('brand', brandIds.join(','));
+                                }
+
+                                // Update browser history for back/forward navigation
+                                window.history.pushState({}, '', url.href);
+
+                                // Update content based on selected brands using Fetch API
+                                fetchContent(url.href);
+                            }
+
+                            async function fetchContent(url) {
+                                try {
+                                    const response = await fetch(url);
+                                    if (!response.ok) {
+                                        throw new Error(`HTTP error! status: ${response.status}`);
+                                    }
+
+                                    const content = await response.text();
+                                    // document.getElementById('brand-content').innerHTML = content;
+                                } catch (error) {
+                                    console.error('Error fetching content:', error);
+                                    // Handle error gracefully (e.g., display an error message to the user)
+                                }
+                            }
+
+                            // Optional: Enhanced visual feedback (reuse code from previous response)
+                        </script>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
@@ -571,34 +614,37 @@ if (isset($_SESSION['status'])) {
                     <div class="card mb-3 p-3">
                         <div class="row g-0">
                             <div class="col-3 text-center">
-                                <img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px">
+                                <a class="text-decoration-none text-black" href="<?= $base_url . '/laptops/product.php?id=' . $row['product_id'] ?>">
+                                    <img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px">
+                                </a>
                                 <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
                             </div>
                             <div class="col-9">
-                                <div class="card-body p-0">
-                                    <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
-                                        <div class="text-start"><?= $row['product_name'] ?></div>
+                                <a class="text-decoration-none text-black" href="<?= $base_url . '/mobiles/product.php?id=' . $row['product_id'] ?>">
+                                    <div class="card-body p-0">
+                                        <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
+                                            <div class="text-start"><?= $row['product_name'] ?></div>
 
-                                        <div class="text-end " style="font-size: 17px;">Rs. <?= formatPrice($row['price']) ?></div>
-                                    </h5>
-                                    <p class="card-text">
-                                        
-                                    <div class="pro-grid-specs pl10 pr10 pb10">
-                                        <div class="lineheight20 specs font90">
-                                            <ul class="key-specs row row-cols-md-2 gx-5">
-                                                <li> <?= $row['ram'] ?> RAM</li>
-                                                <li> <?= $row['internal_storage'] ?> Internal Storage</li>
-                                                <li> <?= $row['screen_size'] . " " . $row['display'] ?> Display</li>
-                                                <li> <?= $row['front_camera'] ?> Front Camera</li>
-                                                <li> <?= $row['rear_camera'] ?> Rear Camera</li>
-                                                <li> <?= $row['chipset'] ?> Processor</li>
-                                                <li> <?= $row['os'] ?> Operating System</li>
-                                            </ul>
+                                            <div class="text-end " style="font-size: 17px;">Rs. <?= formatPrice($row['price']) ?></div>
+                                        </h5>
+                                        <p class="card-text">
+
+                                        <div class="pro-grid-specs pl10 pr10 pb10">
+                                            <div class="lineheight20 specs font90">
+                                                <ul class="key-specs row row-cols-md-2 gx-5">
+                                                    <li> <?= $row['ram'] ?> RAM</li>
+                                                    <li> <?= $row['internal_storage'] ?> Internal Storage</li>
+                                                    <li> <?= $row['screen_size'] . " " . $row['display'] ?> Display</li>
+                                                    <li> <?= $row['front_camera'] ?> Front Camera</li>
+                                                    <li> <?= $row['rear_camera'] ?> Rear Camera</li>
+                                                    <li> <?= $row['chipset'] ?> Processor</li>
+                                                    <li> <?= $row['os'] ?> Operating System</li>
+                                                </ul>
+                                            </div>
                                         </div>
+                                        </p>
                                     </div>
-                                    </p>
-                                    <a href="<?= $base_url . '/mobiles/product.php?id=' . $row['product_id'] ?>" class="stretched-link opacity-0" style="height:0;width:0;">Show</a>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>

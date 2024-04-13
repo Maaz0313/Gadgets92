@@ -26,13 +26,14 @@ $searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
 $whereClause = '';
 
 if ($searchTerm) {
-    $whereClause = " WHERE products.product_name LIKE '%" . mysqli_real_escape_string($con, $searchTerm) . "%'";
+    $whereClause = " AND products.product_name LIKE '%" . mysqli_real_escape_string($con, $searchTerm) . "%'";
 } else {
     $whereClause = '';
 }
 $sql = "SELECT *
     FROM products
-    INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id" . $whereClause . "
+    INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id
+    WHERE products.status = 1 " . $whereClause . "
     LIMIT $offset, $total_records_per_page";
 $result = mysqli_query($con, $sql);
 if (!$result) {
@@ -571,34 +572,34 @@ if (isset($_SESSION['status'])) {
                     <div class="card mb-3 p-3">
                         <div class="row g-0">
                             <div class="col-3 text-center">
-                                <img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px">
+                                <a href="<?= $base_url . '/laptops/product.php?id=' . $row['product_id'] ?>"><img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px"></a>
                                 <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
                             </div>
                             <div class="col-9">
-                                <div class="card-body p-0">
-                                    <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
-                                        <div class="text-start"><?= $row['product_name'] ?></div>
+                                <a class="text-decoration-none text-black" href="<?= $base_url . '/laptops/product.php?id=' . $row['product_id'] ?>">
+                                    <div class="card-body p-0">
+                                        <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
+                                            <div class="text-start"><?= $row['product_name'] ?></div>
 
-                                        <div class="text-end " style="font-size: 17px;">Rs. <?= formatPrice($row['price']) ?></div>
-                                    </h5>
-                                    <p class="card-text">
-                                        
-                                    <div class="pro-grid-specs pl10 pr10 pb10">
-                                        <div class="lineheight20 specs font90">
-                                            <ul class="key-specs row row-cols-md-2 gx-5">
-                                                <li> <?= $row['ram'] ?> RAM</li>
-                                                <li> <?= $row['internal_storage'] ?> Internal Storage</li>
-                                                <li> <?= $row['screen_size'] . " " . $row['display'] ?> Display</li>
-                                                <li> <?= $row['front_camera'] ?> Front Camera</li>
-                                                <li> <?= $row['rear_camera'] ?> Rear Camera</li>
-                                                <li> <?= $row['chipset'] ?> Processor</li>
-                                                <li> <?= $row['os'] ?> Operating System</li>
-                                            </ul>
+                                            <div class="text-end " style="font-size: 17px;">Rs. <?= formatPrice($row['price']) ?></div>
+                                        </h5>
+                                        <p class="card-text">
+
+                                        <div class="pro-grid-specs pl10 pr10 pb10">
+                                            <div class="lineheight20 specs font90">
+                                                <ul class="key-specs row row-cols-md-2 gx-5">
+                                                    <li> <?= $row['processor'] ?> Processor</li>
+                                                    <li> <?= $row['ram'] ?> RAM</li>
+                                                    <li> <?= $row['screen_size'] ?> HD Display</li>
+                                                    <li> <?= $row['ssd_storage'] ?> SSD Storage</li>
+                                                    <li> <?= $row['graphics'] ?> Graphics</li>
+                                                    <li> <?= $row['os'] ?></li>
+                                                </ul>
+                                            </div>
                                         </div>
+                                        </p>
                                     </div>
-                                    </p>
-                                    <a href="<?= $base_url . '/laptops/product.php?id=' . $row['product_id'] ?>" class="stretched-link opacity-0" style="height:0;width:0;">Show</a>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>

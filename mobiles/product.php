@@ -6,7 +6,11 @@ require('../inc/functions.inc.php');
 
 $id = isset($_GET['id']) ? mysqli_real_escape_string($con, $_GET['id']) : '';
 if (empty($id)) {
-    header('Location: /');
+    ?>
+    <script>
+        window.location.href = $base_url;
+    </script>
+<?php
     exit;
 }
 

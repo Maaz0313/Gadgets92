@@ -165,7 +165,7 @@ if (isset($_SESSION['status'])) {
                             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                                 <div class="accordion-body">
                                     <form role="search" action="" method="post">
-                                        <input type="search" name="s" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
+                                        <input type="search" name="search" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
                                     </form>
                                 </div>
                             </div>
@@ -188,33 +188,6 @@ if (isset($_SESSION['status'])) {
                                     </div>
                                     <div class="column">
                                         <button class="go-btn">Go</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Availability" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                    Availability
-                                </button>
-                            </h2>
-                            <div id="Availability" class="accordion-collapse collapse">
-                                <div class="accordion-body">
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="Instock">
-                                        <label class="form-check-label" for="Instock">
-                                            Instock
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="OutofStock">
-                                        <label class="form-check-label" for="OutofStock">
-                                            Out of Stock
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="Upcoming">
-                                        <label class="form-check-label" for="Upcoming">Upcoming</label>
                                     </div>
                                 </div>
                             </div>

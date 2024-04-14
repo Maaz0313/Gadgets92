@@ -30,7 +30,7 @@ if ($searchTerm) {
 } else {
     $whereClause = '';
 }
-if(isset($_GET['go']) && isset($_GET['min']) && isset($_GET['max']) && !empty($_GET['min']) && !empty($_GET['max'])) {
+if(isset($_GET['min']) && isset($_GET['max']) && !empty($_GET['min']) && !empty($_GET['max'])) {
     $min = mysqli_real_escape_string($con, $_GET['min']);
     $max = mysqli_real_escape_string($con, $_GET['max']);
     $whereClause .= " AND products.price BETWEEN $min AND $max";
@@ -408,7 +408,7 @@ if (isset($_SESSION['status'])) {
                                     <input type="number" class="inp" name="max" value="196900">
                                 </div>
                                 <div class="column">
-                                    <button type="submit" name="go" class="go-btn">Go</button>
+                                    <button type="submit" class="go-btn">Go</button>
                                 </div>
                             </form>
                         </div>

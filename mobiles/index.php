@@ -30,7 +30,7 @@ if ($searchTerm) {
 } else {
     $whereClause = '';
 }
-if(isset($_GET['min']) && isset($_GET['max']) && !empty($_GET['min']) && !empty($_GET['max'])) {
+if (isset($_GET['min']) && isset($_GET['max']) && !empty($_GET['min']) && !empty($_GET['max'])) {
     $min = mysqli_real_escape_string($con, $_GET['min']);
     $max = mysqli_real_escape_string($con, $_GET['max']);
     $whereClause .= " AND products.price BETWEEN $min AND $max";
@@ -290,8 +290,8 @@ if (isset($_SESSION['status'])) {
                             <div id="battery" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="3000">
-                                        <label class="form-check-label" for="3000">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none" type="checkbox" value="3000" id="3000">
                                             3000 mAh & Above
                                         </label>
                                     </div>

@@ -26,7 +26,7 @@ $searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
 $whereClause = '';
 
 if ($searchTerm) {
-    $whereClause = " WHERE products.product_name LIKE '%" . mysqli_real_escape_string($con, $searchTerm) . "%'";
+    $whereClause = " AND products.product_name LIKE '%" . mysqli_real_escape_string($con, $searchTerm) . "%'";
 } else {
     $whereClause = '';
 }

@@ -13,7 +13,7 @@ if (!isset($_SESSION['ADMIN_LOGIN'])) {
     exit(0);
 }
 
-$query = "SELECT * FROM brands";
+$query = "SELECT * FROM brands INNER JOIN categories ON brands.cat_id = categories.cat_id ORDER BY brand_id DESC";
 $result = mysqli_query($con, $query);
 ?>
 <?php
@@ -65,6 +65,7 @@ if (isset($_SESSION['status'])) {
                             <thead>
                                 <tr>
                                     <th>Brand</th>
+                                    <th>Category</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -72,6 +73,7 @@ if (isset($_SESSION['status'])) {
                                 <?php while ($row = mysqli_fetch_assoc($result)) { ?>
                                     <tr role="row" class="even">
                                         <td class="sorting_1"><?= $row['brand_name'] ?></td>
+                                        <td><?= $row['cat_name'] ?></td>
                                         <td>
                                             <a href="edit.php?id=<?= $row['brand_id'] ?>" class="btn btn-success">Edit</a>
                                             <a href="delete.php?id=<?= $row['brand_id'] ?>" class="btn btn-danger">Delete</a>

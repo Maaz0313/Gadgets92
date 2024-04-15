@@ -10,7 +10,8 @@ if (!isset($_SESSION['ADMIN_LOGIN'])) {
 }
 if (isset($_POST['submit'])) {
     $brand_name = mysqli_real_escape_string($con, $_POST['brand_name']);
-    $sql = "INSERT INTO brands(brand_name) VALUES('$brand_name')";
+    $cat_id = mysqli_real_escape_string($con, $_POST['cat_id']);
+    $sql = "INSERT INTO brands(brand_name, cat_id) VALUES('$brand_name', '$cat_id')";
     $insert_brand = mysqli_query($con, $sql);
     if ($insert_brand) {
         $_SESSION['status'] = "Brand added successfully";
@@ -62,6 +63,21 @@ if (isset($_POST['submit'])) {
                     <div class="form-group">
                         <label for="brand_name">Brand Name</label>
                         <input type="text" name="brand_name" id="brand_name" class="form-control w-50">
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_id">Category</label>
+                        <select name="cat_id" id="cat_id" class="form-control w-50">
+                            <option value="" disabled selected>Select Category</option>
+                            <?php
+                            $sql = "SELECT * FROM categories";
+                            $result = mysqli_query($con, $sql);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                                <option value="<?= $row['cat_id'] ?>"><?= $row['cat_name'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
                     </div>
                     <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                     <a href="index.php" class="btn btn-secondary">Cancel</a>

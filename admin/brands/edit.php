@@ -99,6 +99,21 @@ if (isset($_SESSION['status'])) {
                                 <label for="brand_name">Brand Name</label>
                                 <input type="text" class="form-control" id="brand_name" name="brand_name" value="<?= $row['brand_name'] ?>" required>
                             </div>
+                            <div class="form-group">
+                        <label for="cat_id">Category</label>
+                        <select name="cat_id" id="cat_id" class="form-control w-50">
+                            <option value="" disabled selected>Select Category</option>
+                            <?php
+                            $sql = "SELECT * FROM categories";
+                            $result = mysqli_query($con, $sql);
+                            while ($row2 = mysqli_fetch_assoc($result)) {
+                            ?>
+                                <option value="<?= $row2['cat_id'] ?>" <?= ($row2['cat_id'] == $row['cat_id']) ? 'selected' : '' ?>><?= $row2['cat_name'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
                             <button type="submit" class="btn btn-primary" name="submit">Submit</button>
                         </form>
                     </div>

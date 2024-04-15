@@ -442,39 +442,34 @@ if (isset($_SESSION['status'])) {
                             </button>
                         </h2>
                         <div id="brands" class="accordion-collapse collapse">
-                            <div class="accordion-body">
+                            <form class="accordion-body" method="get" id="brand-filter-form">
                                 <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="google">
-                                    <label class="form-check-label" for="google">
-                                        Google
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="xiamo">
-                                    <label class="form-check-label" for="xiamo">
-                                        Xiaomi
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="nothing">
-                                    <label class="form-check-label" for="nothing">
-                                        Nothing
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="samsung">
-                                    <label class="form-check-label" for="samsung">
-                                        Samsung
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="vivo">
-                                    <label class="form-check-label" for="vivo">
-                                        Vivo
-                                    </label>
-                                </div>
-                            </div>
+                                <?php
+                                function getBrands()
+                                {
+                                    global $con;
+                                    $sql = "SELECT * FROM brands WHERE cat_id = 2";
+                                    $result = mysqli_query($con, $sql);
+                                    $brands = [];
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $brands[] = $row;
+                                    }
+                                    return $brands;
+                                }
+                                $brands = getBrands();
+                                foreach ($brands as $brand) {
+                                ?>
+                                    <div class="form-check">
+                                        <input class="form-check-input shadow-none" type="checkbox" name="brands[]" value="<?= $brand['brand_name'] ?>" id="<?= $brand['brand_id'] ?>">
+                                        <label class="form-check-label" for="<?= $brand['brand_id'] ?>">
+                                            <?= $brand['brand_name'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+
+                            </form>
                         </div>
                     </div>
                     <div class="accordion-item">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 14, 2024 at 07:39 PM
+-- Generation Time: Apr 15, 2024 at 09:03 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -182,6 +182,13 @@ CREATE TABLE `laptop_specs` (
   `backlit_keyboard` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `laptop_specs`
+--
+
+INSERT INTO `laptop_specs` (`spec_id`, `product_id`, `model`, `os`, `touch_screen`, `screen_size`, `screen_resolution`, `display`, `display_features`, `processor`, `processor_variant`, `graphics`, `clock_speed`, `cores`, `cache`, `sys_arch`, `ram`, `ram_frequency`, `ssd_storage`, `hdd_storage`, `battery`, `power_supply`, `bluetooth`, `wifi`, `ethernet_port`, `usb_port`, `hdmi_port`, `headset_jack`, `webcam`, `mic`, `disk_drive`, `keyboard`, `backlit_keyboard`) VALUES
+(1, 3, '15s-FR5012TU', 'Windows 11 Home', 0, '15.6 inches', '1920 x 1080 pixels', 'IPS Screen, 250 nits, 60 Hz', 'Anti-Glare, Micro-edge, 45 Percent NTSC, FHD, BrightView', 'Intel Core i3 12th Gen', '1215U', 'Intel HD Graphics', '2 x 1.2 GHz (Turbo Speed upto 4.4 GHz) Performance Cores, 4 x 900 MHz (Turbo Speed upto 3.3 GHz) Efficient Cores', 'Hexa Core (2P + 4E), 8 Threads', '10 MB', '64 Bit', '8 GB, DDR4', '2400 MHz', '512 GB', 'Not Present', '3 Cell Battery', '65 W Smart AC Power Adapter', 'Yes, v5.2', 'Yes, IEEE 802.11a/b/g/n/ac/ax', 'No', '1 x USB Type-C, 2 x USB 3.0', '1 x HDMI 2.1', 'Yes', 1, 1, 1, 'Yes', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -233,6 +240,16 @@ CREATE TABLE `mobile_specs` (
   `other_sensors` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `mobile_specs`
+--
+
+INSERT INTO `mobile_specs` (`spec_id`, `product_id`, `release_date`, `device_type`, `sim`, `os`, `dimensions`, `weight`, `waterproof`, `build_material`, `colors`, `touch_screen`, `display`, `screen_size`, `screen_resolution`, `bezel_less_display`, `screen_protection`, `rear_camera`, `sensor`, `flash`, `rear_video_recording`, `rear_features`, `front_camera`, `ram`, `chipset`, `gpu`, `cpu_cores`, `internal_storage`, `sd_card_slot`, `battery`, `fast_charging`, `network_support`, `bluetooth`, `wifi`, `usb`, `gps`, `nfc`, `audio_jack`, `fm_radio`, `loud_speaker`, `fingerprint_sensor`, `other_sensors`) VALUES
+(1, 2, '2023-08-09', 'Smartphone', 'Dual SIM (Nano)', 'Android v13, HiOS', '162.7 x 75.9 x 7.8 mm', 'N/A', 'No', 'Glass Front, Lychee pattern leather back', 'Dark Welkin, Serenity Blue', 'Yes, Capacitive Touchscreen, Multi-touch', 'AMOLED, 120 Hz', '6.67 inches', '1080 x 2400 pixels', 'Yes, Punch hole', 'No', '64 MP + 2 MP + 2 MP', '64MP main sensor with an RGBW color filter, 2MP depth sensor, AI Shining Selfie sensor', 'Yes, Dual LED', '1080P @ 30 fps, 2160P @ 30 fps', 'Digital Zoom, Auto Flash, Face detection, Touch to focus, Autofocus, OIS', '32 MP', '8 GB', 'MediaTek Dimensity 8050', 'Mali-G77 MC9', 'Octa core (1 x 3 GHz Cortex A78 + 3 x 2.6 GHz Cortex A78 + 4 x 2 GHz Cortex A55)', '128 GB', 'Unspecified', '5000 mAh, Li-Polymer', 'Yes, Super, 33W', '4G, 3G, 2G', 'Yes, v5.2', 'Yes, Wi-Fi 5 (802.11 a/b/g/n/ac)', 'USB Type-C, USB On-The-Go', 'Yes with A-GPS', 'Yes', 'Yes, 3.5 mm', 'Yes', 1, 'Yes, In-display', 'Light sensor, Proximity sensor, Accelerometer, Compass'),
+(2, 1, '2016-03-11', 'Smartphone', 'Dual SIM (Nano-SIM, dual stand-by)', 'Android 6.0 (Marshmallow), TouchWiz UI', '150.9 x 72.6 x 7.7 mm', '157 g', 'No', 'Glass front (Gorilla Glass 4), glass back (Gorilla Glass 4), aluminum frame', 'Black, White, Gold, Silver, Pink Gold, Black Pearl, Coral Blue', 'Yes, Capacitive Touchscreen, Multi-touch', 'Super AMOLED', '5.5 inches', '1440 x 2560 pixels', 'Yes', 'Corning Gorilla Glass 4', '12 MP rear camera with dual pixel', 'Fingerprint (front-mounted), accelerometer, gyro, proximity, compass, barometer, heart rate, SpO2', 'Yes, Multi-color LED', '4K@30fps, 1080p@30fps (gyro-EIS), 1080p@60fps, 720p@240fps, HDR, stereo sound rec., OIS', 'LED flash, auto-HDR, panorama', '5 MP', '4 GB', 'Snapdragon 820 or Exynos 8890', 'Qualcomm Adreno 530', 'Quad-core (2x2.15 GHz Kryo &amp; 2x1.6 GHz Kryo) - G9350', '32 GB / 64 GB /128 GB', 'Yes, microSDXC supported, Up to 2 TB', 'Li-Ion 3600 mAh, non-removable', 'Yes, 15W wired (QC2), Wireless (Qi/PMA) (market dependent)', '4G, 3G, 2G', 'Yes, v4.2', 'Yes, Wi-Fi 802.11 a/b/g/n/ac, dual-band, Wi-Fi Direct', 'microUSB 2.0, OTG', 'Yes with A-GPS', 'Yes', 'Yes, 3.5 mm', 'No', 1, 'Yes, Fingerprint (front-mounted)', 'Accelerometer, gyro, proximity, compass, barometer, heart rate, SpO2'),
+(3, 7, '2024-02-22', 'Smartphone', 'Dual SIM (Nano-SIM, dual stand-by)', 'Android v14, Funtouch OS', '163.17 x 75.81 x 7.79 mm', '185.5 g', 'Yes, Splash proof, IP54', 'eco-fiber leather finish', 'Saffron Delight, Black Diamond', 'Yes, Capacitive Touchscreen, Multi-touch', 'AMOLED, 120 Hz', '6.67 inches', '1080 x 2400 pixels', 'Yes, Punch hole', 'No', '50MP + 2MP', '50 MP ISOCELL JN1, 2 MP depth sensor', 'Yes, LED Flash', '1080p @ 30 fps', 'Digital Zoom, Auto Flash, Face detection, Touch to focus, Autofocus', '16 MP', '6 GB / 8 GB', 'Qualcomm Snapdragon 4 Gen 2, 4 nm', 'Adreno 613', 'Octa core (2 x 2.2 GHz Cortex A78 + 6 x 1.95 GHz Cortex A55)', '128 GB', 'Yes, Up to 1 TB', '5000 mAh, Li-ion', 'Yes, Flash, 44W', '5G, 4G, 3G, 2G', 'Yes, v5.0', 'Yes, Wi-Fi 4 (802.11 b/g/n) 5GHz', 'USB Type-C, USB On-The-Go (OTG)', 'Yes with A-GPS, Glonass', 'No', 'Yes, USB Type-C', 'No', 1, 'Yes, In-display', 'Light sensor, Proximity sensor, Accelerometer, Compass'),
+(4, 8, '2024-03-07', 'Smartphone', 'Dual SIM (Nano + Nano)', 'Android v14, Funtouch OS', '164.36 x 75.1 x 7.45 mm', '188 g', 'Yes, Splash proof, IP54', 'Back: Mineral Glass', 'Classic Black, Andaman Blue', 'Yes, Capacitive Touchscreen, Multi-touch', 'AMOLED, 120 Hz, HDR 10+', '6.78 inches', '1260 x 2800 pixels', 'Yes, Punch hole', 'Yes', '50MP + 50 MP + 50 MP', 'IMX920, CMOS image sensor, Exmor-RS CMOS Sensor', 'Yes, Smart Aura Light', '1080p @ 30 fps, 2160p @ 30 fps', 'Digital Zoom, Auto Flash, Face detection, Touch to focus, Autofocus, OIS', '', '8 GB / 12 GB', 'MediaTek Dimensity 8200 MT6896Z, 4 nm', 'Mali-G610 MC6', 'Octa core (1 x 3.1 GHz Cortex A78 + 3 x 3 GHz Cortex A78 + 4 x 2 GHz Cortex A55)', '256 GB / 512 GB, UFS 3.1', 'No', '5000 mAh, Li-ion', 'Yes, Flash, 80W', '5G, 4G, 3G, 2G', 'Yes, v5.3', 'Yes, Wi-Fi 5 (802.11 b/g/n/ac) 5GHz', 'USB Type-C, USB On-The-Go (OTG)', 'Yes with A-GPS, Glonass', 'No', 'Yes, USB Type-C', 'No', 1, 'Yes, In-display', 'Light sensor, Proximity sensor, Accelerometer, Compass, Gyroscope');
+
 -- --------------------------------------------------------
 
 --
@@ -246,8 +263,23 @@ CREATE TABLE `products` (
   `product_name` varchar(150) NOT NULL,
   `price` decimal(10,0) NOT NULL,
   `product_image` varchar(150) NOT NULL,
-  `release_date` date NOT NULL
+  `release_date` date NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `category_id`, `brand_id`, `product_name`, `price`, `product_image`, `release_date`, `status`) VALUES
+(1, 1, 2, 'Samsung Galaxy S7 Edge', 50999, 's7 edge.jpeg', '2016-03-11', 1),
+(2, 1, 6, 'Tecno Camon 20', 60999, 'tecno-camon-20-pro-pakistan-priceoye-i672r-500x500.png', '2023-06-15', 1),
+(3, 2, 15, 'HP 15s-FR5012TU Intel Core i3 12th Gen (8GB/512GB SSD/Win 11)', 132900, 'hp-15s-fr5012tu-lapt.png', '2024-02-28', 1),
+(4, 3, 8, 'Sony WH-CH520 Headphone', 14500, 'sony-wh-ch520-headphone.png', '2023-04-11', 1),
+(5, 4, 1, 'Samsung Watch 4 Smartwatch', 35999, 'samsung-watch-4.png', '2021-08-27', 1),
+(6, 5, 16, 'LG B3 77 inch Ultra HD 4K Smart OLED TV (OLED55B3PSA)', 629000, 'OLED77B3PUA_gallery_01_front_3000x3000.png', '2023-04-03', 1),
+(7, 1, 4, 'Vivo Y200e 5G', 69999, 'vivo-y200e-5g.webp', '2024-02-22', 1),
+(8, 1, 4, 'Vivo V30 Pro', 169999, 'vivo-v30-pro.webp', '2024-03-07', 1);
 
 -- --------------------------------------------------------
 
@@ -275,6 +307,13 @@ CREATE TABLE `sm_watch_specs` (
   `features` varchar(200) NOT NULL,
   `extra_features` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `sm_watch_specs`
+--
+
+INSERT INTO `sm_watch_specs` (`spec_id`, `product_id`, `dial_shape`, `bluetooth`, `gps`, `call_function`, `notification`, `wifi`, `sensors`, `battery_type`, `battery_life`, `touchscreen`, `display`, `screen_size`, `os`, `fitness_features`, `features`, `extra_features`) VALUES
+(1, 5, 'Circle', 1, 1, 1, 1, 'Wi-Fi 802.11 a/b/g/n 2.4+5GHz', 'Bioelectrical Impedance Analysis Sensor, Geomagnetic Sensor, Optical Heart Rate Sensor, Electrical Heart Sensor, Accelerometer, Barometer, Gyro Sensor, Light Sensor', 'Li-Ion 361 mAh, non-removable', 'Up to 40 hrs', 1, 'Super AMOLED', '1.4 inches', 'Wear OS', 'Calorie Count, Step Count, Heart Rate Monitor', 'Water Resistant, Up to 50 m depth', 'Alarm Clock, Voice Control, Gesture Control');
 
 -- --------------------------------------------------------
 
@@ -315,6 +354,13 @@ CREATE TABLE `tv_specs` (
   `power_consumption` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `tv_specs`
+--
+
+INSERT INTO `tv_specs` (`spec_id`, `product_id`, `model`, `launch_year`, `in_the_box`, `weight_with_stand`, `weight_without_stand`, `display`, `screen_size`, `screen_resolution`, `display_features`, `video_formats`, `audio_formats`, `no_of_speakers`, `output_per_speaker`, `total_speaker_output`, `sound_tech`, `smart_tv`, `os`, `internet_connectivity`, `bluetooth`, `screen_mirroring`, `preloaded_apps`, `voice_assistant`, `more_features`, `usb`, `hdmi`, `ethernet`, `power_requirement`, `power_consumption`) VALUES
+(1, 6, 'OLED77PSA', 2023, 'Television, Remote Control, Magic Remote, Batteries, Table Stand, Wall Mount, Power Cord, User Manual &amp; Warranty card', '30 kg', '26.7 kg', 'OLED, 120 Hz', '77 inches, 4K', '3840 x 2160 pixels', 'α7 AI Processor 4K Gen6, HDR10, HLG, Dolby Vision, Pixel Dimming, Perfect Black, 100% Color Fidelity &amp; Color Volume', 'MP4', 'AC4, AC3(Dolby Digital), EAC3, HE-AAC, AAC, MP2, MP3, PCM, WMA, apt-X (refer to manual)', 2, '10 W', '20 W', 'AI Sound Pro (Virtual 5.1.2 Up-mix), Clear Voice Pro, Dolby Atmos', 1, 'Web OS', 'Wi-Fi', 1, 1, 'Apple TV, Netflix, Prime Video, Disney+Hotstar, YouTube, etc.', 'Amazon Alexa, Apple Airplay2, Apple Home, Hey Google', 'Nvidia GeForce Now Cloud Gaming, Utomik Cloud Gaming, Game Optimizer, Auto Low Latency Mode', '2 (Side)', '2 (Side), 2 (Rear)', 1, 'AC 100 - 240V 50-60Hz', '0.5 W');
+
 -- --------------------------------------------------------
 
 --
@@ -331,6 +377,14 @@ CREATE TABLE `users` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `verify_token`, `verify_status`, `created_at`) VALUES
+(1, 'Maaz', 'maaztajammul63@gmail.com', 'maaz', '33ba087cbca6cc482e5566e933d2dbdc', 1, '2024-02-10 13:01:16'),
+(2, 'Kami', 'kami.009211@gmail.com', 'kami', 'f900cc923ae127b9162120313eb2b02a', 0, '2024-02-24 13:09:12');
+
 -- --------------------------------------------------------
 
 --
@@ -345,6 +399,14 @@ CREATE TABLE `user_reviews` (
   `review_summary` text NOT NULL,
   `created_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `user_reviews`
+--
+
+INSERT INTO `user_reviews` (`id`, `product_id`, `user_id`, `review_heading`, `review_summary`, `created_at`) VALUES
+(1, 2, 1, 'Amazing Mobile', 'Very nice mobile phone ', '2024-03-25 06:00:32'),
+(2, 2, 1, 'High performance mobile ', 'The mobile\'s performance is very good for gamers.', '2024-03-25 06:14:19');
 
 --
 -- Indexes for dumped tables

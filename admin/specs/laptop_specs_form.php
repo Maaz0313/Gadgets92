@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
             processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram_memory, ram_type, ram_frequency, ssd_storage, hdd_storage, battery, power_supply, 
             bluetooth, wifi, ethernet_port, usb_port, hdmi_port, multi_card_slot, headset_jack, webcam, mic, speakers, disk_drive, keyboard, backlit_keyboard) 
             VALUES ('$product_id', '$model', '$os', '$dimensions', '$weight', '$colors', '$touch_screen', '$screen_size', '$screen_resolution', '$display', '$display_features', 
-            '$processor', '$processor_variant', '$graphics', '$clock_speed', '$cores', '$cache', '$sys_arch', '$ram', '$ram_frequency', '$ssd_storage', '$hdd_storage',
+            '$processor', '$processor_variant', '$graphics', '$clock_speed', '$cores', '$cache', '$sys_arch', '$ram_memory', '$ram_type', '$ram_frequency', '$ssd_storage', '$hdd_storage',
             '$battery', '$power_supply', '$bluetooth', '$wifi', '$ethernet_port', '$usb_port', '$hdmi_port', '$multi_card_slot', '$headset_jack', '$webcam', '$mic', 
             '$speakers', '$disk_drive','$keyboard', '$backlit_keyboard')";
 

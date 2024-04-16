@@ -34,8 +34,7 @@ if ($searchTerm) {
 
 if ($brand) {
     $whereClause .= " AND brands.brand_name = '" . $brand . "'";
-}
-else {
+} else {
     $whereClause .= '';
 }
 $sql = "SELECT *
@@ -159,174 +158,221 @@ if (isset($_SESSION['status'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <div class="accordion" id="accordionPanelsStayOpenExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                    Search
-                                </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-                                <div class="accordion-body">
-                                    <form role="search" action="" method="post">
-                                        <input type="search" name="s" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                    Price
-                                </button>
-                            </h2>
-                            <div id="price" class="accordion-collapse collapse">
-                                <div class="accordion-body p-0 p-2 d-table w-100">
-                                    <div class="column">
-                                        <div class="mini">Min</div>
-                                        <input type="number" class="inp" value="0">
-                                    </div>
-                                    <div class="column">
-                                        <div class="mini">Max</div>
-                                        <input type="number" class="inp" value="196900">
-                                    </div>
-                                    <div class="column">
-                                        <button class="go-btn">Go</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                    Brands
-                                </button>
-                            </h2>
-                            <div id="brands" class="accordion-collapse collapse">
-                                <div class="accordion-body">
-                                    <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="google">
-                                        <label class="form-check-label" for="google">
-                                            Google
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="xiamo">
-                                        <label class="form-check-label" for="xiamo">
-                                            Xiaomi
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="nothing">
-                                        <label class="form-check-label" for="nothing">
-                                            Nothing
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="samsung">
-                                        <label class="form-check-label" for="samsung">
-                                            Samsung
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="vivo">
-                                        <label class="form-check-label" for="vivo">
-                                            Vivo
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ram" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                    RAM
-                                </button>
-                            </h2>
-                            <div id="ram" class="accordion-collapse collapse">
-                                <div class="accordion-body">
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
-                                        <label class="form-check-label" for="2gb">
-                                            2 GB
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
-                                        <label class="form-check-label" for="4gb">
-                                            4 GB
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
-                                        <label class="form-check-label" for="6gb">
-                                            6 GB
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
-                                        <label class="form-check-label" for="8gb">
-                                            8 GB
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
-                                        <label class="form-check-label" for="12gb">
-                                            12 GB
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="18gb">
-                                        <label class="form-check-label" for="18gb">
-                                            16 GB
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#battery" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                    Battery Capacity
-                                </button>
-                            </h2>
-                            <div id="battery" class="accordion-collapse collapse">
-                                <div class="accordion-body">
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
-                                        <label class="form-check-label" for="2gb">
-                                            3000 mAh & Above
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
-                                        <label class="form-check-label" for="4gb">
-                                            4000 mAh & Above
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
-                                        <label class="form-check-label" for="6gb">
-                                            5000 mAh & Above
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
-                                        <label class="form-check-label" for="8gb">
-                                            6000 mAh & Above
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
-                                        <label class="form-check-label" for="12gb">
-                                            7000 mAh & Above
-                                        </label>
-                                    </div>
-                                </div>
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                Search
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                                <form role="search" action="" method="get">
+                                    <input type="search" name="search" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
+                                </form>
                             </div>
                         </div>
                     </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                Price
+                            </button>
+                        </h2>
+                        <div id="price" class="accordion-collapse collapse">
+                            <form class="accordion-body p-0 p-2 d-table w-100" method="get">
+                                <div class="column">
+                                    <div class="mini">Min</div>
+                                    <input type="number" class="inp" name="min" value="0">
+                                </div>
+                                <div class="column">
+                                    <div class="mini">Max</div>
+                                    <input type="number" class="inp" name="max" value="196900">
+                                </div>
+                                <div class="column">
+                                    <button type="submit" class="go-btn">Go</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Brands
+                            </button>
+                        </h2>
+
+                        <div id="brands" class="accordion-collapse collapse">
+                            <form class="accordion-body" method="get" id="brand-filter-form">
+                                <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
+                                <?php
+                                $brand_sql = "SELECT * FROM brands WHERE cat_id = 2 ORDER BY brand_name";
+                                $brand_result = mysqli_query($con, $brand_sql);
+                                while ($brand_row = mysqli_fetch_assoc($brand_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" name="brand" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                            <?= $brand_row['brand_name'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_ram" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                RAM
+                            </button>
+                        </h2>
+                        <div id="m_ram" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $ram_query = "SELECT DISTINCT ram_memory FROM laptop_specs ORDER BY ram_memory DESC";
+                                $ram_res = mysqli_query($con, $ram_query);
+                                while ($ram_row = mysqli_fetch_assoc($ram_res)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $ram_row['ram_memory'] ?>" id="ram">
+                                            <?= $ram_row['ram_memory'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_ssd_storage" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                SSD Storage
+                            </button>
+                        </h2>
+                        <div id="m_ssd_storage" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $ssd_storage_query = "SELECT DISTINCT ssd_storage FROM laptop_specs ORDER BY ssd_storage";
+                                $ssd_storage_result = mysqli_query($con, $ssd_storage_query);
+                                while ($ssd_storage_row = mysqli_fetch_assoc($ssd_storage_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $ssd_storage_row['ssd_storage'] ?>" id="ssd_storage">
+                                            <?= $ssd_storage_row['ssd_storage'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_hdd_storage" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                HDD Storage
+                            </button>
+                        </h2>
+                        <div id="m_hdd_storage" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $hdd_storage_query = "SELECT DISTINCT hdd_storage FROM laptop_specs ORDER BY hdd_storage";
+                                $hdd_storage_result = mysqli_query($con, $hdd_storage_query);
+                                while ($hdd_storage_row = mysqli_fetch_assoc($hdd_storage_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $hdd_storage_row['hdd_storage'] ?>" id="hdd_storage">
+                                            <?= $hdd_storage_row['hdd_storage'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#screen_size_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Screen Size
+                            </button>
+                        </h2>
+                        <div id="screen_size_id" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $screen_size_query = "SELECT DISTINCT screen_size FROM laptop_specs ORDER BY screen_size";
+                                $screen_size_result = mysqli_query($con, $screen_size_query);
+                                while ($screen_size_row = mysqli_fetch_assoc($screen_size_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $screen_size_row['screen_size'] ?>" id="screen_size">
+                                            <?= $screen_size_row['screen_size'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#screen_resolution_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Screen Resolution
+                            </button>
+                        </h2>
+                        <div id="screen_resolution_id" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $screen_resolution_query = "SELECT DISTINCT screen_resolution FROM laptop_specs ORDER BY screen_resolution";
+                                $screen_resolution_result = mysqli_query($con, $screen_resolution_query);
+                                while ($screen_resolution_row = mysqli_fetch_assoc($screen_resolution_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $screen_resolution_row['screen_resolution'] ?>" id="screen_resolution">
+                                            <?= $screen_resolution_row['screen_resolution'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_os" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Operating System
+                            </button>
+                        </h2>
+                        <div id="m_os" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $os_query = "SELECT DISTINCT os FROM laptop_specs ORDER BY os";
+                                $os_result = mysqli_query($con, $os_query);
+                                while ($os_row = mysqli_fetch_assoc($os_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $os_row['os'] ?>" id="os">
+                                            <?= $os_row['os'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
             <!-- offcanvas ends -->
@@ -363,7 +409,7 @@ if (isset($_SESSION['status'])) {
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                             <div class="accordion-body">
                                 <form role="search" action="" method="get">
-                                    <input type="search" name="search" class="form-control shadow-none" placeholder="Search Laptop" aria-label="Search">
+                                    <input type="search" name="search" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
                                 </form>
                             </div>
                         </div>
@@ -375,39 +421,39 @@ if (isset($_SESSION['status'])) {
                             </button>
                         </h2>
                         <div id="price" class="accordion-collapse collapse">
-                            <div class="accordion-body p-0 p-2 d-table w-100">
+                            <form class="accordion-body p-0 p-2 d-table w-100" method="get">
                                 <div class="column">
                                     <div class="mini">Min</div>
-                                    <input type="number" class="inp" value="0">
+                                    <input type="number" class="inp" name="min" value="0">
                                 </div>
                                 <div class="column">
                                     <div class="mini">Max</div>
-                                    <input type="number" class="inp" value="196900">
+                                    <input type="number" class="inp" name="max" value="196900">
                                 </div>
                                 <div class="column">
-                                    <button class="go-btn">Go</button>
+                                    <button type="submit" class="go-btn">Go</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </div
+                    </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
                                 Brands
                             </button>
                         </h2>
+
                         <div id="brands" class="accordion-collapse collapse">
                             <form class="accordion-body" method="get" id="brand-filter-form">
                                 <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
                                 <?php
                                 $brand_sql = "SELECT * FROM brands WHERE cat_id = 2 ORDER BY brand_name";
                                 $brand_result = mysqli_query($con, $brand_sql);
-                                $brands = [];
                                 while ($brand_row = mysqli_fetch_assoc($brand_result)) {
                                 ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" name="brand" value="<?= $brand_row['brand_name'] ?>" id="brand">
                                             <?= $brand_row['brand_name'] ?>
                                         </label>
                                     </div>
@@ -419,89 +465,151 @@ if (isset($_SESSION['status'])) {
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ram" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_ram" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
                                 RAM
                             </button>
                         </h2>
-                        <div id="ram" class="accordion-collapse collapse">
+                        <div id="m_ram" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
-                                    <label class="form-check-label" for="2gb">
-                                        2 GB
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
-                                    <label class="form-check-label" for="4gb">
-                                        4 GB
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
-                                    <label class="form-check-label" for="6gb">
-                                        6 GB
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
-                                    <label class="form-check-label" for="8gb">
-                                        8 GB
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
-                                    <label class="form-check-label" for="12gb">
-                                        12 GB
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="18gb">
-                                    <label class="form-check-label" for="18gb">
-                                        16 GB
-                                    </label>
-                                </div>
+                                <?php
+                                $ram_query = "SELECT DISTINCT ram_memory FROM laptop_specs ORDER BY ram_memory DESC";
+                                $ram_res = mysqli_query($con, $ram_query);
+                                while ($ram_row = mysqli_fetch_assoc($ram_res)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $ram_row['ram_memory'] ?>" id="ram">
+                                            <?= $ram_row['ram_memory'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#battery" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                Battery Capacity
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_ssd_storage" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                SSD Storage
                             </button>
                         </h2>
-                        <div id="battery" class="accordion-collapse collapse">
+                        <div id="m_ssd_storage" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
-                                    <label class="form-check-label" for="2gb">
-                                        3000 mAh & Above
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
-                                    <label class="form-check-label" for="4gb">
-                                        4000 mAh & Above
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
-                                    <label class="form-check-label" for="6gb">
-                                        5000 mAh & Above
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
-                                    <label class="form-check-label" for="8gb">
-                                        6000 mAh & Above
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
-                                    <label class="form-check-label" for="12gb">
-                                        7000 mAh & Above
-                                    </label>
-                                </div>
+                                <?php
+                                $ssd_storage_query = "SELECT DISTINCT ssd_storage FROM laptop_specs ORDER BY ssd_storage";
+                                $ssd_storage_result = mysqli_query($con, $ssd_storage_query);
+                                while ($ssd_storage_row = mysqli_fetch_assoc($ssd_storage_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $ssd_storage_row['ssd_storage'] ?>" id="ssd_storage">
+                                            <?= $ssd_storage_row['ssd_storage'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_hdd_storage" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                HDD Storage
+                            </button>
+                        </h2>
+                        <div id="m_hdd_storage" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $hdd_storage_query = "SELECT DISTINCT hdd_storage FROM laptop_specs ORDER BY hdd_storage";
+                                $hdd_storage_result = mysqli_query($con, $hdd_storage_query);
+                                while ($hdd_storage_row = mysqli_fetch_assoc($hdd_storage_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $hdd_storage_row['hdd_storage'] ?>" id="hdd_storage">
+                                            <?= $hdd_storage_row['hdd_storage'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#screen_size_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Screen Size
+                            </button>
+                        </h2>
+                        <div id="screen_size_id" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $screen_size_query = "SELECT DISTINCT screen_size FROM laptop_specs ORDER BY screen_size";
+                                $screen_size_result = mysqli_query($con, $screen_size_query);
+                                while ($screen_size_row = mysqli_fetch_assoc($screen_size_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $screen_size_row['screen_size'] ?>" id="screen_size">
+                                            <?= $screen_size_row['screen_size'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#screen_resolution_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Screen Resolution
+                            </button>
+                        </h2>
+                        <div id="screen_resolution_id" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $screen_resolution_query = "SELECT DISTINCT screen_resolution FROM laptop_specs ORDER BY screen_resolution";
+                                $screen_resolution_result = mysqli_query($con, $screen_resolution_query);
+                                while ($screen_resolution_row = mysqli_fetch_assoc($screen_resolution_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $screen_resolution_row['screen_resolution'] ?>" id="screen_resolution">
+                                            <?= $screen_resolution_row['screen_resolution'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_os" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Operating System
+                            </button>
+                        </h2>
+                        <div id="m_os" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $os_query = "SELECT DISTINCT os FROM laptop_specs ORDER BY os";
+                                $os_result = mysqli_query($con, $os_query);
+                                while ($os_row = mysqli_fetch_assoc($os_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $os_row['os'] ?>" id="os">
+                                            <?= $os_row['os'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -536,7 +644,7 @@ if (isset($_SESSION['status'])) {
                                                         <li> <?= $row['ram_memory'] . ' ' . $row['ram_type'] ?> RAM</li>
                                                         <li> <?= $row['screen_size'] ?> HD Display</li>
                                                         <li> <?= $row['ssd_storage'] ?> SSD Storage</li>
-                                                        <li> <?= $row['graphics'] ?> Graphics</li>
+                                                        <li> <?= $row['graphics'] ?></li>
                                                         <li> <?= $row['os'] ?></li>
                                                     </ul>
                                                 </div>
@@ -630,3 +738,44 @@ if (isset($_SESSION['status'])) {
 <?php
 require('../inc/footer.php');
 ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.product_check').click(function() {
+            $('#loader').show();
+            var action = 'data';
+            var brand = get_filter_text('brand');
+            var ram = get_filter_text('ram');
+            var ssd_storage = get_filter_text('ssd_storage');
+            var hdd_storage = get_filter_text('hdd_storage');
+            var screen_size = get_filter_text('screen_size');
+            var screen_resolution = get_filter_text('screen_resolution');
+            var os = get_filter_text('os');
+            $.ajax({
+                url: "action.php",
+                method: "POST",
+                data: {
+                    action: action,
+                    brand: brand,
+                    ram: ram,
+                    ssd_storage: ssd_storage,
+                    hdd_storage: hdd_storage,
+                    screen_size: screen_size,
+                    screen_resolution: screen_resolution,
+                    os: os
+                },
+                success: function(response) {
+                    $('#result').html(response);
+                    $('#loader').hide();
+                }
+            });
+        });
+
+        function get_filter_text(text_id) {
+            var filterData = [];
+            $('#' + text_id + ':checked').each(function() {
+                filterData.push($(this).val());
+            });
+            return filterData;
+        }
+    });
+</script>

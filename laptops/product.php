@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
         </div>
         <div class="row">
             <div class="col-md-4">
-                <div class="modal fade center" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content w300 h-auto h123 px-3">
                             <div class="modal-header p-0 py-2">

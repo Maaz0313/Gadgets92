@@ -72,9 +72,9 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
     <div class="bg-light container mb-3">
         <nav class="p-2 pb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Mobiles</a></li>
-                <li class="breadcrumb-item"><a href="#">Brand Name</a></li>
+                <li class="breadcrumb-item"><a href="../../">Home</a></li>
+                <li class="breadcrumb-item"><a href="../mobiles/">Mobiles</a></li>
+                <li class="breadcrumb-item"><a href="../mobiles/?brand=<?= $row['brand_name'] ?>"><?= $row['brand_name'] ?></a></li>
                 <li class="breadcrumb-item active" aria-current="page"><?= $row['product_name'] ?></li>
             </ol>
         </nav>

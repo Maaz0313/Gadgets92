@@ -22,13 +22,21 @@ $total_records = mysqli_fetch_array($result_count);
 $total_records = $total_records['total_records'];
 $total_no_of_pages = ceil($total_records / $total_records_per_page);
 $second_last = $total_no_of_pages - 1;
-$searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
+$searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
+$brand = isset($_GET['brand']) ? mysqli_real_escape_string($con, $_GET['brand']) : '';
 $whereClause = '';
 
 if ($searchTerm) {
     $whereClause = " AND products.product_name LIKE '%" . mysqli_real_escape_string($con, $searchTerm) . "%'";
 } else {
     $whereClause = '';
+}
+
+if ($brand) {
+    $whereClause .= " AND brands.brand_name = '" . $brand . "'";
+}
+else {
+    $whereClause .= '';
 }
 if (isset($_GET['min']) && isset($_GET['max']) && !empty($_GET['min']) && !empty($_GET['max'])) {
     $min = mysqli_real_escape_string($con, $_GET['min']);
@@ -38,6 +46,7 @@ if (isset($_GET['min']) && isset($_GET['max']) && !empty($_GET['min']) && !empty
 $sql = "SELECT *
     FROM products
     INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id
+    INNER JOIN brands ON products.brand_id = brands.brand_id
     WHERE products.status = 1 " . $whereClause . "
     LIMIT $offset, $total_records_per_page";
 $result = mysqli_query($con, $sql);
@@ -124,8 +133,8 @@ if (isset($_SESSION['status'])) {
     <div class="bg-white container-lg mb-1">
         <nav class="p-1 pb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Mobiles</a></li>
+                <li class="breadcrumb-item"><a href="../">Home</a></li>
+                <li class="breadcrumb-item"><a href="../mobiles/">Mobiles</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Mobile Finder</li>
             </ol>
         </nav>

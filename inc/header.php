@@ -83,19 +83,19 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="<?= $base_url; ?>/mobiles/">Mobiles</a>
+                            <a class="nav-link <?= $_SERVER['REQUEST_URI'] == "/mobiles/" || $_SERVER['REQUEST_URI'] == "/mobiles/index.php" ? "active" : "text-white"; ?>" aria-current="page" href="<?= $base_url; ?>/mobiles/">Mobiles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="<?= $base_url; ?>/laptops/">Laptops</a>
+                            <a class="nav-link <?= $_SERVER['REQUEST_URI'] == "/laptops/" || $_SERVER['REQUEST_URI'] == "/laptops/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/laptops/">Laptops</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="<?= $base_url; ?>/televisions/">Televisions</a>
+                            <a class="nav-link <?= $_SERVER['REQUEST_URI'] == "/televisions/" || $_SERVER['REQUEST_URI'] == "/televisions/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/televisions/">Televisions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="<?= $base_url; ?>/watches/">Smart Watches</a>
+                            <a class="nav-link <?= $_SERVER['REQUEST_URI'] == "/watches/" || $_SERVER['REQUEST_URI'] == "/watches/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/watches/">Smart Watches</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="<?= $base_url; ?>/headsets/">Headsets</a>
+                            <a class="nav-link <?= $_SERVER['REQUEST_URI'] == "/headsets/" || $_SERVER['REQUEST_URI'] == "/headsets/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/headsets/">Headsets</a>
                         </li>
                     </ul>
                 </div>
@@ -117,19 +117,19 @@ if (session_status() === PHP_SESSION_NONE) {
                 <!-- Offcanvas menu items -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link ms-3" href="<?= $base_url; ?>/mobiles/">Mobiles</a>
+                        <a class="nav-link ms-3 <?= $_SERVER['REQUEST_URI'] == "/mobiles/" || $_SERVER['REQUEST_URI'] == "/mobiles/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/mobiles/">Mobiles</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3" href="<?= $base_url; ?>/laptops/">Laptops</a>
+                        <a class="nav-link ms-3 <?= $_SERVER['REQUEST_URI'] == "/laptops/" || $_SERVER['REQUEST_URI'] == "/laptops/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/laptops/">Laptops</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3" href="<?= $base_url; ?>/televisions/">Televisions</a>
+                        <a class="nav-link ms-3 <?= $_SERVER['REQUEST_URI'] == "/televisions/" || $_SERVER['REQUEST_URI'] == "/televisions/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/televisions/">Televisions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3" href="<?= $base_url; ?>/watches/">Smart Watches</a>
+                        <a class="nav-link ms-3 <?= $_SERVER['REQUEST_URI'] == "/watches/" || $_SERVER['REQUEST_URI'] == "/watches/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/watches/">Smart Watches</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3" href="<?= $base_url; ?>/headsets/">Headsets</a>
+                        <a class="nav-link ms-3 <?= $_SERVER['REQUEST_URI'] == "/headsets/" || $_SERVER['REQUEST_URI'] == "/headsets/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/headsets/">Headsets</a>
                     </li>
                     <li class="nav-item mt-3 ms-3">
                         <?php

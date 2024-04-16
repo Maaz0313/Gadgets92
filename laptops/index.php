@@ -22,7 +22,8 @@ $total_records = mysqli_fetch_array($result_count);
 $total_records = $total_records['total_records'];
 $total_no_of_pages = ceil($total_records / $total_records_per_page);
 $second_last = $total_no_of_pages - 1;
-$searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
+$searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
+$brand = isset($_GET['brand']) ? mysqli_real_escape_string($con, $_GET['brand']) : '';
 $whereClause = '';
 
 if ($searchTerm) {
@@ -30,9 +31,17 @@ if ($searchTerm) {
 } else {
     $whereClause = '';
 }
+
+if ($brand) {
+    $whereClause .= " AND brands.brand_name = '" . $brand . "'";
+}
+else {
+    $whereClause .= '';
+}
 $sql = "SELECT *
     FROM products
     INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id
+    INNER JOIN brands ON products.brand_id = brands.brand_id
     WHERE products.status = 1 " . $whereClause . "
     LIMIT $offset, $total_records_per_page";
 $result = mysqli_query($con, $sql);
@@ -119,8 +128,8 @@ if (isset($_SESSION['status'])) {
     <div class="bg-white container-lg mb-1">
         <nav class="p-1 pb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Laptops</a></li>
+                <li class="breadcrumb-item"><a href="../">Home</a></li>
+                <li class="breadcrumb-item"><a href="/laptops/">Laptops</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Laptop Finder</li>
             </ol>
         </nav>
@@ -445,20 +454,20 @@ if (isset($_SESSION['status'])) {
                             <form class="accordion-body" method="get" id="brand-filter-form">
                                 <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
                                 <?php
-                                    $brand_sql = "SELECT * FROM brands WHERE cat_id = 2 ORDER BY brand_name";
-                                    $brand_result = mysqli_query($con, $brand_sql);
-                                    $brands = [];
-                                    while ($brand_row = mysqli_fetch_assoc($brand_result)) {
-                                    ?>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
-                                                <?= $brand_row['brand_name'] ?>
-                                            </label>
-                                        </div>
-                                    <?php
-                                    }
-                                    ?>
+                                $brand_sql = "SELECT * FROM brands WHERE cat_id = 2 ORDER BY brand_name";
+                                $brand_result = mysqli_query($con, $brand_sql);
+                                $brands = [];
+                                while ($brand_row = mysqli_fetch_assoc($brand_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                            <?= $brand_row['brand_name'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                             </form>
                         </div>
                     </div>
@@ -553,42 +562,47 @@ if (isset($_SESSION['status'])) {
                 </div>
             </aside>
             <div class="col-md-9 bg-white py-2">
-                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-                    <div class="card mb-3 p-3">
-                        <div class="row g-0">
-                            <div class="col-3 text-center">
-                                <a href="<?= $base_url . '/laptops/product.php?id=' . $row['product_id'] ?>"><img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px"></a>
-                                <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
-                            </div>
-                            <div class="col-9">
-                                <a class="text-decoration-none text-black" href="<?= $base_url . '/laptops/product.php?id=' . $row['product_id'] ?>">
-                                    <div class="card-body p-0">
-                                        <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
-                                            <div class="text-start"><?= $row['product_name'] ?></div>
+                <div class="text-center">
+                    <img src="../img/loader.gif" alt="Loading..." width="200" id="loader" style="display:none;">
+                </div>
+                <div id="result">
+                    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <div class="card mb-3 p-3">
+                            <div class="row g-0">
+                                <div class="col-3 text-center">
+                                    <a href="<?= $base_url . '/laptops/product.php?id=' . $row['product_id'] ?>"><img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px"></a>
+                                    <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
+                                </div>
+                                <div class="col-9">
+                                    <a class="text-decoration-none text-black" href="<?= $base_url . '/laptops/product.php?id=' . $row['product_id'] ?>">
+                                        <div class="card-body p-0">
+                                            <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
+                                                <div class="text-start"><?= $row['product_name'] ?></div>
 
-                                            <div class="text-end " style="font-size: 17px;">Rs. <?= formatPrice($row['price']) ?></div>
-                                        </h5>
-                                        <p class="card-text">
+                                                <div class="text-end " style="font-size: 17px;">Rs. <?= formatPrice($row['price']) ?></div>
+                                            </h5>
+                                            <p class="card-text">
 
-                                        <div class="pro-grid-specs pl10 pr10 pb10">
-                                            <div class="lineheight20 specs font90">
-                                                <ul class="key-specs row row-cols-md-2 gx-5">
-                                                    <li> <?= $row['processor'] ?> Processor</li>
-                                                    <li> <?= $row['ram_memory'].' '.$row['ram_type'] ?> RAM</li>
-                                                    <li> <?= $row['screen_size'] ?> HD Display</li>
-                                                    <li> <?= $row['ssd_storage'] ?> SSD Storage</li>
-                                                    <li> <?= $row['graphics'] ?> Graphics</li>
-                                                    <li> <?= $row['os'] ?></li>
-                                                </ul>
+                                            <div class="pro-grid-specs pl10 pr10 pb10">
+                                                <div class="lineheight20 specs font90">
+                                                    <ul class="key-specs row row-cols-md-2 gx-5">
+                                                        <li> <?= $row['processor'] ?> Processor</li>
+                                                        <li> <?= $row['ram_memory'] . ' ' . $row['ram_type'] ?> RAM</li>
+                                                        <li> <?= $row['screen_size'] ?> HD Display</li>
+                                                        <li> <?= $row['ssd_storage'] ?> SSD Storage</li>
+                                                        <li> <?= $row['graphics'] ?> Graphics</li>
+                                                        <li> <?= $row['os'] ?></li>
+                                                    </ul>
+                                                </div>
                                             </div>
+                                            </p>
                                         </div>
-                                        </p>
-                                    </div>
-                                </a>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <?php } ?>
+                    <?php } ?>
+                </div>
                 <!-- Pagination -->
                 <nav aria-label="...">
                     <ul class="pagination justify-content-center">

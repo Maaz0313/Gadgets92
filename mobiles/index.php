@@ -247,6 +247,81 @@ if (isset($_SESSION['status'])) {
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_internal_storage" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    Internal Storage
+                                </button>
+                            </h2>
+                            <div id="m_internal_storage" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <?php
+                                    $internal_storage_query = "SELECT DISTINCT internal_storage FROM mobile_specs ORDER BY internal_storage";
+                                    $internal_storage_result = mysqli_query($con, $internal_storage_query);
+                                    while ($internal_storage_row = mysqli_fetch_assoc($internal_storage_result)) {
+                                    ?>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $internal_storage_row['internal_storage'] ?>" id="internal_storage">
+                                                <?= $internal_storage_row['internal_storage'] ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#screen_size_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    Screen Size
+                                </button>
+                            </h2>
+                            <div id="screen_size_id" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <?php
+                                    $screen_size_query = "SELECT DISTINCT screen_size FROM mobile_specs ORDER BY screen_size";
+                                    $screen_size_result = mysqli_query($con, $screen_size_query);
+                                    while ($screen_size_row = mysqli_fetch_assoc($screen_size_result)) {
+                                    ?>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $screen_size_row['screen_size'] ?>" id="screen_size">
+                                                <?= $screen_size_row['screen_size'] ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#screen_resolution_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    Screen Resolution
+                                </button>
+                            </h2>
+                            <div id="screen_resolution_id" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <?php
+                                    $screen_resolution_query = "SELECT DISTINCT screen_resolution FROM mobile_specs ORDER BY screen_resolution";
+                                    $screen_resolution_result = mysqli_query($con, $screen_resolution_query);
+                                    while ($screen_resolution_row = mysqli_fetch_assoc($screen_resolution_result)) {
+                                    ?>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $screen_resolution_row['screen_resolution'] ?>" id="screen_resolution">
+                                                <?= $screen_resolution_row['screen_resolution'] ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
                                 <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_battery" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
                                     Battery Capacity
                                 </button>
@@ -312,31 +387,6 @@ if (isset($_SESSION['status'])) {
                                             <label class="form-check-label">
                                                 <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $rear_camera_row['rear_camera'] ?>" id="rear_camera">
                                                 <?= $rear_camera_row['rear_camera'] ?>
-                                            </label>
-                                        </div>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_internal_storage" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                    Internal Storage
-                                </button>
-                            </h2>
-                            <div id="m_internal_storage" class="accordion-collapse collapse">
-                                <div class="accordion-body">
-                                    <?php
-                                    $internal_storage_query = "SELECT DISTINCT internal_storage FROM mobile_specs ORDER BY internal_storage";
-                                    $internal_storage_result = mysqli_query($con, $internal_storage_query);
-                                    while ($internal_storage_row = mysqli_fetch_assoc($internal_storage_result)) {
-                                    ?>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $internal_storage_row['internal_storage'] ?>" id="internal_storage">
-                                                <?= $internal_storage_row['internal_storage'] ?>
                                             </label>
                                         </div>
                                     <?php
@@ -458,7 +508,6 @@ if (isset($_SESSION['status'])) {
                                 <?php
                                 }
                                 ?>
-
                             </form>
                         </div>
                     </div>
@@ -479,6 +528,81 @@ if (isset($_SESSION['status'])) {
                                         <label class="form-check-label">
                                             <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $ram_row['ram'] ?>" id="ram">
                                             <?= $ram_row['ram'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_internal_storage" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Internal Storage
+                            </button>
+                        </h2>
+                        <div id="m_internal_storage" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $internal_storage_query = "SELECT DISTINCT internal_storage FROM mobile_specs ORDER BY internal_storage";
+                                $internal_storage_result = mysqli_query($con, $internal_storage_query);
+                                while ($internal_storage_row = mysqli_fetch_assoc($internal_storage_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $internal_storage_row['internal_storage'] ?>" id="internal_storage">
+                                            <?= $internal_storage_row['internal_storage'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#screen_size_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Screen Size
+                            </button>
+                        </h2>
+                        <div id="screen_size_id" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $screen_size_query = "SELECT DISTINCT screen_size FROM mobile_specs ORDER BY screen_size";
+                                $screen_size_result = mysqli_query($con, $screen_size_query);
+                                while ($screen_size_row = mysqli_fetch_assoc($screen_size_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $screen_size_row['screen_size'] ?>" id="screen_size">
+                                            <?= $screen_size_row['screen_size'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#screen_resolution_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Screen Resolution
+                            </button>
+                        </h2>
+                        <div id="screen_resolution_id" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $screen_resolution_query = "SELECT DISTINCT screen_resolution FROM mobile_specs ORDER BY screen_resolution";
+                                $screen_resolution_result = mysqli_query($con, $screen_resolution_query);
+                                while ($screen_resolution_row = mysqli_fetch_assoc($screen_resolution_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $screen_resolution_row['screen_resolution'] ?>" id="screen_resolution">
+                                            <?= $screen_resolution_row['screen_resolution'] ?>
                                         </label>
                                     </div>
                                 <?php
@@ -554,31 +678,6 @@ if (isset($_SESSION['status'])) {
                                         <label class="form-check-label">
                                             <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $rear_camera_row['rear_camera'] ?>" id="rear_camera">
                                             <?= $rear_camera_row['rear_camera'] ?>
-                                        </label>
-                                    </div>
-                                <?php
-                                }
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_internal_storage" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                Internal Storage
-                            </button>
-                        </h2>
-                        <div id="m_internal_storage" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <?php
-                                $internal_storage_query = "SELECT DISTINCT internal_storage FROM mobile_specs ORDER BY internal_storage";
-                                $internal_storage_result = mysqli_query($con, $internal_storage_query);
-                                while ($internal_storage_row = mysqli_fetch_assoc($internal_storage_result)) {
-                                ?>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $internal_storage_row['internal_storage'] ?>" id="internal_storage">
-                                            <?= $internal_storage_row['internal_storage'] ?>
                                         </label>
                                     </div>
                                 <?php
@@ -747,9 +846,11 @@ require('../inc/footer.php');
             var action = 'data';
             var brand = get_filter_text('brand');
             var ram = get_filter_text('ram');
+            var internal_storage = get_filter_text('internal_storage');
+            var screen_size = get_filter_text('screen_size');
+            var screen_resolution = get_filter_text('screen_resolution');
             var battery = get_filter_text('battery');
             var os = get_filter_text('os');
-            var internal_storage = get_filter_text('internal_storage');
             var front_camera = get_filter_text('front_camera');
             var rear_camera = get_filter_text('rear_camera');
             $.ajax({
@@ -759,9 +860,11 @@ require('../inc/footer.php');
                     action: action,
                     brand: brand,
                     ram: ram,
+                    internal_storage: internal_storage,
+                    screen_size: screen_size,
+                    screen_resolution: screen_resolution,
                     battery: battery,
                     os: os,
-                    internal_storage: internal_storage,
                     front_camera: front_camera,
                     rear_camera: rear_camera
                 },

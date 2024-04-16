@@ -381,7 +381,7 @@ if (isset($_SESSION['status'])) {
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                             <div class="accordion-body">
                                 <form role="search" action="" method="get">
-                                    <input type="search" name="search" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
+                                    <input type="search" name="search" class="form-control shadow-none" placeholder="Search Laptop" aria-label="Search">
                                 </form>
                             </div>
                         </div>
@@ -574,7 +574,7 @@ if (isset($_SESSION['status'])) {
                                             <div class="lineheight20 specs font90">
                                                 <ul class="key-specs row row-cols-md-2 gx-5">
                                                     <li> <?= $row['processor'] ?> Processor</li>
-                                                    <li> <?= $row['ram'] ?> RAM</li>
+                                                    <li> <?= $row['ram_memory'].' '.$row['ram_type'] ?> RAM</li>
                                                     <li> <?= $row['screen_size'] ?> HD Display</li>
                                                     <li> <?= $row['ssd_storage'] ?> SSD Storage</li>
                                                     <li> <?= $row['graphics'] ?> Graphics</li>

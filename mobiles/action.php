@@ -16,6 +16,18 @@ if (isset($_POST['action'])) {
         $ram = implode("','", $_POST['ram']);
         $sql .= " AND mobile_specs.ram IN ('" . $ram . "')";
     }
+    if (isset($_POST['internal_storage'])) {
+        $internal_storage = implode("','", $_POST['internal_storage']);
+        $sql .= " AND mobile_specs.internal_storage IN ('" . $internal_storage . "')";
+    }
+    if (isset($_POST['screen_size'])) {
+        $screen_size = implode("','", $_POST['screen_size']);
+        $sql .= " AND mobile_specs.screen_size IN ('" . $screen_size . "')";
+    }
+    if (isset($_POST['screen_resolution'])) {
+        $screen_resolution = implode("','", $_POST['screen_resolution']);
+        $sql .= " AND mobile_specs.screen_resolution IN ('" . $screen_resolution . "')";
+    }
     if (isset($_POST['battery'])) {
         $battery = implode("','", $_POST['battery']);
         $sql .= " AND mobile_specs.battery_capacity IN ('" . $battery . "')";
@@ -23,10 +35,6 @@ if (isset($_POST['action'])) {
     if (isset($_POST['os'])) {
         $os = implode("','", $_POST['os']);
         $sql .= " AND mobile_specs.os IN ('" . $os . "')";
-    }
-    if (isset($_POST['internal_storage'])) {
-        $internal_storage = implode("','", $_POST['internal_storage']);
-        $sql .= " AND mobile_specs.internal_storage IN ('" . $internal_storage . "')";
     }
     if (isset($_POST['front_camera'])) {
         $front_camera = implode("','", $_POST['front_camera']);

@@ -34,7 +34,8 @@ if (isset($_POST['submit'])) {
     $sys_arch = mysqli_real_escape_string($con, $_POST['sys_arch']);
 
     // Memory and Storage
-    $ram = mysqli_real_escape_string($con, $_POST['ram']);
+    $ram_memory = mysqli_real_escape_string($con, $_POST['ram_memory']);
+    $ram_type = mysqli_real_escape_string($con, $_POST['ram_type']);
     $ram_frequency = mysqli_real_escape_string($con, $_POST['ram_frequency']);
     $ssd_storage = mysqli_real_escape_string($con, $_POST['ssd_storage']);
     $hdd_storage = mysqli_real_escape_string($con, $_POST['hdd_storage']);
@@ -64,7 +65,7 @@ if (isset($_POST['submit'])) {
 
     // Insert data into laptop_specs table
     $sql = "INSERT INTO laptop_specs (product_id, model, os, dimensions, `weight`, colors, touch_screen, screen_size, screen_resolution, display, display_features, 
-            processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram, ram_frequency, ssd_storage, hdd_storage, battery, power_supply, 
+            processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram_memory, ram_type, ram_frequency, ssd_storage, hdd_storage, battery, power_supply, 
             bluetooth, wifi, ethernet_port, usb_port, hdmi_port, multi_card_slot, headset_jack, webcam, mic, speakers, disk_drive, keyboard, backlit_keyboard) 
             VALUES ('$product_id', '$model', '$os', '$dimensions', '$weight', '$colors', '$touch_screen', '$screen_size', '$screen_resolution', '$display', '$display_features', 
             '$processor', '$processor_variant', '$graphics', '$clock_speed', '$cores', '$cache', '$sys_arch', '$ram', '$ram_frequency', '$ssd_storage', '$hdd_storage',
@@ -221,8 +222,13 @@ if (isset($_POST['submit'])) {
                             <!-- Memory and Storage -->
                             <h3 class="my-3">Memory and Storage</h3>
                             <div class="form-group">
-                                <label for="ram" class="form-label">RAM:</label>
-                                <input type="text" name="ram" class="form-control" required>
+                                <label for="ram_memory" class="form-label">RAM Memory:</label>
+                                <input type="text" name="ram_memory" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ram_type" class="form-label">RAM Type:</label>
+                                <input type="text" name="ram_type" class="form-control" required>
                             </div>
 
                             <div class="form-group">

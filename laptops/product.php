@@ -251,7 +251,7 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['ram']; ?></span>
+                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['ram_memory'].' '.$row['ram_type']; ?></span>
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
@@ -507,7 +507,7 @@ if (isset($_POST['submit'])) {
                             RAM
                         </th>
                         <td>
-                            <?= $row['ram']; ?>
+                            <?= $row['ram_memory'].' '.$row['ram_type']; ?>
                         </td>
                     </tr>
                     <tr>

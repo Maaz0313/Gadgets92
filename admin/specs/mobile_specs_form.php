@@ -39,7 +39,8 @@ $gpu = sanitize_data($_POST['gpu']);
 $cpuCores = sanitize_data($_POST['cpu_cores']);
 $internalStorage = sanitize_data($_POST['internal_storage']);
 $sdCardSlot = sanitize_data($_POST['sd_card_slot']);
-$battery = sanitize_data($_POST['battery']);
+$battery_capacity = sanitize_data($_POST['battery_capacity']);
+$battery_features = sanitize_data($_POST['battery_features']);
 $fastCharging = sanitize_data($_POST['fast_charging']);
 $networkSupport = sanitize_data($_POST['network_support']);
 $bluetooth = sanitize_data($_POST['bluetooth']);
@@ -53,8 +54,8 @@ $loudSpeaker = sanitize_data($_POST['loud_speaker']);
 $fingerprintSensor = sanitize_data($_POST['fingerprint_sensor']);
 $otherSensors = sanitize_data($_POST['other_sensors']);
     // Insert query
-    $insertQuery = "INSERT INTO `mobile_specs` (`product_id`, `release_date`, `device_type`, `sim`, `os`, `dimensions`, `weight`, `waterproof`, `build_material`, `colors`, `touch_screen`, `display`, `screen_size`, `screen_resolution`, `bezel_less_display`, `screen_protection`, `rear_camera`, `sensor`, `flash`, `rear_video_recording`, `rear_features`, `front_camera`, `ram`, `chipset`, `gpu`, `cpu_cores`, `internal_storage`, `sd_card_slot`, `battery`, `fast_charging`, `network_support`, `bluetooth`, `wifi`, `usb`, `gps`, `nfc`, `audio_jack`, `fm_radio`, `loud_speaker`, `fingerprint_sensor`, `other_sensors`) 
-    VALUES ('$productId', '$releaseDate', '$deviceType', '$sim', '$os', '$dimensions', '$weight', '$waterproof', '$buildMaterial', '$colors', '$touchScreen', '$display', '$screenSize', '$screenResolution', '$bezelLessDisplay', '$screenProtection', '$rearCamera', '$sensor', '$flash', '$rearVideoRecording', '$rearFeatures', '$frontCamera', '$ram', '$chipset', '$gpu', '$cpuCores', '$internalStorage', '$sdCardSlot', '$battery', '$fastCharging', '$networkSupport', '$bluetooth', '$wifi', '$usb', '$gps', '$nfc', '$audioJack', '$fmRadio', '$loudSpeaker', '$fingerprintSensor', '$otherSensors')";
+    $insertQuery = "INSERT INTO `mobile_specs` (`product_id`, `release_date`, `device_type`, `sim`, `os`, `dimensions`, `weight`, `waterproof`, `build_material`, `colors`, `touch_screen`, `display`, `screen_size`, `screen_resolution`, `bezel_less_display`, `screen_protection`, `rear_camera`, `sensor`, `flash`, `rear_video_recording`, `rear_features`, `front_camera`, `ram`, `chipset`, `gpu`, `cpu_cores`, `internal_storage`, `sd_card_slot`, `battery_capacity`, `battery_features`, `fast_charging`, `network_support`, `bluetooth`, `wifi`, `usb`, `gps`, `nfc`, `audio_jack`, `fm_radio`, `loud_speaker`, `fingerprint_sensor`, `other_sensors`) 
+    VALUES ('$productId', '$releaseDate', '$deviceType', '$sim', '$os', '$dimensions', '$weight', '$waterproof', '$buildMaterial', '$colors', '$touchScreen', '$display', '$screenSize', '$screenResolution', '$bezelLessDisplay', '$screenProtection', '$rearCamera', '$sensor', '$flash', '$rearVideoRecording', '$rearFeatures', '$frontCamera', '$ram', '$chipset', '$gpu', '$cpuCores', '$internalStorage', '$sdCardSlot', '$battery_capacity', '$battery_features', '$fastCharging', '$networkSupport', '$bluetooth', '$wifi', '$usb', '$gps', '$nfc', '$audioJack', '$fmRadio', '$loudSpeaker', '$fingerprintSensor', '$otherSensors')";
     if ($con->query($insertQuery) === TRUE) {
         $_SESSION['success_msg'] = "Mobile specs added successfully.";
         ?><script>window.location.href = "../products/index.php";</script><?php
@@ -209,8 +210,12 @@ $otherSensors = sanitize_data($_POST['other_sensors']);
                                 <input type="text" id="sd_card_slot" name="sd_card_slot" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="battery">Battery</label>
-                                <input type="text" id="battery" name="battery" class="form-control" >
+                                <label for="battery_capacity">Battery Capacity</label>
+                                <input type="text" id="battery_capacity" name="battery_capacity" class="form-control" >
+                            </div>
+                            <div class="form-group">
+                                <label for="battery_features">Battery Features</label>
+                                <input type="text" id="battery_features" name="battery_features" class="form-control" >
                             </div>
                             <div class="form-group">
                                 <label for="fast_charging">Fast Charging</label>

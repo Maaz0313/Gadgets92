@@ -164,7 +164,7 @@ if (isset($_SESSION['status'])) {
                             </h2>
                             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                                 <div class="accordion-body">
-                                    <form role="search" action="" method="post">
+                                    <form role="search" action="" method="get">
                                         <input type="search" name="search" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
                                     </form>
                                 </div>
@@ -177,19 +177,19 @@ if (isset($_SESSION['status'])) {
                                 </button>
                             </h2>
                             <div id="price" class="accordion-collapse collapse">
-                                <div class="accordion-body p-0 p-2 d-table w-100">
+                                <form class="accordion-body p-0 p-2 d-table w-100" method="get">
                                     <div class="column">
                                         <div class="mini">Min</div>
-                                        <input type="number" class="inp" value="0">
+                                        <input type="number" class="inp" name="min" value="0">
                                     </div>
                                     <div class="column">
                                         <div class="mini">Max</div>
-                                        <input type="number" class="inp" value="196900">
+                                        <input type="number" class="inp" name="max" value="196900">
                                     </div>
                                     <div class="column">
-                                        <button class="go-btn">Go</button>
+                                        <button type="submit" class="go-btn">Go</button>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                         <div class="accordion-item">
@@ -198,127 +198,175 @@ if (isset($_SESSION['status'])) {
                                     Brands
                                 </button>
                             </h2>
+
                             <div id="brands" class="accordion-collapse collapse">
-                                <div class="accordion-body">
+                                <form class="accordion-body" method="get" id="brand-filter-form">
                                     <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="google">
-                                        <label class="form-check-label" for="google">
-                                            Google
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="xiamo">
-                                        <label class="form-check-label" for="xiamo">
-                                            Xiaomi
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="nothing">
-                                        <label class="form-check-label" for="nothing">
-                                            Nothing
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="samsung">
-                                        <label class="form-check-label" for="samsung">
-                                            Samsung
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="vivo">
-                                        <label class="form-check-label" for="vivo">
-                                            Vivo
-                                        </label>
-                                    </div>
-                                </div>
+                                    <?php
+                                    $brand_sql = "SELECT * FROM brands WHERE cat_id = 1 ORDER BY brand_name";
+                                    $brand_result = mysqli_query($con, $brand_sql);
+                                    $brands = [];
+                                    while ($brand_row = mysqli_fetch_assoc($brand_result)) {
+                                    ?>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                                <?= $brand_row['brand_name'] ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </form>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ram" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_ram" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
                                     RAM
                                 </button>
                             </h2>
-                            <div id="ram" class="accordion-collapse collapse">
+                            <div id="m_ram" class="accordion-collapse collapse">
                                 <div class="accordion-body">
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
-                                        <label class="form-check-label" for="2gb">
-                                            2 GB
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
-                                        <label class="form-check-label" for="4gb">
-                                            4 GB
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
-                                        <label class="form-check-label" for="6gb">
-                                            6 GB
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
-                                        <label class="form-check-label" for="8gb">
-                                            8 GB
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
-                                        <label class="form-check-label" for="12gb">
-                                            12 GB
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="18gb">
-                                        <label class="form-check-label" for="18gb">
-                                            16 GB
-                                        </label>
-                                    </div>
+                                    <?php
+                                    $ram_query = "SELECT DISTINCT ram FROM mobile_specs ORDER BY ram DESC";
+                                    $ram_res = mysqli_query($con, $ram_query);
+                                    while ($ram_row = mysqli_fetch_assoc($ram_res)) {
+                                    ?>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $ram_row['ram'] ?>" id="ram">
+                                                <?= $ram_row['ram'] ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#battery" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_battery" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
                                     Battery Capacity
                                 </button>
                             </h2>
-                            <div id="battery" class="accordion-collapse collapse">
+                            <div id="m_battery" class="accordion-collapse collapse">
                                 <div class="accordion-body">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input shadow-none" type="checkbox" value="3000" id="3000">
-                                            3000 mAh & Above
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="4000">
-                                        <label class="form-check-label" for="4000">
-                                            4000 mAh & Above
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="5000">
-                                        <label class="form-check-label" for="5000">
-                                            5000 mAh & Above
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="6000">
-                                        <label class="form-check-label" for="6000">
-                                            6000 mAh & Above
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" value="" id="7000">
-                                        <label class="form-check-label" for="7000">
-                                            7000 mAh & Above
-                                        </label>
-                                    </div>
+                                    <?php
+                                    $battery_query = "SELECT DISTINCT battery_capacity FROM mobile_specs ORDER BY battery_capacity";
+                                    $battery_result = mysqli_query($con, $battery_query);
+                                    while ($battery_row = mysqli_fetch_assoc($battery_result)) {
+                                    ?>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $battery_row['battery_capacity'] ?>" id="battery">
+                                                <?= $battery_row['battery_capacity'] ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_front_camera" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    Front Camera
+                                </button>
+                            </h2>
+                            <div id="m_front_camera" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <?php
+                                    $front_camera_query = "SELECT DISTINCT front_camera FROM mobile_specs ORDER BY front_camera";
+                                    $front_camera_result = mysqli_query($con, $front_camera_query);
+                                    while ($front_camera_row = mysqli_fetch_assoc($front_camera_result)) {
+                                    ?>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $front_camera_row['front_camera'] ?>" id="front_camera">
+                                                <?= $front_camera_row['front_camera'] ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_rear_camera" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    Rear Camera
+                                </button>
+                            </h2>
+                            <div id="m_rear_camera" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <?php
+                                    $rear_camera_query = "SELECT DISTINCT rear_camera FROM mobile_specs ORDER BY rear_camera";
+                                    $rear_camera_result = mysqli_query($con, $rear_camera_query);
+                                    while ($rear_camera_row = mysqli_fetch_assoc($rear_camera_result)) {
+                                    ?>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $rear_camera_row['rear_camera'] ?>" id="rear_camera">
+                                                <?= $rear_camera_row['rear_camera'] ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_internal_storage" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    Internal Storage
+                                </button>
+                            </h2>
+                            <div id="m_internal_storage" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <?php
+                                    $internal_storage_query = "SELECT DISTINCT internal_storage FROM mobile_specs ORDER BY internal_storage";
+                                    $internal_storage_result = mysqli_query($con, $internal_storage_query);
+                                    while ($internal_storage_row = mysqli_fetch_assoc($internal_storage_result)) {
+                                    ?>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $internal_storage_row['internal_storage'] ?>" id="internal_storage">
+                                                <?= $internal_storage_row['internal_storage'] ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_os" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    Operating System
+                                </button>
+                            </h2>
+                            <div id="m_os" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <?php
+                                    $os_query = "SELECT DISTINCT os FROM mobile_specs ORDER BY os";
+                                    $os_result = mysqli_query($con, $os_query);
+                                    while ($os_row = mysqli_fetch_assoc($os_result)) {
+                                    ?>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $os_row['os'] ?>" id="os">
+                                                <?= $os_row['os'] ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -341,7 +389,6 @@ if (isset($_SESSION['status'])) {
                         <option value="">Highest Price</option>
                     </select>
                 </span>
-
             </div>
         </div>
     </div>
@@ -397,24 +444,15 @@ if (isset($_SESSION['status'])) {
                             <form class="accordion-body" method="get" id="brand-filter-form">
                                 <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
                                 <?php
-                                function getBrands()
-                                {
-                                    global $con;
-                                    $sql = "SELECT * FROM brands WHERE cat_id = 1";
-                                    $result = mysqli_query($con, $sql);
-                                    $brands = [];
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        $brands[] = $row;
-                                    }
-                                    return $brands;
-                                }
-                                $brands = getBrands();
-                                foreach ($brands as $brand) {
+                                $brand_sql = "SELECT * FROM brands WHERE cat_id = 1 ORDER BY brand_name";
+                                $brand_result = mysqli_query($con, $brand_sql);
+                                $brands = [];
+                                while ($brand_row = mysqli_fetch_assoc($brand_result)) {
                                 ?>
                                     <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" name="brands[]" value="<?= $brand['brand_name'] ?>" id="<?= $brand['brand_id'] ?>">
-                                        <label class="form-check-label" for="<?= $brand['brand_id'] ?>">
-                                            <?= $brand['brand_name'] ?>
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                            <?= $brand_row['brand_name'] ?>
                                         </label>
                                     </div>
                                 <?php
@@ -423,178 +461,204 @@ if (isset($_SESSION['status'])) {
 
                             </form>
                         </div>
-                        <script>
-                            document.getElementById('brand-filter-form').addEventListener('change', updateUrl);
-
-                            function updateUrl() {
-                                const selectedBrands = document.querySelectorAll('input[name="brands[]"]:checked');
-
-                                let url = new URL(window.location.href);
-                                url.searchParams.delete('brand');
-
-                                if (selectedBrands.length > 0) {
-                                    const brandIds = [];
-                                    for (const checkbox of selectedBrands) {
-                                        brandIds.push(checkbox.value);
-                                    }
-                                    url.searchParams.set('brand', brandIds.join(','));
-                                }
-
-                                // Update browser history for back/forward navigation
-                                window.history.pushState({}, '', url.href);
-
-                                // Update content based on selected brands using Fetch API
-                                fetchContent(url.href);
-                            }
-
-                            async function fetchContent(url) {
-                                try {
-                                    const response = await fetch(url);
-                                    if (!response.ok) {
-                                        throw new Error(`HTTP error! status: ${response.status}`);
-                                    }
-
-                                    const content = await response.text();
-                                    // document.getElementById('brand-content').innerHTML = content;
-                                } catch (error) {
-                                    console.error('Error fetching content:', error);
-                                    // Handle error gracefully (e.g., display an error message to the user)
-                                }
-                            }
-
-                            // Optional: Enhanced visual feedback (reuse code from previous response)
-                        </script>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ram" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_ram" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
                                 RAM
                             </button>
                         </h2>
-                        <div id="ram" class="accordion-collapse collapse">
+                        <div id="m_ram" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
-                                    <label class="form-check-label" for="2gb">
-                                        2 GB
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
-                                    <label class="form-check-label" for="4gb">
-                                        4 GB
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
-                                    <label class="form-check-label" for="6gb">
-                                        6 GB
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
-                                    <label class="form-check-label" for="8gb">
-                                        8 GB
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
-                                    <label class="form-check-label" for="12gb">
-                                        12 GB
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="18gb">
-                                    <label class="form-check-label" for="18gb">
-                                        16 GB
-                                    </label>
-                                </div>
+                                <?php
+                                $ram_query = "SELECT DISTINCT ram FROM mobile_specs ORDER BY ram DESC";
+                                $ram_res = mysqli_query($con, $ram_query);
+                                while ($ram_row = mysqli_fetch_assoc($ram_res)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $ram_row['ram'] ?>" id="ram">
+                                            <?= $ram_row['ram'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#battery" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_battery" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
                                 Battery Capacity
                             </button>
                         </h2>
-                        <div id="battery" class="accordion-collapse collapse">
+                        <div id="m_battery" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="2gb">
-                                    <label class="form-check-label" for="2gb">
-                                        3000 mAh & Above
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="4gb">
-                                    <label class="form-check-label" for="4gb">
-                                        4000 mAh & Above
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="6gb">
-                                    <label class="form-check-label" for="6gb">
-                                        5000 mAh & Above
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="8gb">
-                                    <label class="form-check-label" for="8gb">
-                                        6000 mAh & Above
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="" id="12gb">
-                                    <label class="form-check-label" for="12gb">
-                                        7000 mAh & Above
-                                    </label>
-                                </div>
+                                <?php
+                                $battery_query = "SELECT DISTINCT battery_capacity FROM mobile_specs ORDER BY battery_capacity";
+                                $battery_result = mysqli_query($con, $battery_query);
+                                while ($battery_row = mysqli_fetch_assoc($battery_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $battery_row['battery_capacity'] ?>" id="battery">
+                                            <?= $battery_row['battery_capacity'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_front_camera" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Front Camera
+                            </button>
+                        </h2>
+                        <div id="m_front_camera" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $front_camera_query = "SELECT DISTINCT front_camera FROM mobile_specs ORDER BY front_camera";
+                                $front_camera_result = mysqli_query($con, $front_camera_query);
+                                while ($front_camera_row = mysqli_fetch_assoc($front_camera_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $front_camera_row['front_camera'] ?>" id="front_camera">
+                                            <?= $front_camera_row['front_camera'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_rear_camera" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Rear Camera
+                            </button>
+                        </h2>
+                        <div id="m_rear_camera" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $rear_camera_query = "SELECT DISTINCT rear_camera FROM mobile_specs ORDER BY rear_camera";
+                                $rear_camera_result = mysqli_query($con, $rear_camera_query);
+                                while ($rear_camera_row = mysqli_fetch_assoc($rear_camera_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $rear_camera_row['rear_camera'] ?>" id="rear_camera">
+                                            <?= $rear_camera_row['rear_camera'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_internal_storage" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Internal Storage
+                            </button>
+                        </h2>
+                        <div id="m_internal_storage" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $internal_storage_query = "SELECT DISTINCT internal_storage FROM mobile_specs ORDER BY internal_storage";
+                                $internal_storage_result = mysqli_query($con, $internal_storage_query);
+                                while ($internal_storage_row = mysqli_fetch_assoc($internal_storage_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $internal_storage_row['internal_storage'] ?>" id="internal_storage">
+                                            <?= $internal_storage_row['internal_storage'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_os" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Operating System
+                            </button>
+                        </h2>
+                        <div id="m_os" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <?php
+                                $os_query = "SELECT DISTINCT os FROM mobile_specs ORDER BY os";
+                                $os_result = mysqli_query($con, $os_query);
+                                while ($os_row = mysqli_fetch_assoc($os_result)) {
+                                ?>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $os_row['os'] ?>" id="os">
+                                            <?= $os_row['os'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </aside>
             <div class="col-md-9 bg-white py-2">
-                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-                    <div class="card mb-3 p-3">
-                        <div class="row g-0">
-                            <div class="col-3 text-center">
-                                <a class="text-decoration-none text-black" href="<?= $base_url . '/laptops/product.php?id=' . $row['product_id'] ?>">
-                                    <img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px">
-                                </a>
-                                <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
-                            </div>
-                            <div class="col-9">
-                                <a class="text-decoration-none text-black" href="<?= $base_url . '/mobiles/product.php?id=' . $row['product_id'] ?>">
-                                    <div class="card-body p-0">
-                                        <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
-                                            <div class="text-start"><?= $row['product_name'] ?></div>
+                <div class="text-center">
+                    <img src="../img/loader.gif" alt="Loading..." width="200" id="loader" style="display:none;">
+                </div>
+                <div id="result">
+                    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <div class="card mb-3 p-3">
+                            <div class="row g-0">
+                                <div class="col-3 text-center">
+                                    <a class="text-decoration-none text-black" href="<?= $base_url . '/laptops/product.php?id=' . $row['product_id'] ?>">
+                                        <img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px">
+                                    </a>
+                                    <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
+                                </div>
+                                <div class="col-9">
+                                    <a class="text-decoration-none text-black" href="<?= $base_url . '/mobiles/product.php?id=' . $row['product_id'] ?>">
+                                        <div class="card-body p-0">
+                                            <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
+                                                <div class="text-start"><?= $row['product_name'] ?></div>
 
-                                            <div class="text-end " style="font-size: 17px;">Rs. <?= formatPrice($row['price']) ?></div>
-                                        </h5>
-                                        <p class="card-text">
+                                                <div class="text-end " style="font-size: 17px;">Rs. <?= formatPrice($row['price']) ?></div>
+                                            </h5>
+                                            <p class="card-text">
 
-                                        <div class="pro-grid-specs pl10 pr10 pb10">
-                                            <div class="lineheight20 specs font90">
-                                                <ul class="key-specs row row-cols-md-2 gx-5">
-                                                    <li> <?= $row['ram'] ?> RAM</li>
-                                                    <li> <?= $row['internal_storage'] ?> Internal Storage</li>
-                                                    <li> <?= $row['screen_size'] . " " . $row['display'] ?> Display</li>
-                                                    <li> <?= $row['front_camera'] ?> Front Camera</li>
-                                                    <li> <?= $row['rear_camera'] ?> Rear Camera</li>
-                                                    <li> <?= $row['chipset'] ?> Processor</li>
-                                                    <li> <?= $row['os'] ?> Operating System</li>
-                                                </ul>
+                                            <div class="pro-grid-specs pl10 pr10 pb10">
+                                                <div class="lineheight20 specs font90">
+                                                    <ul class="key-specs row row-cols-md-2 gx-5">
+                                                        <li> <?= $row['ram'] ?> RAM</li>
+                                                        <li> <?= $row['internal_storage'] ?> Internal Storage</li>
+                                                        <li> <?= $row['display'] ?> Display</li>
+                                                        <li> <?= $row['front_camera'] ?> Front Camera</li>
+                                                        <li> <?= $row['rear_camera'] ?> Rear Camera</li>
+                                                        <li> <?= $row['chipset'] ?> Processor</li>
+                                                        <li> <?= $row['os'] ?> Operating System</li>
+                                                    </ul>
+                                                </div>
                                             </div>
+                                            </p>
                                         </div>
-                                        </p>
-                                    </div>
-                                </a>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <?php } ?>
+                    <?php } ?>
+                </div>
                 <!-- Pagination -->
                 <nav aria-label="...">
                     <ul class="pagination justify-content-center">
@@ -676,3 +740,44 @@ if (isset($_SESSION['status'])) {
 <?php
 require('../inc/footer.php');
 ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.product_check').click(function() {
+            $('#loader').show();
+            var action = 'data';
+            var brand = get_filter_text('brand');
+            var ram = get_filter_text('ram');
+            var battery = get_filter_text('battery');
+            var os = get_filter_text('os');
+            var internal_storage = get_filter_text('internal_storage');
+            var front_camera = get_filter_text('front_camera');
+            var rear_camera = get_filter_text('rear_camera');
+            $.ajax({
+                url: "action.php",
+                method: "POST",
+                data: {
+                    action: action,
+                    brand: brand,
+                    ram: ram,
+                    battery: battery,
+                    os: os,
+                    internal_storage: internal_storage,
+                    front_camera: front_camera,
+                    rear_camera: rear_camera
+                },
+                success: function(response) {
+                    $('#result').html(response);
+                    $('#loader').hide();
+                }
+            });
+        });
+
+        function get_filter_text(text_id) {
+            var filterData = [];
+            $('#' + text_id + ':checked').each(function() {
+                filterData.push($(this).val());
+            });
+            return filterData;
+        }
+    });
+</script>

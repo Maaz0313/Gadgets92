@@ -302,7 +302,7 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['battery']; ?></span>
+                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['battery_capacity'] ?>, <?= $row['battery_features']?></span>
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
@@ -598,7 +598,7 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                             Battery
                         </th>
                         <td>
-                            <?= $row['battery']; ?>
+                        <?= $row['battery_capacity'] ?>, <?= $row['battery_features']?>
                         </td>
                     </tr>
                     <tr>

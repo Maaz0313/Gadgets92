@@ -502,7 +502,7 @@ ALTER TABLE `user_reviews`
 -- AUTO_INCREMENT for table `admin_users`
 --
 ALTER TABLE `admin_users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `brands`
@@ -526,13 +526,13 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `headset_specs`
 --
 ALTER TABLE `headset_specs`
-  MODIFY `spec_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `spec_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `laptop_specs`
 --
 ALTER TABLE `laptop_specs`
-  MODIFY `spec_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `spec_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `mobile_specs`
@@ -550,13 +550,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `sm_watch_specs`
 --
 ALTER TABLE `sm_watch_specs`
-  MODIFY `spec_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `spec_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `tv_specs`
 --
 ALTER TABLE `tv_specs`
-  MODIFY `spec_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `spec_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `users`

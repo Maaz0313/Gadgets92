@@ -186,8 +186,20 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
     </div>
 </div>
 
-
-
 <?php
 require '../inc/footer.php';
 ?>
+
+<script>
+    $('#category_id').on('change', function() {
+        var mainselection = this.value; // get the selection value
+        $.ajax({
+            type: "POST", // method of sending data
+            url: "getBrands.php", // name of PHP script
+            data: 'selection=' + mainselection, // parameter name and value
+            success: function(result) { // deal with the results
+                $("#brand_id").html(result); // insert in div above
+            }
+        });
+    });
+</script>

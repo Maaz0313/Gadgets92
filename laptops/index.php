@@ -445,30 +445,20 @@ if (isset($_SESSION['status'])) {
                             <form class="accordion-body" method="get" id="brand-filter-form">
                                 <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
                                 <?php
-                                function getBrands()
-                                {
-                                    global $con;
-                                    $sql = "SELECT * FROM brands WHERE cat_id = 2";
-                                    $result = mysqli_query($con, $sql);
+                                    $brand_sql = "SELECT * FROM brands WHERE cat_id = 2 ORDER BY brand_name";
+                                    $brand_result = mysqli_query($con, $brand_sql);
                                     $brands = [];
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        $brands[] = $row;
+                                    while ($brand_row = mysqli_fetch_assoc($brand_result)) {
+                                    ?>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                                <?= $brand_row['brand_name'] ?>
+                                            </label>
+                                        </div>
+                                    <?php
                                     }
-                                    return $brands;
-                                }
-                                $brands = getBrands();
-                                foreach ($brands as $brand) {
-                                ?>
-                                    <div class="form-check">
-                                        <input class="form-check-input shadow-none" type="checkbox" name="brands[]" value="<?= $brand['brand_name'] ?>" id="<?= $brand['brand_id'] ?>">
-                                        <label class="form-check-label" for="<?= $brand['brand_id'] ?>">
-                                            <?= $brand['brand_name'] ?>
-                                        </label>
-                                    </div>
-                                <?php
-                                }
-                                ?>
-
+                                    ?>
                             </form>
                         </div>
                     </div>

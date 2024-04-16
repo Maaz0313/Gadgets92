@@ -37,6 +37,7 @@ if (isset($_POST['submit'])) {
     $ram = mysqli_real_escape_string($con, $_POST['ram']);
     $ram_frequency = mysqli_real_escape_string($con, $_POST['ram_frequency']);
     $ssd_storage = mysqli_real_escape_string($con, $_POST['ssd_storage']);
+    $hdd_storage = mysqli_real_escape_string($con, $_POST['hdd_storage']);
 
     // Battery Information
     $battery = mysqli_real_escape_string($con, $_POST['battery']);
@@ -63,10 +64,10 @@ if (isset($_POST['submit'])) {
 
     // Insert data into laptop_specs table
     $sql = "INSERT INTO laptop_specs (product_id, model, os, dimensions, `weight`, colors, touch_screen, screen_size, screen_resolution, display, display_features, 
-            processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram, ram_frequency, ssd_storage, battery, power_supply, 
+            processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram, ram_frequency, ssd_storage, hdd_storage, battery, power_supply, 
             bluetooth, wifi, ethernet_port, usb_port, hdmi_port, multi_card_slot, headset_jack, webcam, mic, speakers, disk_drive, keyboard, backlit_keyboard) 
             VALUES ('$product_id', '$model', '$os', '$dimensions', '$weight', '$colors', '$touch_screen', '$screen_size', '$screen_resolution', '$display', '$display_features', 
-            '$processor', '$processor_variant', '$graphics', '$clock_speed', '$cores', '$cache', '$sys_arch', '$ram', '$ram_frequency', '$ssd_storage',
+            '$processor', '$processor_variant', '$graphics', '$clock_speed', '$cores', '$cache', '$sys_arch', '$ram', '$ram_frequency', '$ssd_storage', '$hdd_storage',
             '$battery', '$power_supply', '$bluetooth', '$wifi', '$ethernet_port', '$usb_port', '$hdmi_port', '$multi_card_slot', '$headset_jack', '$webcam', '$mic', 
             '$speakers', '$disk_drive','$keyboard', '$backlit_keyboard')";
 
@@ -232,6 +233,11 @@ if (isset($_POST['submit'])) {
                             <div class="form-group">
                                 <label for="ssd_storage" class="form-label">SSD Storage:</label>
                                 <input type="text" name="ssd_storage" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hdd_storage" class="form-label">HDD Storage:</label>
+                                <input type="text" name="hdd_storage" class="form-control" required>
                             </div>
 
                             <!-- Battery Information -->

@@ -12,7 +12,7 @@ $categoriesResult = mysqli_query($con, $fetchCategoriesQuery);
 $fetchBrandsQuery = "SELECT * FROM brands";
 $brandsResult = mysqli_query($con, $fetchBrandsQuery);
 
-if(isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
     $categoryId = sanitize_data($_POST['category_id']);
     $brandId = sanitize_data($_POST['brand_id']);
     $productName = sanitize_data($_POST['product_name']);
@@ -21,76 +21,81 @@ if(isset($_POST['submit'])) {
     $targetDir = '../images/products/';
     $fileName = $_FILES['product_image']['name'];
     $targetFile = $targetDir . basename($fileName);
-    
+
     if (file_exists($targetFile)) {
         $_SESSION['fail_msg'] = "File already exists. Please choose a different file.";
-        ?><script>window.location.href = "add.php";</script><?php
-        exit(0);
-    } else {
-        $allowedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
-        if (!in_array($_FILES['product_image']['type'], $allowedImageTypes) || $_FILES['product_image']['size'] > 500000) {
-            $_SESSION['fail_msg'] = "Sorry, only JPG, JPEG, PNG & GIF files under 500KB are allowed.";
-            ?><script>window.location.href = "add.php";</script><?php
-            exit(0);
-        }
-    }
-    
-    if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
-        $sql = "INSERT INTO products(category_id, brand_id, product_name, price, release_date, product_image) VALUES('$categoryId', '$brandId', '$productName', '$price', '$releaseDate', '$fileName')";
-        $insertProductResult = mysqli_query($con, $sql);
-        if ($insertProductResult) {
-            $_SESSION['success_msg'] = "Product added successfully";
-            $lastInsertedId = mysqli_insert_id($con);
-            ?>
-            <script>
-            var categoryId = <?= json_encode(sanitize_data($_POST['category_id'])) ?>;
-            var productId = <?= json_encode($lastInsertedId) ?>;
+?><script>
+            window.location.href = "add.php";
+        </script><?php
+                    exit(0);
+                } else {
+                    $allowedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
+                    if (!in_array($_FILES['product_image']['type'], $allowedImageTypes) || $_FILES['product_image']['size'] > 500000) {
+                        $_SESSION['fail_msg'] = "Sorry, only JPG, JPEG, PNG & GIF files under 500KB are allowed.";
+                    ?><script>
+                window.location.href = "add.php";
+            </script><?php
+                        exit(0);
+                    }
+                }
 
-            switch (categoryId) {
-                case '1':
-                    window.location.href = "../specs/mobile_specs_form.php?product_id=" + productId;
-                    break;
-                case '2':
-                    window.location.href = "../specs/laptop_specs_form.php?product_id=" + productId;
-                    break;
-                case '3':
-                    window.location.href = "../specs/headset_specs_form.php?product_id=" + productId;
-                    break;
-                case '4':
-                    window.location.href = "../specs/smartwatch_specs_form.php?product_id=" + productId;
-                    break;
-                case '5':
-                    window.location.href = "../specs/tv_specs_form.php?product_id=" + productId;
-                    break;
-                default:
-                    window.location.href = "index.php";
-                    break;
-            }
-        </script>
+                if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
+                    $sql = "INSERT INTO products(category_id, brand_id, product_name, price, release_date, product_image) VALUES('$categoryId', '$brandId', '$productName', '$price', '$releaseDate', '$fileName')";
+                    $insertProductResult = mysqli_query($con, $sql);
+                    if ($insertProductResult) {
+                        $_SESSION['success_msg'] = "Product added successfully";
+                        $lastInsertedId = mysqli_insert_id($con);
+                        ?>
+            <script>
+                var categoryId = <?= json_encode(sanitize_data($_POST['category_id'])) ?>;
+                var productId = <?= json_encode($lastInsertedId) ?>;
+
+                switch (categoryId) {
+                    case '1':
+                        window.location.href = "../specs/mobile_specs_form.php?product_id=" + productId;
+                        break;
+                    case '2':
+                        window.location.href = "../specs/laptop_specs_form.php?product_id=" + productId;
+                        break;
+                    case '3':
+                        window.location.href = "../specs/headset_specs_form.php?product_id=" + productId;
+                        break;
+                    case '4':
+                        window.location.href = "../specs/smartwatch_specs_form.php?product_id=" + productId;
+                        break;
+                    case '5':
+                        window.location.href = "../specs/tv_specs_form.php?product_id=" + productId;
+                        break;
+                    default:
+                        window.location.href = "index.php";
+                        break;
+                }
+            </script>
         <?php
-            exit(0);
-        }
-    } else {
-        $_SESSION['fail_msg'] = "Sorry, there was an error uploading your file.";
-        ?><script>window.location.href = "add.php";</script><?php
-        exit(0);
-    }
-}
-if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
-    if (isset($_SESSION['success_msg'])) {
-        echo '<div class="alert alert-success" role="alert">
+                        exit(0);
+                    }
+                } else {
+                    $_SESSION['fail_msg'] = "Sorry, there was an error uploading your file.";
+        ?><script>
+            window.location.href = "add.php";
+        </script><?php
+                    exit(0);
+                }
+            }
+            if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
+                if (isset($_SESSION['success_msg'])) {
+                    echo '<div class="alert alert-success" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
         ' . $_SESSION['success_msg'] . '</div>';
-        unset($_SESSION['success_msg']);
-    }
-    else {
-        echo '<div class="alert alert-danger" role="alert">
+                    unset($_SESSION['success_msg']);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
         ' . $_SESSION['fail_msg'] . '</div>';
-        unset($_SESSION['fail_msg']);
-    }
-}
-?>
+                    unset($_SESSION['fail_msg']);
+                }
+            }
+                    ?>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
@@ -123,31 +128,26 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                         <strong class="card-title">Add Product</strong>
                     </div>
                     <div class="card-body">
-                        <form action="<?= $_SERVER['PHP_SELF']?>" method="POST" enctype="multipart/form-data">
+                        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="category_id">Category</label>
                                 <select name="category_id" id="category_id" class="form-control" required>
                                     <option value="" selected disabled>Select Category</option>
                                     <?php
                                     while ($row = mysqli_fetch_assoc($categoriesResult)) {
-                                        ?>
+                                    ?>
                                         <option value="<?= $row['cat_id'] ?>"><?= $row['cat_name'] ?></option>
-                                        <?php
+                                    <?php
                                     }
                                     ?>
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 <label for="brand_id">Brand</label>
                                 <select name="brand_id" id="brand_id" class="form-control py-3">
                                     <option value="" selected disabled>Select Brand</option>
-                                   <?php
-                                    while ($row = mysqli_fetch_assoc($brandsResult)) {
-                                        ?>
-                                        <option value="<?= $row['brand_id'] ?>"><?= $row['brand_name'] ?></option>
-                                        <?php
-                                    }
-                                    ?>
+
                                 </select>
                             </div>
                             <div class="form-group">
@@ -177,3 +177,16 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
 <?php
 require "../inc/footer.php";
 ?>
+<script>
+    $('#category_id').on('change', function() {
+        var mainselection = this.value; // get the selection value
+        $.ajax({
+            type: "POST", // method of sending data
+            url: "getBrands.php", // name of PHP script
+            data: 'selection=' + mainselection, // parameter name and value
+            success: function(result) { // deal with the results
+                $("#brand_id").html(result); // insert in div above
+            }
+        });
+    });
+</script>

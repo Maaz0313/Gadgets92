@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
     $power_consumption = sanitize_data($_POST['power_consumption']);
 
     // Perform the database insertion
-    $sql = "INSERT INTO tv_specs (product_id, model, launch_year, in_the_box, weight_with_stand, weight_without_stand, display, screen_size, screen_resolution, display_features, video_formats, audio_formats, no_of_speakers, output_per_speaker, total_speaker_output, sound_tech, smart_tv, os, internet_connectivity, bluetooth, screen_mirroring, preloaded_apps, voice_assistant, more_features, usb, hdmi, ethernet, power_requirement, power_consumption) 
+    $sql = "INSERT INTO tv_specs (product_id, model, launch_year, in_the_box, weight_with_stand, weight_without_stand, display_tech, screen_size, screen_resolution, display_features, video_formats, audio_formats, no_of_speakers, output_per_speaker, total_speaker_output, sound_tech, smart_tv, os, internet_connectivity, bluetooth, screen_mirroring, preloaded_apps, voice_assistant, more_features, usb, hdmi, ethernet, power_requirement, power_consumption) 
             VALUES ('$product_id', '$model', '$launch_year', '$in_the_box', '$weight_with_stand', '$weight_without_stand', '$display', '$screen_size', '$screen_resolution', '$display_features', '$video_formats', '$audio_formats', '$no_of_speakers', '$output_per_speaker', '$total_speaker_output', '$sound_tech', '$smart_tv', '$os', '$internet_connectivity', '$bluetooth', '$screen_mirroring', '$preloaded_apps', '$voice_assistant', '$more_features', '$usb', '$hdmi', '$ethernet', '$power_requirement', '$power_consumption')";
 
     $result = mysqli_query($con, $sql);
@@ -116,7 +116,7 @@ if (isset($_POST['submit'])) {
 
                             <!-- Display Features -->
                             <div class="form-group">
-                                <label for="display">Display</label>
+                                <label for="display">Display Technology</label>
                                 <input type="text" id="display" name="display" class="form-control">
                             </div>
                             <div class="form-group">

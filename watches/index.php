@@ -16,7 +16,7 @@ $adjacents = "2";
 $result_count = mysqli_query(
     $con,
     "SELECT COUNT(*) AS total_records FROM products
-    INNER JOIN tv_specs ON products.product_id = tv_specs.product_id"
+    INNER JOIN sm_watch_specs ON products.product_id = sm_watch_specs.product_id"
 );
 $total_records = mysqli_fetch_array($result_count);
 $total_records = $total_records['total_records'];
@@ -39,7 +39,7 @@ if ($brand) {
 }
 $sql = "SELECT *
     FROM products
-    INNER JOIN tv_specs ON products.product_id = tv_specs.product_id
+    INNER JOIN sm_watch_specs ON products.product_id = sm_watch_specs.product_id
     INNER JOIN brands ON products.brand_id = brands.brand_id
     WHERE products.status = 1 " . $whereClause . "
     LIMIT $offset, $total_records_per_page";
@@ -128,15 +128,15 @@ if (isset($_SESSION['status'])) {
         <nav class="p-1 pb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../">Home</a></li>
-                <li class="breadcrumb-item"><a href="../televisions/">TVs</a></li>
-                <li class="breadcrumb-item active" aria-current="page">TV Finder</li>
+                <li class="breadcrumb-item"><a href="/watches/">Smart Watches</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Smart Watch Finder</li>
             </ol>
         </nav>
         <div class="row">
-            <h4 class="fw-bold">TV Finder - Find Your Desired TV</h4>
+            <h4 class="fw-bold">Smart Watch Finder - Find Your Desired Smart Watch</h4>
         </div>
         <div class="row">
-            <p>Ditch the decision fatigue. Find a TV that suits your needs using our comprehensive mobile finder tool.</p>
+            <p>Ditch the decision fatigue. Find a smart watch that suits your needs using our comprehensive smart watch finder tool.</p>
         </div>
     </div>
     <!-- filters shown on mobile screens only -->
@@ -168,7 +168,7 @@ if (isset($_SESSION['status'])) {
                             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                                 <div class="accordion-body">
                                     <form role="search" action="" method="get">
-                                        <input type="search" name="search" class="form-control shadow-none" placeholder="Search Televisions" aria-label="Search">
+                                        <input type="search" name="search" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
                                     </form>
                                 </div>
                             </div>
@@ -180,19 +180,19 @@ if (isset($_SESSION['status'])) {
                                 </button>
                             </h2>
                             <div id="price" class="accordion-collapse collapse">
-                                <div class="accordion-body p-0 p-2 d-table w-100">
+                                <form class="accordion-body p-0 p-2 d-table w-100" method="get">
                                     <div class="column">
                                         <div class="mini">Min</div>
-                                        <input type="number" class="inp" value="0">
+                                        <input type="number" class="inp" name="min" value="0">
                                     </div>
                                     <div class="column">
                                         <div class="mini">Max</div>
-                                        <input type="number" class="inp" value="196900">
+                                        <input type="number" class="inp" name="max" value="196900">
                                     </div>
                                     <div class="column">
-                                        <button class="go-btn">Go</button>
+                                        <button type="submit" class="go-btn">Go</button>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                         <div class="accordion-item">
@@ -206,14 +206,13 @@ if (isset($_SESSION['status'])) {
                                 <form class="accordion-body" method="get" id="brand-filter-form">
                                     <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
                                     <?php
-                                    $brand_sql = "SELECT DISTINCT * FROM brands WHERE cat_id = 5 ORDER BY brand_name";
+                                    $brand_sql = "SELECT * FROM brands WHERE cat_id = 4 ORDER BY brand_name";
                                     $brand_result = mysqli_query($con, $brand_sql);
-                                    $brands = [];
                                     while ($brand_row = mysqli_fetch_assoc($brand_result)) {
                                     ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" name="brand" value="<?= $brand_row['brand_name'] ?>" id="brand">
                                                 <?= $brand_row['brand_name'] ?>
                                             </label>
                                         </div>
@@ -225,21 +224,21 @@ if (isset($_SESSION['status'])) {
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#disp" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                    Display Size
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#screen_size_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    Screen Size
                                 </button>
                             </h2>
-                            <div id="disp" class="accordion-collapse collapse">
+                            <div id="screen_size_id" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <?php
-                                    $disp_sql = "SELECT DISTINCT screen_size FROM tv_specs ORDER BY screen_size";
-                                    $disp_result = mysqli_query($con, $disp_sql);
-                                    while ($disp_row = mysqli_fetch_assoc($disp_result)) {
+                                    $screen_size_query = "SELECT DISTINCT screen_size FROM sm_watch_specs ORDER BY screen_size";
+                                    $screen_size_result = mysqli_query($con, $screen_size_query);
+                                    while ($screen_size_row = mysqli_fetch_assoc($screen_size_result)) {
                                     ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $disp_row['screen_size'] ?>" id="display">
-                                                <?= $disp_row['screen_size'] ?>
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $screen_size_row['screen_size'] ?>" id="screen_size">
+                                                <?= $screen_size_row['screen_size'] ?>
                                             </label>
                                         </div>
                                     <?php
@@ -250,21 +249,21 @@ if (isset($_SESSION['status'])) {
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#res" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                    Resolution
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_os" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    Operating System
                                 </button>
                             </h2>
-                            <div id="res" class="accordion-collapse collapse">
+                            <div id="m_os" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <?php
-                                    $res_sql = "SELECT DISTINCT screen_resolution FROM tv_specs ORDER BY screen_resolution";
-                                    $res_result = mysqli_query($con, $res_sql);
-                                    while ($res_row = mysqli_fetch_assoc($res_result)) {
+                                    $os_query = "SELECT DISTINCT os FROM sm_watch_specs ORDER BY os";
+                                    $os_result = mysqli_query($con, $os_query);
+                                    while ($os_row = mysqli_fetch_assoc($os_result)) {
                                     ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $res_row['screen_resolution'] ?>" id="resolution">
-                                                <?= $res_row['screen_resolution'] ?>
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $os_row['os'] ?>" id="os">
+                                                <?= $os_row['os'] ?>
                                             </label>
                                         </div>
                                     <?php
@@ -275,21 +274,21 @@ if (isset($_SESSION['status'])) {
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#disp_tech" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                    Display Technology
+                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c_os" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    Compatible Operating System
                                 </button>
                             </h2>
-                            <div id="disp_tech" class="accordion-collapse collapse">
+                            <div id="c_os" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <?php
-                                    $disp_tech_sql = "SELECT DISTINCT display_tech FROM tv_specs ORDER BY display_tech";
-                                    $disp_tech_result = mysqli_query($con, $disp_tech_sql);
-                                    while ($disp_tech_row = mysqli_fetch_assoc($disp_tech_result)) {
+                                    $c_os_query = "SELECT DISTINCT compatible_os FROM sm_watch_specs ORDER BY compatible_os";
+                                    $c_os_result = mysqli_query($con, $c_os_query);
+                                    while ($c_os_row = mysqli_fetch_assoc($c_os_result)) {
                                     ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $disp_tech_row['display_tech'] ?>" id="display_tech">
-                                                <?= $disp_tech_row['display_tech'] ?>
+                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $c_os_row['compatible_os'] ?>" id="compatible_os">
+                                                <?= $c_os_row['compatible_os'] ?>
                                             </label>
                                         </div>
                                     <?php
@@ -335,7 +334,7 @@ if (isset($_SESSION['status'])) {
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                             <div class="accordion-body">
                                 <form role="search" action="" method="get">
-                                    <input type="search" name="search" class="form-control shadow-none" placeholder="Search Televisions" aria-label="Search">
+                                    <input type="search" name="search" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
                                 </form>
                             </div>
                         </div>
@@ -347,19 +346,19 @@ if (isset($_SESSION['status'])) {
                             </button>
                         </h2>
                         <div id="price" class="accordion-collapse collapse">
-                            <div class="accordion-body p-0 p-2 d-table w-100">
+                            <form class="accordion-body p-0 p-2 d-table w-100" method="get">
                                 <div class="column">
                                     <div class="mini">Min</div>
-                                    <input type="number" class="inp" value="0">
+                                    <input type="number" class="inp" name="min" value="0">
                                 </div>
                                 <div class="column">
                                     <div class="mini">Max</div>
-                                    <input type="number" class="inp" value="196900">
+                                    <input type="number" class="inp" name="max" value="196900">
                                 </div>
                                 <div class="column">
-                                    <button class="go-btn">Go</button>
+                                    <button type="submit" class="go-btn">Go</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     <div class="accordion-item">
@@ -373,14 +372,13 @@ if (isset($_SESSION['status'])) {
                             <form class="accordion-body" method="get" id="brand-filter-form">
                                 <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
                                 <?php
-                                $brand_sql = "SELECT DISTINCT * FROM brands WHERE cat_id = 5 ORDER BY brand_name";
+                                $brand_sql = "SELECT * FROM brands WHERE cat_id = 4 ORDER BY brand_name";
                                 $brand_result = mysqli_query($con, $brand_sql);
-                                $brands = [];
                                 while ($brand_row = mysqli_fetch_assoc($brand_result)) {
                                 ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" name="brand" value="<?= $brand_row['brand_name'] ?>" id="brand">
                                             <?= $brand_row['brand_name'] ?>
                                         </label>
                                     </div>
@@ -392,21 +390,21 @@ if (isset($_SESSION['status'])) {
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#disp" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                Display Size
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#screen_size_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Screen Size
                             </button>
                         </h2>
-                        <div id="disp" class="accordion-collapse collapse">
+                        <div id="screen_size_id" class="accordion-collapse collapse">
                             <div class="accordion-body">
                                 <?php
-                                $disp_sql = "SELECT DISTINCT screen_size FROM tv_specs ORDER BY screen_size";
-                                $disp_result = mysqli_query($con, $disp_sql);
-                                while ($disp_row = mysqli_fetch_assoc($disp_result)) {
+                                $screen_size_query = "SELECT DISTINCT screen_size FROM sm_watch_specs ORDER BY screen_size";
+                                $screen_size_result = mysqli_query($con, $screen_size_query);
+                                while ($screen_size_row = mysqli_fetch_assoc($screen_size_result)) {
                                 ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $disp_row['screen_size'] ?>" id="display">
-                                            <?= $disp_row['screen_size'] ?>
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $screen_size_row['screen_size'] ?>" id="screen_size">
+                                            <?= $screen_size_row['screen_size'] ?>
                                         </label>
                                     </div>
                                 <?php
@@ -417,21 +415,21 @@ if (isset($_SESSION['status'])) {
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#res" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                Resolution
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#m_os" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Operating System
                             </button>
                         </h2>
-                        <div id="res" class="accordion-collapse collapse">
+                        <div id="m_os" class="accordion-collapse collapse">
                             <div class="accordion-body">
                                 <?php
-                                $res_sql = "SELECT DISTINCT screen_resolution FROM tv_specs ORDER BY screen_resolution";
-                                $res_result = mysqli_query($con, $res_sql);
-                                while ($res_row = mysqli_fetch_assoc($res_result)) {
+                                $os_query = "SELECT DISTINCT os FROM sm_watch_specs ORDER BY os";
+                                $os_result = mysqli_query($con, $os_query);
+                                while ($os_row = mysqli_fetch_assoc($os_result)) {
                                 ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $res_row['screen_resolution'] ?>" id="resolution">
-                                            <?= $res_row['screen_resolution'] ?>
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $os_row['os'] ?>" id="os">
+                                            <?= $os_row['os'] ?>
                                         </label>
                                     </div>
                                 <?php
@@ -442,21 +440,21 @@ if (isset($_SESSION['status'])) {
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#disp_tech" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                Display Technology
+                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c_os" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Compatible Operating System
                             </button>
                         </h2>
-                        <div id="disp_tech" class="accordion-collapse collapse">
+                        <div id="c_os" class="accordion-collapse collapse">
                             <div class="accordion-body">
                                 <?php
-                                $disp_tech_sql = "SELECT DISTINCT display_tech FROM tv_specs ORDER BY display_tech";
-                                $disp_tech_result = mysqli_query($con, $disp_tech_sql);
-                                while ($disp_tech_row = mysqli_fetch_assoc($disp_tech_result)) {
+                                $c_os_query = "SELECT DISTINCT compatible_os FROM sm_watch_specs ORDER BY compatible_os";
+                                $c_os_result = mysqli_query($con, $c_os_query);
+                                while ($c_os_row = mysqli_fetch_assoc($c_os_result)) {
                                 ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $disp_tech_row['display_tech'] ?>" id="display_tech">
-                                            <?= $disp_tech_row['display_tech'] ?>
+                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $c_os_row['compatible_os'] ?>" id="compatible_os">
+                                            <?= $c_os_row['compatible_os'] ?>
                                         </label>
                                     </div>
                                 <?php
@@ -476,14 +474,14 @@ if (isset($_SESSION['status'])) {
                         <div class="card mb-3 p-3">
                             <div class="row g-0">
                                 <div class="col-3 text-center">
-                                    <a href="<?= $base_url . '/televisions/product.php?id=' . $row['product_id'] ?>"><img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px"></a>
+                                    <a href="<?= $base_url . '/watches/product.php?id=' . $row['product_id'] ?>"><img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px"></a>
                                     <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
                                 </div>
                                 <div class="col-9">
-                                    <a class="text-decoration-none text-black" href="<?= $base_url . '/televisions/product.php?id=' . $row['product_id'] ?>">
+                                    <a class="text-decoration-none text-black" href="<?= $base_url . '/watches/product.php?id=' . $row['product_id'] ?>">
                                         <div class="card-body p-0">
                                             <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
-                                                <div class="text-start ms-2"><?= $row['product_name'] ?></div>
+                                                <div class="text-start"><?= $row['product_name'] ?></div>
 
                                                 <div class="text-end " style="font-size: 17px;">Rs. <?= formatPrice($row['price']) ?></div>
                                             </h5>
@@ -492,11 +490,11 @@ if (isset($_SESSION['status'])) {
                                             <div class="pro-grid-specs pl10 pr10 pb10">
                                                 <div class="lineheight20 specs font90">
                                                     <ul class="key-specs row row-cols-md-2 gx-5">
-                                                        <li> <?= $row['preloaded_apps'] ?></li>
-                                                        <li> <?= $row['display_tech'] ?></li>
-                                                        <li> <?= $row['screen_size'] ?> HD Display</li>
-                                                        <li> <?= $row['screen_resolution'] ?></li>
-                                                        <li> <?= $row['smart_tv'] ? 'Smart TV' : 'Non-Smart TV' ?></li>
+                                                        <li> <?= $row['touchscreen'] == 1 ? 'Touchscreen' : 'No Touchscreen' ?></li>
+                                                        <li> <?= $row['screen_size'] ?> Display</li>
+                                                        <li> <?= $row['battery_life'] ?></li>
+                                                        <li> <?= $row['features'] ?></li>
+                                                        <li> <?= $row['extra_features'] ?></li>
                                                         <li> <?= $row['os'] ?></li>
                                                     </ul>
                                                 </div>
@@ -512,6 +510,8 @@ if (isset($_SESSION['status'])) {
                 <!-- Pagination -->
                 <nav aria-label="...">
                     <ul class="pagination justify-content-center">
+                        <?php // if($page_no > 1){ echo "<li><a href='?page_no=1'>First Page</a></li>"; } 
+                        ?>
 
                         <li class="page-item <?= $page_no <= 1 ? 'disabled' : '' ?>">
                             <a class="page-link" <?php if ($page_no > 1) {
@@ -593,23 +593,23 @@ require('../inc/footer.php');
         $('.product_check').click(function() {
             $('#loader').show();
             var action = 'data';
-            var display = get_filter_text('display_tech');
             var brand = get_filter_text('brand');
-            var screen_size = get_filter_text('display');
-            var screen_resolution = get_filter_text('resolution');
+            var screen_size = get_filter_text('screen_size');
+            var os = get_filter_text('os');
+            var compatible_os = get_filter_text('compatible_os');
             $.ajax({
                 url: "action.php",
                 method: "POST",
                 data: {
                     action: action,
                     brand: brand,
-                    display: display,
                     screen_size: screen_size,
-                    screen_resolution: screen_resolution
+                    os: os,
+                    compatible_os: compatible_os
                 },
                 success: function(response) {
-                    $('#loader').hide();
                     $('#result').html(response);
+                    $('#loader').hide();
                 }
             });
         });

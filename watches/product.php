@@ -16,7 +16,7 @@ if (empty($id)) {
 
 $sql = "SELECT *
     FROM products
-    INNER JOIN tv_specs ON products.product_id = tv_specs.product_id 
+    INNER JOIN sm_watch_specs ON products.product_id = sm_watch_specs.product_id 
     INNER JOIN brands ON products.brand_id = brands.brand_id
     WHERE products.product_id = $id";
 $result = mysqli_query($con, $sql);
@@ -57,7 +57,8 @@ if (isset($_POST['submit'])) {
             $review_sql = "SELECT * FROM user_reviews WHERE product_id = $id";
             $review_result = mysqli_query($con, $review_sql);
             if ($review_result === false) {
-                // handle the error
+                $_SESSION['fail_msg']="Cannot submit your review. Please try again later.";
+                exit;
             }
 
             if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
@@ -80,8 +81,8 @@ if (isset($_POST['submit'])) {
         <nav class="p-2 pb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../../">Home</a></li>
-                <li class="breadcrumb-item"><a href="../televisions/">Televisions</a></li>
-                <li class="breadcrumb-item"><a href="../televisions/?brand=<?= $row['brand_name'] ?>"><?= $row['brand_name'] ?></a></li>
+                <li class="breadcrumb-item"><a href="../watches/">Smart Watches</a></li>
+                <li class="breadcrumb-item"><a href="../watches/?brand=<?= $row['brand_name'] ?>"><?= $row['brand_name']; ?></a></li>
                 <li class="breadcrumb-item active" aria-current="page"><?= $row['product_name'] ?></li>
             </ol>
         </nav>
@@ -238,7 +239,7 @@ if (isset($_POST['submit'])) {
                         <div class="row">
                             <div class="d-flex align-items-center ">
                                 <i class="bi bi-calendar-date"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name fw-bold">Release Date</span>
+                                <span style="padding-left: 9px;" class="key-spec-name">Release Date</span>
                             </div>
                         </div>
                         <div class="row">
@@ -246,42 +247,60 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-tv"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name fw-bold">Smart TV</span>
+                                <i class="fa fa-weight-hanging"></i>
+                                <span style="padding-left: 9px;" class="key-spec-name">Weight</span>
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['smart_tv'] ? 'Yes' : 'No'; ?></span>
+                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['weight'] ?></span>
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-cast"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name fw-bold">Display Features</span>
+                                <i class="bi bi-display"></i>
+                                <span style="padding-left: 9px;" class="key-spec-name">Display</span>
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['display_features']; ?></span>
+                            <span style="padding-left: 37px;" class="key-spec-value"><?=$row['screen_size'].', '. $row['display']; ?></span>
+                        </div>
+                        <div class="row pt-md-2 ">
+                            <div class="d-flex align-items-center ">
+                                <i class="bi bi-battery-half"></i>
+                                <span style="padding-left: 9px;" class="key-spec-name">Battery Life</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['battery_life']; ?></span>
                         </div>
 
                     </div>
                     <div class="col-md-6">
                         <div class="row">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-display"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name fw-bold">Display</span>
+                                <i class="fa fa-person-running"></i>
+                                <span style="padding-left: 9px;" class="key-spec-name">Fitness Features</span>
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['screen_size']; ?> Display</span>
+                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['fitness_features']; ?></span>
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-grid"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name fw-bold">Preloaded Apps</span>
+                                <i class="bi bi-droplet"></i>
+                                <span style="padding-left: 9px;" class="key-spec-name">Water Resistant</span>
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['preloaded_apps']; ?></span>
+                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['water_resistant']; ?></span>
+                        </div>
+                        <div class="row pt-md-2 ">
+                            <div class="d-flex align-items-center ">
+                                <i class="bi bi-robot"></i>
+                                <span style="padding-left: 8px;" class="key-spec-name">Compatible OS</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['compatible_os']; ?></span>
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
@@ -292,7 +311,7 @@ if (isset($_POST['submit'])) {
                                         <path d="M1069 2247 c-122 -42 -198 -112 -256 -232 -46 -97 -66 -213 -59 -335 20 -331 191 -511 486 -511 248 0 411 132 466 377 23 105 16 312 -15 406 -43 133 -142 243 -261 290 -43 17 -81 22 -175 25 -105 3 -128 1 -186 -20z m308 -147 c162 -71 237 -292 181 -530 -46 -191 -217 -295 -406 -246 -113 29 -184 98 -228 221 -25 71 -25 279 0 350 58 161 175 241 338 231 38 -3 88 -14 115 -26z"></path>
                                     </g>
                                 </svg>
-                                <span style="padding-left: 7px;" class="key-spec-name fw-bold">OS (Operating System)</span>
+                                <span style="padding-left: 7px;" class="key-spec-name">OS (Operating System)</span>
                             </div>
                         </div>
                         <div class="row">
@@ -307,7 +326,7 @@ if (isset($_POST['submit'])) {
     <div class="container bg-light p-3 mb-3">
         <h5 class="fw-bold pb-2"><?= $row['product_name']; ?> Full Specifications</h5>
         <div class="category">
-            <h3 class="">General (4)
+            <h3 class="">General (5)
                 <span class="icon"><i class="bi bi-chevron-down"></i></span>
             </h3>
             <table>
@@ -320,7 +339,6 @@ if (isset($_POST['submit'])) {
                             <?= date("d M Y", strtotime($row['release_date']));  ?>
                         </td>
                     </tr>
-                    <tr>
                     <tr>
                         <th>
                             Brand
@@ -344,6 +362,14 @@ if (isset($_POST['submit'])) {
                             <?= $row['os']; ?>
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            Compatible OS
+                        </th>
+                        <td>
+                            <?= $row['compatible_os']; ?>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -353,25 +379,25 @@ if (isset($_POST['submit'])) {
                 <tbody>
                     <tr>
                         <th>
-                            Weight With Stand
+                            Dial Shape
                         </th>
                         <td>
-                            <?= $row['weight_with_stand']; ?>
+                            <?= $row['dial_shape']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Weight Without Stand
+                            Weight
                         </th>
                         <td>
-                            <?= $row['weight_without_stand']; ?>
+                            <?= $row['weight']; ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="category">
-            <h3>Display (6) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Display (3) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>
@@ -379,7 +405,15 @@ if (isset($_POST['submit'])) {
                             Display Tech
                         </th>
                         <td>
-                            <?= $row['display_tech']; ?>
+                            <?= $row['display']; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Touch Screen
+                        </th>
+                        <td>
+                            <?= $row['touchscreen'] == 1 ? 'Yes' : 'No'; ?>
                         </td>
                     </tr>
                     <tr>
@@ -390,210 +424,99 @@ if (isset($_POST['submit'])) {
                             <?= $row['screen_size']; ?>
                         </td>
                     </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="category">
+            <h3>Battery (2) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <table>
+                <tbody>
                     <tr>
                         <th>
-                            Screen Resolution
+                            Battery Type
                         </th>
                         <td>
-                            <?= $row['screen_resolution']; ?>
+                            <?= $row['battery_type']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Display Features
+                            Battery Life
                         </th>
                         <td>
-                            <?= $row['display_features']; ?>
+                            <?= $row['battery_life']; ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="category">
-            <h3>Video (1) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Network & Connectivity (4) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
-                    <tr>
-                        <th>
-                            Video Formats
-                        </th>
-                        <td>
-                            <?= $row['video_formats']; ?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="category">
-            <h3>Audio (5) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>
-                            Audio Formats
-                        </th>
-                        <td>
-                            <?= $row['audio_formats']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Number of Speakers
-                        </th>
-                        <td>
-                            <?= $row['no_of_speakers']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Output per Speaker
-                        </th>
-                        <td>
-                            <?= $row['output_per_speaker']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Total Speaker Output
-                        </th>
-                        <td>
-                            <?= $row['total_speaker_output']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Sound Technology
-                        </th>
-                        <td>
-                            <?= $row['sound_tech']; ?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="category">
-            <h3>Smart TV Features (8) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>
-                            Smart TV
-                        </th>
-                        <td>
-                            <?= $row['smart_tv'] ? 'Yes' : 'No'; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Operating System
-                        </th>
-                        <td>
-                            <?= $row['os']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Internet Connectivity
-                        </th>
-                        <td>
-                            <?= $row['internet_connectivity']; ?>
-                        </td>
-                    </tr>
                     <tr>
                         <th>
                             Bluetooth
                         </th>
                         <td>
-                            <?= $row['bluetooth'] ? 'Yes' : 'No'; ?>
+                            <?= $row['bluetooth']==1 ? 'Yes' : 'No'; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Screen Mirroring
+                            Wi-Fi
                         </th>
                         <td>
-                            <?= $row['screen_mirroring'] ? 'Yes' : 'No'; ?>
+                            <?= $row['wifi']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Preloaded Apps
+                            GPS
                         </th>
                         <td>
-                            <?= $row['preloaded_apps']; ?>
+                            <?= $row['gps']==1 ? 'Yes' : 'No'; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Voice Assistant
+                            Call Function
                         </th>
                         <td>
-                            <?= $row['voice_assistant']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            More Features
-                        </th>
-                        <td>
-                            <?= $row['more_features']; ?>
+                            <?= $row['call_function']==1 ? 'Yes' : 'No'; ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="category">
-            <h3>Ports (3) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Fitness & Other Features (3) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>
                         <th>
-                            USB
+                            Fitness Features
                         </th>
                         <td>
-                            <?= $row['usb']; ?>
+                            <?= $row['fitness_features']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            HDMI
+                            Sensors
                         </th>
                         <td>
-                            <?= $row['hdmi']; ?>
+                            <?= $row['sensors']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Ethernet Port
+                            Extra Features
                         </th>
                         <td>
-                            <?= $row['ethernet'] ? 'Yes' : 'No'; ?>
+                            <?= $row['extra_features']; ?>
                         </td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="category">
-            <h3>Power (2) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>
-                            Power Requirement
-                        </th>
-                        <td>
-                            <?= $row['power_requirement']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Power Consumption
-                        </th>
-                        <td>
-                            <?= $row['power_consumption']; ?>
-                        </td>
-                    </tr>
-                    
                 </tbody>
             </table>
         </div>

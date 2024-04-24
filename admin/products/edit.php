@@ -166,7 +166,7 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                             </div>
                             <div class="form-group">
                                 <label for="price">Price</label>
-                                <input type="number" name="price" id="price" class="form-control">
+                                <input type="number" name="price" id="price" class="form-control" value="<?= $product['price'] ?>">
                             </div>
                             <div class="form-group">
                                 <label for="release_date">Release Date</label>

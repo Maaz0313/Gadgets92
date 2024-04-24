@@ -1,7 +1,7 @@
 <?php
 session_start();
 require '../../dbcon.php';
-$title = "Add Headphone Specs";
+$title = "Add Smartwatch Specs";
 require '../inc/header.php';
 
 require '../functions/logic.php';
@@ -10,6 +10,7 @@ if (isset($_POST['submit'])) {
     $product_id = sanitize_data($_POST['product_id']);
 
     // Display Information
+    $weight = sanitize_data($_POST['weight']);
     $dial_shape = sanitize_data($_POST['dial_shape']);
     $bluetooth = sanitize_data($_POST['bluetooth']);
     $gps = sanitize_data($_POST['gps']);
@@ -18,6 +19,7 @@ if (isset($_POST['submit'])) {
     $display = sanitize_data($_POST['display']);
     $screen_size = sanitize_data($_POST['screen_size']);
     $os = sanitize_data($_POST['os']);
+    $compatible_os = sanitize_data($_POST['compatible_os']);
 
     // Battery and Display Features
     $wifi = sanitize_data($_POST['wifi']);
@@ -28,12 +30,12 @@ if (isset($_POST['submit'])) {
     // Additional Features
     $touchscreen = sanitize_data($_POST['touchscreen']);
     $fitness_features = sanitize_data($_POST['fitness_features']);
-    $features = sanitize_data($_POST['features']);
+    $water_resistant = sanitize_data($_POST['water_resistant']);
     $extra_features = sanitize_data($_POST['extra_features']);
 
     // Perform the database insertion
-    $sql = "INSERT INTO sm_watch_specs (product_id, dial_shape, bluetooth, gps, call_function, `notification`, display, screen_size, os, wifi, sensors, battery_type, battery_life, touchscreen, fitness_features, features, extra_features) 
-            VALUES ('$product_id', '$dial_shape', '$bluetooth', '$gps', '$call_function', '$notification', '$display', '$screen_size', '$os', '$wifi', '$sensors', '$battery_type', '$battery_life', '$touchscreen', '$fitness_features', '$features', '$extra_features')";
+    $sql = "INSERT INTO sm_watch_specs (product_id, `weight`, dial_shape, bluetooth, gps, call_function, `notification`, display, screen_size, os, compatible_os, wifi, sensors, battery_type, battery_life, touchscreen, fitness_features, water_resistant, extra_features) 
+            VALUES ('$product_id', '$weight', '$dial_shape', '$bluetooth', '$gps', '$call_function', '$notification', '$display', '$screen_size', '$os', '$compatible_os', '$wifi', '$sensors', '$battery_type', '$battery_life', '$touchscreen', '$fitness_features', '$water_resistant', '$extra_features')";
 
     $result = mysqli_query($con, $sql);
 
@@ -91,6 +93,10 @@ if (isset($_POST['submit'])) {
                             <!-- Display Information -->
                             <h3>Display Information</h3>
                             <div class="form-group">
+                                <label for="weight">Weight:</label>
+                                <input type="text" name="weight" id="weight" class="form-control" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="dial_shape">Dial Shape:</label>
                                 <input type="text" name="dial_shape" id="dial_shape" class="form-control" required>
                             </div>
@@ -141,7 +147,10 @@ if (isset($_POST['submit'])) {
                                 <label for="os">Operating System:</label>
                                 <input type="text" name="os" id="os" class="form-control" required>
                             </div>
-
+                            <div class="form-group">
+                                <label for="compatible_os">Compatible Operating System:</label>
+                                <input type="text" name="compatible_os" id="compatible_os" class="form-control" required>
+                            </div>
                             <!-- Battery and Display Features -->
                             <h3>Battery and Display Features</h3>
                             <div class="form-group">
@@ -180,8 +189,8 @@ if (isset($_POST['submit'])) {
                             </div>
 
                             <div class="form-group">
-                                <label for="features">Features:</label>
-                                <input type="text" name="features" id="features" class="form-control" required>
+                                <label for="water_resistant">Water Resistant:</label>
+                                <input type="text" name="water_resistant" id="water_resistant" class="form-control" required>
                             </div>
 
                             <div class="form-group">

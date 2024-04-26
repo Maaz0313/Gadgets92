@@ -30,7 +30,7 @@ require('inc/header.php');
             </div>
         </div>
         <section class="bg-dark-subtle w-md-100 w-sm-100 text-black pb-4">
-            <form class="row g-3 p-3 w-md-75 w-sm-65 mx-auto" action="signupCode.php" method="POST">
+            <form enctype="multipart/form-data" class="row g-3 p-3 w-md-75 w-sm-65 mx-auto" action="signupCode.php" method="POST">
                 <div class="col-12">
                     <label for="validationDefault01" class="form-label">Name <span class="req">*</span></label>
                     <input type="text" class="form-control" name="name" id="validationDefault01" required

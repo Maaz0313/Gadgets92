@@ -1,6 +1,5 @@
 <?php
 include('dbcon.php');
-// include('inc/header.php');
 $base_url = "http://gadgets92.test";
 
 include('inc/functions.inc.php');
@@ -32,7 +31,7 @@ while ($row = mysqli_fetch_array($sql)) {
             break;
     }
     $s .= "
-    <li class='p-3'>
+    <li class='p-3 d-inline'>
         <a class='link-p-colr' href='" . $base_url . $url ."/product.php?id=" . $row['product_id'] . "'>
             <div class='live-outer'>
                 <div class='live-im'>

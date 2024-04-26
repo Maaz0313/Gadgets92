@@ -9,17 +9,31 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
-.search-results {
-    z-index: 9999;
-    width: 80vw;
-    position: absolute;
-    top: 80%;
-    left: 10%;
-    
+@media screen and (min-width: 768px) {
+    .search-results {
+        z-index: 9999;
+        width: 40vw;
+        position: absolute;
+        top: 80%;
+        left: 10%;
+        max-height: 50vw;
+        overflow-y: scroll;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .search-results {
+        z-index: 9999;
+        width: 80vw;
+        position: absolute;
+        top: 80%;
+        left: 10%;
+        max-height: 50vw;
+        overflow-y: scroll;
+    }
 }
 .search-results li{
     width: 100%;
-    overflow: hidden;
 }
 .link-p-colr {
     color: #333;

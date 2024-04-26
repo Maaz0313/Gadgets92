@@ -3,12 +3,14 @@ require('../inc/header.php');
 require('../dbcon.php');
 require('../inc/functions.inc.php');
 
+
+
 if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
     $page_no = $_GET['page_no'];
 } else {
     $page_no = 1;
 }
-$total_records_per_page = 10;
+$total_records_per_page = 3;
 $offset = ($page_no - 1) * $total_records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
@@ -25,7 +27,7 @@ $second_last = $total_no_of_pages - 1;
 $searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
 $brand = isset($_GET['brand']) ? mysqli_real_escape_string($con, $_GET['brand']) : '';
 $whereClause = '';
-
+$orderClause = '';
 if ($searchTerm) {
     $whereClause = " AND products.product_name LIKE '%" . mysqli_real_escape_string($con, $searchTerm) . "%'";
 } else {
@@ -34,9 +36,17 @@ if ($searchTerm) {
 
 if ($brand) {
     $whereClause .= " AND brands.brand_name = '" . $brand . "'";
-}
-else {
+} else {
     $whereClause .= '';
+}
+if (isset($_GET['sort']) && $_GET['sort'] == "upcoming") {
+    $whereClause .= " AND products.release_date > CURDATE()";
+}
+if (isset($_GET['sort']) && $_GET['sort'] == "latest") {
+    $orderClause .= " ORDER BY products.release_date DESC";
+}
+if (isset($_GET['sort']) && $_GET['sort'] == "battery") {
+    $orderClause .= " ORDER BY mobile_specs.battery_capacity DESC";
 }
 if (isset($_GET['min']) && isset($_GET['max']) && !empty($_GET['min']) && !empty($_GET['max'])) {
     $min = mysqli_real_escape_string($con, $_GET['min']);
@@ -47,8 +57,9 @@ $sql = "SELECT *
     FROM products
     INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id
     INNER JOIN brands ON products.brand_id = brands.brand_id
-    WHERE products.status = 1 " . $whereClause . "
+    WHERE products.status = 1 " . $whereClause . $orderClause . "
     LIMIT $offset, $total_records_per_page";
+// echo $sql;
 $result = mysqli_query($con, $sql);
 if (!$result) {
     $_SESSION['fail_msg'] = mysqli_error($con);
@@ -799,11 +810,11 @@ if (isset($_SESSION['status'])) {
                                     }
                                 }
                                 echo "<li class='page-item'><a class='page-link'>...</a></li>";
-                                echo "<li class='page-item'><a class='page-link href='?page_no=$second_last'>$second_last</a></li>";
-                                echo "<li class='page-item'><a class='page-link href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
+                                echo "<li class='page-item'><a class='page-link' href='?page_no=$second_last'>$second_last</a></li>";
+                                echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
                             } elseif ($page_no > 4 && $page_no < $total_no_of_pages - 4) {
-                                echo "<li class='page-item'><a class='page-link href='?page_no=1'>1</a></li>";
-                                echo "<li class='page-item'><a class='page-link href='?page_no=2'>2</a></li>";
+                                echo "<li class='page-item'><a class='page-link' href='?page_no=1'>1</a></li>";
+                                echo "<li class='page-item'><a class='page-link' href='?page_no=2'>2</a></li>";
                                 echo "<li class='page-item'><a class='page-link>...</a></li>";
                                 for ($counter = $page_no - $adjacents; $counter <= $page_no + $adjacents; $counter++) {
                                     if ($counter == $page_no) {
@@ -837,7 +848,7 @@ if (isset($_SESSION['status'])) {
                                                     } ?>>Next</a>
                         </li>
                         <?php if ($page_no < $total_no_of_pages) {
-                            echo "<li class='page-item'><a class='page-link href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
+                            echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
                         } ?>
                     </ul>
                 </nav>

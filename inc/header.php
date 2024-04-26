@@ -1,7 +1,7 @@
 <?php
 $link = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $base_url = "http://gadgets92.test";
-$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"; 
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -52,7 +52,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <!-- Centered Search Bar -->
                     <form class="d-flex mx-auto position-relative" id="form-search" autocomplete="off">
                         <input class="form-control me-2" onkeyup="fx_1(this.value)" name="search" type="search" placeholder="Search" aria-label="Search" id="qu">
-                        <ul class="search-results position-absolute top-100 start-0 w-auto d-none list-group list-unstyled bg-white" id="livesearch1"></ul>
+                        <ul class="search-results position-absolute top-100 start-0 d-none list-group list-unstyled bg-white" id="livesearch1"></ul>
                         <button class="btn btn-success float-start" type="submit">Search</button>
                     </form>
                     <!-- Login/Signup Buttons -->
@@ -73,6 +73,8 @@ if (session_status() === PHP_SESSION_NONE) {
                 </div>
             </div>
         </nav>
+
+
         <!-- Search bar shown on mobile screens only -->
         <form class="py-3 d-flex justify-content-end d-md-none custom-form position-relative" style="background-color:#FFDB58;" method="get" autocomplete="off" id="search2">
             <input class="form-control w-50 ms-auto" onkeyup="fx_2(this.value)" name="search" type="search" placeholder="Search" aria-label="Search" id="mu">
@@ -147,12 +149,6 @@ if (session_status() === PHP_SESSION_NONE) {
                         <?php
                         }
                         ?>
-                    </li>
-                    <li class="nav-item mt-4 ms-3">
-                        <form class="d-flex mx-auto" method="get">
-                            <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-success" type="submit">Search</button>
-                        </form>
                     </li>
                 </ul>
             </div>

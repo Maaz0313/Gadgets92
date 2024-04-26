@@ -183,7 +183,7 @@ $otherSensors = sanitize_data($_POST['other_sensors']);
 
                             <div class="form-group">
                                 <label for="front_camera">Front Camera</label>
-                                <input type="text" id="camera" name="camera" class="form-control" required>
+                                <input type="text" id="front_camera" name="front_camera" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="ram">RAM</label>

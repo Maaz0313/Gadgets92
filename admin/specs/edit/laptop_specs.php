@@ -78,15 +78,15 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($con, $sql);
 
     if ($result) {
-        $_SESSION['success_msg'] = "Record inserted successfully";
+        $_SESSION['success_msg'] = "Record updated successfully";
 ?><script>
-            window.location.href = "../products/index.php"
+            window.location.href = "../../products/index.php"
         </script><?php
                     exit();
                 } else {
                     $_SESSION['fail_msg'] = "Error updating record: " . mysqli_error($con);
                     ?><script>
-            window.location.href = "../products/index.php"
+            window.location.href = "../../products/index.php"
         </script><?php
                     exit();
                 }

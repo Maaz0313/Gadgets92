@@ -1,12 +1,16 @@
 <?php
 session_start();
-require '../../dbcon.php';
+require '../../../dbcon.php';
 $title = "Add Laptop Specs";
-require '../inc/header.php';
+require '../../inc/header.php';
 
-require '../functions/logic.php';
+require '../../functions/logic.php';
 
-$productId = isset($_GET['product_id']) ? sanitize_data($_GET['product_id']) : 0;
+$id = isset($_GET['id']) ? sanitize_data($_GET['id']) : 0;
+
+$sql = "SELECT * FROM laptop_specs WHERE product_id = $id";
+$result = mysqli_query($con, $sql);
+$row = mysqli_fetch_assoc($result);
 
 if (isset($_POST['submit'])) {
     // Retrieve data from the form
@@ -64,13 +68,12 @@ if (isset($_POST['submit'])) {
     $disk_drive = isset($_POST['disk_drive']) ? 1 : 0;
 
     // Insert data into laptop_specs table
-    $sql = "INSERT INTO laptop_specs (product_id, model, os, dimensions, `weight`, colors, touch_screen, screen_size, screen_resolution, display, display_features, 
-            processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram_memory, ram_type, ram_frequency, ssd_storage, hdd_storage, battery, power_supply, 
-            bluetooth, wifi, ethernet_port, usb_port, hdmi_port, multi_card_slot, headset_jack, webcam, mic, speakers, disk_drive, keyboard, backlit_keyboard) 
-            VALUES ('$product_id', '$model', '$os', '$dimensions', '$weight', '$colors', '$touch_screen', '$screen_size', '$screen_resolution', '$display', '$display_features', 
-            '$processor', '$processor_variant', '$graphics', '$clock_speed', '$cores', '$cache', '$sys_arch', '$ram_memory', '$ram_type', '$ram_frequency', '$ssd_storage', '$hdd_storage',
-            '$battery', '$power_supply', '$bluetooth', '$wifi', '$ethernet_port', '$usb_port', '$hdmi_port', '$multi_card_slot', '$headset_jack', '$webcam', '$mic', 
-            '$speakers', '$disk_drive','$keyboard', '$backlit_keyboard')";
+    $sql = "UPDATE laptop_specs SET 
+            model = '$model', os = '$os', dimensions = '$dimensions', `weight` = '$weight', colors = '$colors', touch_screen = '$touch_screen', screen_size = '$screen_size', screen_resolution = '$screen_resolution', display = '$display', display_features = '$display_features', 
+            processor = '$processor', processor_variant = '$processor_variant', graphics = '$graphics', clock_speed = '$clock_speed', cores = '$cores', cache = '$cache', sys_arch = '$sys_arch', ram_memory = '$ram_memory', ram_type = '$ram_type', ram_frequency = '$ram_frequency', ssd_storage = '$ssd_storage', hdd_storage = '$hdd_storage', battery = '$battery', power_supply = '$power_supply', 
+            bluetooth = '$bluetooth', wifi = '$wifi', ethernet_port = '$ethernet_port', usb_port = '$usb_port', hdmi_port = '$hdmi_port', multi_card_slot = '$multi_card_slot', headset_jack = '$headset_jack', webcam = '$webcam', mic = '$mic',
+            speakers = '$speakers', disk_drive = '$disk_drive', keyboard = '$keyboard', backlit_keyboard = '$backlit_keyboard'
+            WHERE product_id = '$id'";
 
     $result = mysqli_query($con, $sql);
 
@@ -124,22 +127,22 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="card-body">
                         <form method="POST">
-                            <input type="hidden" name="product_id" value="<?php echo isset($_GET['product_id']) ? $_GET['product_id'] : ''; ?>">
+                            <input type="hidden" name="product_id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
 
                             <!-- General Information -->
                             <h3 class="my-3">General Information</h3>
                             <div class="form-group">
                                 <label for="model" class="form-label">Model:</label>
-                                <input type="text" name="model" class="form-control" required>
+                                <input type="text" name="model" class="form-control" value="<?=$row['model']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="os" class="form-label">Operating System:</label>
-                                <input type="text" name="os" class="form-control" required>
+                                <input type="text" name="os" class="form-control" value="<?=$row['os']?>" required>
                             </div>
 
                             <div class="form-check">
-                                <input type="checkbox" id="touch_screen" class="form-check-input" name="touch_screen">
+                                <input type="checkbox" id="touch_screen" class="form-check-input" name="touch_screen" <?= ($row['touch_screen']==1) ? 'checked' : '' ?>>
                                 <label for="touch_screen" class="form-check-label">Touch Screen</label>
                             </div>
 
@@ -147,186 +150,186 @@ if (isset($_POST['submit'])) {
                             <h3 class="my-3">Design Information</h3>
                             <div class="form-group">
                                 <label for="dimensions" class="form-label">Dimensions:</label>
-                                <input type="text" name="dimensions" class="form-control" required>
+                                <input type="text" name="dimensions" class="form-control" value="<?=$row['dimensions']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="weight" class="form-label">Weight:</label>
-                                <input type="text" name="weight" class="form-control" required>
+                                <input type="text" name="weight" class="form-control" value="<?=$row['weight']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="colors" class="form-label">Colors:</label>
-                                <input type="text" name="colors" class="form-control" required>
+                                <input type="text" name="colors" class="form-control" value="<?=$row['colors']?>" required>
                             </div>
 
                             <!-- Display Information -->
                             <h3 class="my-3">Display Information</h3>
                             <div class="form-group">
                                 <label for="screen_size" class="form-label">Screen Size (in inches):</label>
-                                <input type="text" name="screen_size" class="form-control" required>
+                                <input type="text" name="screen_size" class="form-control" value="<?=$row['screen_size']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="screen_resolution" class="form-label">Screen Resolution:</label>
-                                <input type="text" name="screen_resolution" class="form-control" required>
+                                <input type="text" name="screen_resolution" class="form-control" value="<?=$row['screen_resolution']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="display" class="form-label">Display:</label>
-                                <input type="text" name="display" class="form-control" required>
+                                <input type="text" name="display" class="form-control" value="<?=$row['display']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="display_features" class="form-label">Display Features:</label>
-                                <input type="text" name="display_features" class="form-control" required>
+                                <input type="text" name="display_features" class="form-control" value="<?=$row['display_features']?>" required>
                             </div>
 
                             <!-- Processor Information -->
                             <h3 class="my-3">Processor Information</h3>
                             <div class="form-group">
                                 <label for="processor" class="form-label">Processor:</label>
-                                <input type="text" name="processor" class="form-control" required>
+                                <input type="text" name="processor" class="form-control" value="<?=$row['processor']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="processor_variant" class="form-label">Processor Variant:</label>
-                                <input type="text" name="processor_variant" class="form-control" required>
+                                <input type="text" name="processor_variant" class="form-control" value="<?=$row['processor_variant']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="graphics" class="form-label">Graphics:</label>
-                                <input type="text" name="graphics" class="form-control" required>
+                                <input type="text" name="graphics" class="form-control" value="<?=$row['graphics']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="clock_speed" class="form-label">Clock Speed:</label>
-                                <input type="text" name="clock_speed" class="form-control" required>
+                                <input type="text" name="clock_speed" class="form-control" value="<?=$row['clock_speed']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="cores" class="form-label">Number of Cores:</label>
-                                <input type="text" name="cores" class="form-control" required>
+                                <input type="text" name="cores" class="form-control" value="<?=$row['cores']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="cache" class="form-label">Cache:</label>
-                                <input type="text" name="cache" class="form-control" required>
+                                <input type="text" name="cache" class="form-control" value="<?=$row['cache']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="sys_arch" class="form-label">System Architecture:</label>
-                                <input type="text" name="sys_arch" class="form-control" required>
+                                <input type="text" name="sys_arch" class="form-control" value="<?=$row['sys_arch']?>" required>
                             </div>
 
                             <!-- Memory and Storage -->
                             <h3 class="my-3">Memory and Storage</h3>
                             <div class="form-group">
                                 <label for="ram_memory" class="form-label">RAM Memory:</label>
-                                <input type="text" name="ram_memory" class="form-control" required>
+                                <input type="text" name="ram_memory" class="form-control" value="<?=$row['ram_memory']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="ram_type" class="form-label">RAM Type:</label>
-                                <input type="text" name="ram_type" class="form-control" required>
+                                <input type="text" name="ram_type" class="form-control" value="<?=$row['ram_type']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="ram_frequency" class="form-label">RAM Frequency:</label>
-                                <input type="text" name="ram_frequency" class="form-control" required>
+                                <input type="text" name="ram_frequency" class="form-control" value="<?=$row['ram_frequency']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="ssd_storage" class="form-label">SSD Storage:</label>
-                                <input type="text" name="ssd_storage" class="form-control" required>
+                                <input type="text" name="ssd_storage" class="form-control" value="<?=$row['ssd_storage']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="hdd_storage" class="form-label">HDD Storage:</label>
-                                <input type="text" name="hdd_storage" class="form-control" required>
+                                <input type="text" name="hdd_storage" class="form-control" value="<?=$row['hdd_storage']?>" required>
                             </div>
 
                             <!-- Battery Information -->
                             <h3 class="my-3">Battery Information</h3>
                             <div class="form-group">
                                 <label for="battery" class="form-label">Battery:</label>
-                                <input type="text" name="battery" class="form-control" required>
+                                <input type="text" name="battery" class="form-control" value="<?=$row['battery']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="power_supply" class="form-label">Power Supply:</label>
-                                <input type="text" name="power_supply" class="form-control" required>
+                                <input type="text" name="power_supply" class="form-control" value="<?=$row['power_supply']?>" required>
                             </div>
 
                             <!-- Connectivity -->
                             <h3 class="my-3">Connectivity</h3>
                             <div class="form-group">
                                 <label for="bluetooth" class="form-label">Bluetooth:</label>
-                                <input type="text" name="bluetooth" class="form-control" required>
+                                <input type="text" name="bluetooth" class="form-control" value="<?=$row['bluetooth']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="wifi" class="form-label">Wi-Fi:</label>
-                                <input type="text" name="wifi" class="form-control" required>
+                                <input type="text" name="wifi" class="form-control" value="<?=$row['wifi']?>" required>
                             </div>
 
                             <!-- Ports and Other Features -->
                             <h3 class="my-3">Ports and Other Features</h3>
                             <div class="form-group">
                                 <label for="ethernet_port" class="form-label">Ethernet Port:</label>
-                                <input type="text" name="ethernet_port" class="form-control" required>
+                                <input type="text" name="ethernet_port" class="form-control" value="<?=$row['ethernet_port']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="usb_port" class="form-label">USB Ports:</label>
-                                <input type="text" name="usb_port" class="form-control" required>
+                                <input type="text" name="usb_port" class="form-control" value="<?=$row['usb_port']?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="hdmi_port" class="form-label">HDMI Port:</label>
-                                <input type="text" name="hdmi_port" class="form-control" required>
+                                <input type="text" name="hdmi_port" class="form-control" value="<?=$row['hdmi_port']?>" required>
                             </div>
                             <!-- multi card slot -->
 
                             <div class="form-group">
                                 <label for="multi_card_slot" class="form-label">Multi Card Slot:</label>
-                                <input type="text" name="multi_card_slot" class="form-control" required>
+                                <input type="text" name="multi_card_slot" class="form-control" value="<?=$row['multi_card_slot']?>" required>
                             </div>
 
                             <div class="form-check">
-                                <input type="checkbox" id="headset_jack" class="form-check-input" name="headset_jack">
+                                <input type="checkbox" id="headset_jack" class="form-check-input" name="headset_jack" <?= ($row['headset_jack']==1) ? 'checked' : '' ?>>
                                 <label for="headset_jack" class="form-label">Headset Jack</label>
                             </div>
 
                             <div class="form-check">
-                                <input type="checkbox" id="webcam" class="form-check-input" name="webcam">
+                                <input type="checkbox" id="webcam" class="form-check-input" name="webcam" <?= ($row['webcam']==1) ? 'checked' : '' ?>>
                                 <label for="webcam" class="form-check-label">Webcam</label>
                             </div>
 
                             <div class="form-check">
-                                <input type="checkbox" id="mic" class="form-check-input" name="mic">
+                                <input type="checkbox" id="mic" class="form-check-input" name="mic" <?= ($row['mic']==1) ? 'checked' : '' ?>>
                                 <label for="mic" class="form-check-label">Microphone</label>
                             </div>
 
                             <div class="form-group">
                                 <label for="speakers" class="form-label">Speakers:</label>
-                                <input type="text" name="speakers" class="form-control" required>
+                                <input type="text" name="speakers" class="form-control" value="<?=$row['speakers']?>" required>
                             </div>
 
                             <!-- Keyboard Information -->
                             <h3 class="my-3">Keyboard Information</h3>
                             <div class="form-group">
                                 <label for="keyboard" class="form-label">Keyboard:</label>
-                                <input type="text" name="keyboard" class="form-control" required>
+                                <input type="text" name="keyboard" class="form-control" value="<?=$row['keyboard']?>" required>
                             </div>
 
                             <div class="form-check">
-                                <input type="checkbox" id="backlit_keyboard" class="form-check-input" name="backlit_keyboard">
+                                <input type="checkbox" id="backlit_keyboard" class="form-check-input" name="backlit_keyboard" <?= ($row['backlit_keyboard']==1) ? 'checked' : '' ?>>
                                 <label for="backlit_keyboard" class="form-check-label">Backlit Keyboard</label>
                             </div>
 
                             <div class="form-check">
-                                <input type="checkbox" id="disk_drive" name="disk_drive" class="form-check-input">
+                                <input type="checkbox" id="disk_drive" name="disk_drive" class="form-check-input" <?= ($row['disk_drive']==1) ? 'checked' : '' ?>>
                                 <label for="disk_drive" class="form-check-label">Disk Drive</label>
                             </div>
                             <!-- Submit Button -->
@@ -340,4 +343,4 @@ if (isset($_POST['submit'])) {
     </div>
 </div>
 <!-- END MAIN CONTENT-->
-<?php require '../inc/footer.php'; ?>
+<?php require '../../inc/footer.php'; ?>

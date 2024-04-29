@@ -52,19 +52,19 @@ if (isset($_POST['submit'])) {
 
                 switch (categoryId) {
                     case '1':
-                        window.location.href = "../specs/mobile_specs_form.php?product_id=" + productId;
+                        window.location.href = "../specs/add/mobile_specs.php?product_id=" + productId;
                         break;
                     case '2':
-                        window.location.href = "../specs/laptop_specs_form.php?product_id=" + productId;
+                        window.location.href = "../specs/add/laptop_specs.php?product_id=" + productId;
                         break;
                     case '3':
-                        window.location.href = "../specs/headset_specs_form.php?product_id=" + productId;
+                        window.location.href = "../specs/add/headset_specs.php?product_id=" + productId;
                         break;
                     case '4':
-                        window.location.href = "../specs/smartwatch_specs_form.php?product_id=" + productId;
+                        window.location.href = "../specs/add/smartwatch_specs.php?product_id=" + productId;
                         break;
                     case '5':
-                        window.location.href = "../specs/tv_specs_form.php?product_id=" + productId;
+                        window.location.href = "../specs/add/tv_specs.php?product_id=" + productId;
                         break;
                     default:
                         window.location.href = "index.php";

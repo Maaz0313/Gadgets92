@@ -97,7 +97,34 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                                             <td><img src="../images/products/<?= $product_image ?>" alt="" height="50"></td>
                                             <td><?= $release_date ?></td>
                                             <td class="d-flex btn-group">
-                                                <a href="edit.php?id=<?= $id ?>" class="btn btn-primary btn-sm">Edit</a>
+                                                <a href="edit.php?id=<?= $id ?>" class="btn btn-primary btn-sm">Edit Product</a>
+                                                <?php
+                                                switch ($category_name) {
+                                                    case 'mobiles':
+                                                        echo '<a href="../specs/edit/mobile_specs.php?id='. $id.'" class="btn btn-success btn-sm">Edit Specs</a>';
+                                                        break;
+
+                                                    case 'laptops':
+                                                        echo '<a href="../specs/edit/laptop_specs.php?id='. $id.'" class="btn btn-success btn-sm">Edit Specs</a>';
+                                                        break;
+                                                        
+                                                    case 'headsets':
+                                                        echo '<a href="../specs/edit/headset_specs.php?id='. $id.'" class="btn btn-success btn-sm">Edit Specs</a>';
+                                                        break;
+
+                                                    case 'smart watches':
+                                                        echo '<a href="../specs/edit/smartwatch_specs.php?id='. $id.'" class="btn btn-success btn-sm">Edit Specs</a>';
+                                                        break;
+                                        
+                                                    case 'televisions':
+                                                        echo '<a href="../specs/edit/tv_specs.php?id='. $id.'" class="btn btn-success btn-sm">Edit Specs</a>';
+                                                        break;
+
+                                                    default:
+                                                        echo 'Category does not exist';
+                                                        break;
+                                                }
+                                                ?>
                                                 <a href="delete.php?id=<?= $id ?>" class="btn btn-danger btn-sm">Delete</a>
                                             </td>
                                         </tr>

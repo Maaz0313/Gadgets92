@@ -16,6 +16,10 @@ if (isset($_POST['action'])) {
         $ram = implode("','", $_POST['ram']);
         $sql .= " AND laptop_specs.ram_memory IN ('" . $ram . "')";
     }
+    if (isset($_POST['touch'])) {
+        $touch = implode("','", $_POST['touch']);
+        $sql .= " AND laptop_specs.touch_screen IN ('" . $touch . "')";
+    }
     if (isset($_POST['ssd_storage'])) {
         $ssd_storage = implode("','", $_POST['ssd_storage']);
         $sql .= " AND laptop_specs.ssd_storage IN ('" . $ssd_storage . "')";

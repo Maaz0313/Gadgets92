@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
         </script><?php
                     exit();
                 } else {
-                    $_SESSION['fail_msg'] = "Error inserting record: " . mysqli_error($con);
+                    $_SESSION['fail_msg'] = "Error updating record: " . mysqli_error($con);
                     ?><script>
             window.location.href = "../products/index.php"
         </script><?php

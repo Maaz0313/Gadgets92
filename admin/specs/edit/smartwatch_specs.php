@@ -1,10 +1,15 @@
 <?php
 session_start();
-require '../../dbcon.php';
+require '../../../dbcon.php';
 $title = "Add Smartwatch Specs";
-require '../inc/header.php';
+require '../../inc/header.php';
 
-require '../functions/logic.php';
+require '../../functions/logic.php';
+
+$productId = isset($_GET['id']) ? sanitize_data($_GET['id']) : 0;
+$selectQuery = "SELECT * FROM sm_watch_specs WHERE product_id = '$productId'";
+$result = mysqli_query($con, $selectQuery);
+$row = mysqli_fetch_assoc($result);
 
 if (isset($_POST['submit'])) {
     $product_id = sanitize_data($_POST['product_id']);
@@ -34,8 +39,7 @@ if (isset($_POST['submit'])) {
     $extra_features = sanitize_data($_POST['extra_features']);
 
     // Perform the database insertion
-    $sql = "INSERT INTO sm_watch_specs (product_id, `weight`, dial_shape, bluetooth, gps, call_function, `notification`, display, screen_size, os, compatible_os, wifi, sensors, battery_type, battery_life, touchscreen, fitness_features, water_resistant, extra_features) 
-            VALUES ('$product_id', '$weight', '$dial_shape', '$bluetooth', '$gps', '$call_function', '$notification', '$display', '$screen_size', '$os', '$compatible_os', '$wifi', '$sensors', '$battery_type', '$battery_life', '$touchscreen', '$fitness_features', '$water_resistant', '$extra_features')";
+    $sql = "UPDATE `sm_watch_specs` SET `weight`='$weight', `dial_shape`='$dial_shape', `bluetooth`='$bluetooth', `gps`='$gps', `call_function`='$call_function', `notification`='$notification', `display`='$display', `screen_size`='$screen_size', `os`='$os', `compatible_os`='$compatible_os', `wifi`='$wifi', `sensors`='$sensors', `battery_type`='$battery_type', `battery_life`='$battery_life', `touchscreen`='$touchscreen', `fitness_features`='$fitness_features', `water_resistant`='$water_resistant', `extra_features`='$extra_features' WHERE `product_id`='$product_id'";
 
     $result = mysqli_query($con, $sql);
 
@@ -88,89 +92,89 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="card-body">
                         <form method="POST">
-                            <input type="hidden" name="product_id" value="<?php echo isset($_GET['product_id']) ? $_GET['product_id'] : ''; ?>">
+                            <input type="hidden" name="product_id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
 
                             <!-- Display Information -->
                             <h3>Display Information</h3>
                             <div class="form-group">
                                 <label for="weight">Weight:</label>
-                                <input type="text" name="weight" id="weight" class="form-control" required>
+                                <input type="text" name="weight" id="weight" class="form-control" value="<?= $row['weight'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="dial_shape">Dial Shape:</label>
-                                <input type="text" name="dial_shape" id="dial_shape" class="form-control" required>
+                                <input type="text" name="dial_shape" id="dial_shape" class="form-control" value="<?= $row['dial_shape'] ?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="bluetooth">Bluetooth:</label>
                                 <select name="bluetooth" id="bluetooth" class="form-control" required>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1" <?= $row['bluetooth'] == 1 ? 'selected' : '' ?>>Yes</option>
+                                    <option value="0" <?= $row['bluetooth'] == 0 ? 'selected' : '' ?>>No</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="gps">GPS:</label>
                                 <select name="gps" id="gps" class="form-control" required>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1" <?= $row['gps'] == 1 ? 'selected' : '' ?>>Yes</option>
+                                    <option value="0" <?= $row['gps'] == 0 ? 'selected' : '' ?>>No</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="call_function">Call Function:</label>
                                 <select name="call_function" id="call_function" class="form-control" required>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1" <?= $row['call_function'] == 1 ? 'selected' : '' ?>>Yes</option>
+                                    <option value="0" <?= $row['call_function'] == 0 ? 'selected' : '' ?>>No</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="notification">Notification:</label>
                                 <select name="notification" id="notification" class="form-control" required>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1" <?= $row['notification'] == 1 ? 'selected' : '' ?>>Yes</option>
+                                    <option value="0" <?= $row['notification'] == 0 ? 'selected' : '' ?>>No</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="display">Display:</label>
-                                <input type="text" name="display" id="display" class="form-control" required>
+                                <label for="display">Display Tech:</label>
+                                <input type="text" name="display" id="display" class="form-control" value="<?= $row['display'] ?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="screen_size">Screen Size:</label>
-                                <input type="text" name="screen_size" id="screen_size" class="form-control" required>
+                                <input type="text" name="screen_size" id="screen_size" class="form-control" value="<?= $row['screen_size'] ?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="os">Operating System:</label>
-                                <input type="text" name="os" id="os" class="form-control" required>
+                                <input type="text" name="os" id="os" class="form-control" value="<?= $row['os'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="compatible_os">Compatible Operating System:</label>
-                                <input type="text" name="compatible_os" id="compatible_os" class="form-control" required>
+                                <input type="text" name="compatible_os" id="compatible_os" class="form-control" value="<?= $row['compatible_os'] ?>" required>
                             </div>
                             <!-- Battery and Display Features -->
                             <h3>Battery and Display Features</h3>
                             <div class="form-group">
                                 <label for="wifi">Wi-Fi:</label>
-                                <input type="text" name="wifi" id="wifi" class="form-control" required>
+                                <input type="text" name="wifi" id="wifi" class="form-control" value="<?= $row['wifi'] ?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="sensors">Sensors:</label>
-                                <input type="text" name="sensors" id="sensors" class="form-control" required>
+                                <input type="text" name="sensors" id="sensors" class="form-control" value="<?= $row['sensors'] ?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="battery_type">Battery Type:</label>
-                                <input type="text" name="battery_type" id="battery_type" class="form-control" required>
+                                <input type="text" name="battery_type" id="battery_type" class="form-control" value="<?= $row['battery_type'] ?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="battery_life">Battery Life:</label>
-                                <input type="text" name="battery_life" id="battery_life" class="form-control" required>
+                                <input type="text" name="battery_life" id="battery_life" class="form-control" value="<?= $row['battery_life'] ?>" required>
                             </div>
 
                             <!-- Additional Features -->
@@ -178,24 +182,24 @@ if (isset($_POST['submit'])) {
                             <div class="form-group">
                                 <label for="touchscreen">Touchscreen:</label>
                                 <select name="touchscreen" id="touchscreen" class="form-control" required>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1" <?= $row['touchscreen'] == 1 ? 'selected' : '' ?>>Yes</option>
+                                    <option value="0" <?= $row['touchscreen'] == 0 ? 'selected' : '' ?>>No</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="fitness_features">Fitness Features:</label>
-                                <input type="text" name="fitness_features" id="fitness_features" class="form-control" required>
+                                <input type="text" name="fitness_features" id="fitness_features" class="form-control" value="<?= $row['fitness_features'] ?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="water_resistant">Water Resistant:</label>
-                                <input type="text" name="water_resistant" id="water_resistant" class="form-control" required>
+                                <input type="text" name="water_resistant" id="water_resistant" class="form-control" value="<?= $row['water_resistant'] ?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="extra_features">Extra Features:</label>
-                                <input type="text" name="extra_features" id="extra_features" class="form-control" required>
+                                <input type="text" name="extra_features" id="extra_features" class="form-control" value="<?= $row['extra_features'] ?>" required>
                             </div>
 
                             <!-- Submit Button -->
@@ -209,3 +213,6 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
+<?php
+require '../../inc/footer.php';
+?>

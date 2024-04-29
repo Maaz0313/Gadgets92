@@ -46,13 +46,13 @@ if (isset($_POST['submit'])) {
     if ($result) {
         $_SESSION['success_msg'] = "Record inserted successfully!";
 ?><script>
-            window.location.href = "../products/index.php";
+            window.location.href = "../../products/index.php";
         </script><?php
 
                 } else {
                     $_SESSION['fail_msg'] = "Error: " . mysqli_error($con);
                     ?><script>
-            window.location.href = "../products/index.php";
+            window.location.href = "../../products/index.php";
         </script><?php
 
                 }

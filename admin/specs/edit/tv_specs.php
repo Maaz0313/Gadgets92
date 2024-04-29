@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($con, $sql);
 
     if ($result) {
-        $_SESSION['success_msg'] = "Record inserted successfully!";
+        $_SESSION['success_msg'] = "TV specs updated successfully!";
         ?><script>window.location.href = "../../products/index.php"</script><?php
     } else {
         $_SESSION['fail_msg'] = "Error: " . mysqli_error($con);

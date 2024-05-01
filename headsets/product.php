@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
                         <div class="m-0 p-0 border-0">
                             <figure class="p-3 bg-secondary-subtle text-center rounded-3">
                                 <a class="p-0 m-0 border-0 text-center" data-rel="smrt_glr" href="../admin/images/products/<?= $row['product_image'] ?>" target="_blank" data-thumb="../admin/images/products/<?= $row['product_image'] ?>">
-                                    <img class="blend-mode ls-is-cached lazyloaded" data-src="../admin/images/products/<?= $row['product_image'] ?>" src="../admin/images/products/<?= $row['product_image'] ?>" alt="Realme Narzo N53 (8GB RAM + 128GB)">
+                                    <img class="blend-mode ls-is-cached lazyloaded" data-src="../admin/images/products/<?= $row['product_image'] ?>" src="../admin/images/products/<?= $row['product_image'] ?>" alt="<?= $row['product_name'] ?>">
                                 </a>
                             </figure>
                             <div class="position-absolute top-0 ms-2_2 mt-2_2 text-center">

@@ -22,6 +22,7 @@ if (isset($_POST['update'])) {
     $categoryId = sanitize_data($_POST['category_id']);
     $brandId = sanitize_data($_POST['brand_id']);
     $productName = sanitize_data($_POST['product_name']);
+    $slug = sanitize_data($_POST['product_slug']);
     $price = sanitize_data($_POST['price']);
     $releaseDate = sanitize_data($_POST['release_date']);
     $targetDir = '../images/products/';
@@ -32,7 +33,7 @@ if (isset($_POST['update'])) {
     
 
     // Update product details in the database
-    $updateQuery = "UPDATE products SET category_id = '$categoryId', brand_id = '$brandId', product_name = '$productName', price = '$price', release_date = '$releaseDate' WHERE product_id = '$productId'";
+    $updateQuery = "UPDATE products SET category_id = '$categoryId', brand_id = '$brandId', product_name = '$productName', product_slug = '$slug',  price = '$price', release_date = '$releaseDate' WHERE product_id = '$productId'";
     $updateResult = mysqli_query($con, $updateQuery);
 
 
@@ -162,7 +163,8 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                             </div>
                             <div class="form-group">
                                 <label for="product_name">Product Name</label>
-                                <input type="text" name="product_name" id="product_name" class="form-control" value="<?= $product['product_name'] ?>">
+                                <input type="text" name="product_name" id="product_name" class="form-control is-valid" value="<?= $product['product_name'] ?>">
+                                <input type="text" class="valid-feedback border-0" id="product_slug" name="product_slug" value="<?= $product['product_slug'] ?>" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="price">Price</label>
@@ -199,6 +201,19 @@ require '../inc/footer.php';
             data: 'selection=' + mainselection, // parameter name and value
             success: function(result) { // deal with the results
                 $("#brand_id").html(result); // insert in div above
+            }
+        });
+    });
+    $('#product_name').on('input', function() {
+        var productName = $(this).val();
+        $.ajax({
+            url: 'slugify.php', // Update with your PHP file path
+            method: 'POST',
+            data: {
+                productName: productName
+            },
+            success: function(data) {
+                $('#product_slug').val(data);
             }
         });
     });

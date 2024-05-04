@@ -16,6 +16,7 @@ if (isset($_POST['submit'])) {
     $categoryId = sanitize_data($_POST['category_id']);
     $brandId = sanitize_data($_POST['brand_id']);
     $productName = sanitize_data($_POST['product_name']);
+    $slug = sanitize_data($_POST['product_slug']);
     $price = sanitize_data($_POST['price']);
     $releaseDate = sanitize_data($_POST['release_date']);
     $targetDir = '../images/products/';
@@ -40,7 +41,7 @@ if (isset($_POST['submit'])) {
                 }
 
                 if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
-                    $sql = "INSERT INTO products(category_id, brand_id, product_name, price, release_date, product_image) VALUES('$categoryId', '$brandId', '$productName', '$price', '$releaseDate', '$fileName')";
+                    $sql = "INSERT INTO products(category_id, brand_id, product_name, product_slug, price, release_date, product_image) VALUES('$categoryId', '$brandId', '$productName', '$slug', '$price', '$releaseDate', '$fileName')";
                     $insertProductResult = mysqli_query($con, $sql);
                     if ($insertProductResult) {
                         $_SESSION['success_msg'] = "Product added successfully";
@@ -152,7 +153,8 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="form-group">
                                 <label for="product_name">Product Name</label>
-                                <input type="text" name="product_name" id="product_name" class="form-control" required>
+                                <input type="text" name="product_name" id="product_name" class="form-control is-valid" required>
+                                <input type="text" class="valid-feedback border-0" id="product_slug" name="product_slug" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="price">Price</label>
@@ -186,6 +188,19 @@ require "../inc/footer.php";
             data: 'selection=' + mainselection, // parameter name and value
             success: function(result) { // deal with the results
                 $("#brand_id").html(result); // insert in div above
+            }
+        });
+    });
+    $('#product_name').on('input', function() {
+        var productName = $(this).val();
+        $.ajax({
+            url: 'slugify.php', // Update with your PHP file path
+            method: 'POST',
+            data: {
+                productName: productName
+            },
+            success: function(data) {
+                $('#product_slug').val(data);
             }
         });
     });

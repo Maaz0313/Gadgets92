@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 29, 2024 at 04:08 PM
+-- Generation Time: May 04, 2024 at 08:42 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -300,6 +300,7 @@ CREATE TABLE `products` (
   `category_id` int NOT NULL,
   `brand_id` int NOT NULL,
   `product_name` varchar(150) NOT NULL,
+  `product_slug` varchar(255) NOT NULL,
   `price` decimal(10,0) NOT NULL,
   `product_image` varchar(150) NOT NULL,
   `release_date` date NOT NULL,
@@ -310,26 +311,26 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `category_id`, `brand_id`, `product_name`, `price`, `product_image`, `release_date`, `status`) VALUES
-(1, 1, 1, 'Samsung Galaxy S7 Edge (4GB RAM +128)', 56999, 's7 edge.jpeg', '2016-03-11', 1),
-(2, 1, 1, 'Samsung Galaxy S7 Edge (4GB RAM +32)', 50999, 's7 edge.jpeg', '2016-03-11', 1),
-(3, 2, 15, 'HP 15s-FR5012TU Intel Core i3 12th Gen (8GB/512GB SSD/Win 11)', 132900, 'hp-15s-fr5012tu-lapt.png', '2024-02-28', 1),
-(4, 3, 8, 'Sony WH-CH520 Headphone', 14500, 'sony-wh-ch520-headphone.png', '2023-04-11', 1),
-(5, 4, 25, 'Samsung Watch 4 Smartwatch', 36499, 'samsung-watch-4.png', '2021-08-27', 1),
-(6, 5, 16, 'LG B3 77 inch Ultra HD 4K Smart OLED TV', 629000, 'OLED77B3PUA_gallery_01_front_3000x3000.png', '2023-04-03', 1),
-(7, 1, 4, 'Vivo Y200e 5G (6GB RAM + 128)', 69999, 'vivo-y200e-5g.webp', '2024-02-22', 1),
-(8, 1, 4, 'Vivo Y200e 5G (8GB RAM + 128)', 77999, 'vivo-y200e-5g.webp', '2024-02-22', 1),
-(9, 1, 4, 'Vivo V30 Pro (8GB RAM + 256)', 141000, 'vivo-v30-pro.webp', '2024-03-07', 1),
-(10, 1, 4, 'Vivo V30 Pro (12GB RAM + 512)', 150000, 'vivo-v30-pro.webp', '2024-03-07', 1),
-(11, 1, 5, 'Tecno Camon 20', 60999, 'tecno-camon-20-pro-pakistan-priceoye-i672r-500x500.png', '2023-06-15', 1),
-(12, 2, 18, 'Dell Vostro 3520 Laptop (12th Gen Core i5/ 8GB/ 512GB SSD/ Win11)', 204999, 'notebook-vostro-15-3520.jpg', '2022-01-09', 1),
-(13, 2, 23, 'Asus VivoBook 15 (2020) M515DA-EJ521T Laptop', 141930, 'asus-vivobook-15-2020-m515da-ej521t.jpg', '2020-12-15', 1),
-(14, 2, 19, 'Lenovo IdeaPad D330 82H0001YIN Laptop', 85465, 'Lenovo IdeaPad D330 82H0001YIN Laptop.png', '2022-02-18', 1),
-(15, 5, 24, 'Samsung UA85CU8000KXXL 85 inches 4K Smart TV', 846999, 'samsung-ua85cu8000kxxl.webp', '2023-04-01', 1),
-(16, 4, 28, 'Amazfit T-Rex Ultra Smartwatch', 87499, 'amazfit-t-rex-ultra-smartwatch.webp', '2023-03-20', 1),
-(17, 3, 31, 'HP Bluetooth Headset 500 Headphone', 26799, 'hp-bluetooth-headset-500-headphone.webp', '2020-09-15', 1),
-(18, 3, 34, 'boAt Rockerz 235V2', 2500, 'boat-rockerz-235v2.webp', '2022-06-01', 1),
-(19, 1, 4, 'Vivo X Fold 3 Pro', 384999, 'vivo-x-fold-3-pro.webp', '2024-07-30', 1);
+INSERT INTO `products` (`product_id`, `category_id`, `brand_id`, `product_name`, `product_slug`, `price`, `product_image`, `release_date`, `status`) VALUES
+(1, 1, 1, 'Samsung Galaxy S7 Edge (4GB RAM +128)', 'samsung-galaxy-s7-edge-4gb-ram-128', 56999, 's7 edge.jpeg', '2016-03-11', 1),
+(2, 1, 1, 'Samsung Galaxy S7 Edge (4GB RAM +32)', 'samsung-galaxy-s7-edge-4gb-ram-32', 50999, 's7 edge.jpeg', '2016-03-11', 1),
+(3, 2, 15, 'HP 15s-FR5012TU Intel Core i3 12th Gen (8GB/512GB SSD/Win 11)', 'hp-15s-fr5012tu-intel-core-i3-12th-gen-8gb-512gb-ssd-win-11', 132900, 'hp-15s-fr5012tu-lapt.png', '2024-02-28', 1),
+(4, 3, 8, 'Sony WH-CH520 Headphone', 'sony-wh-ch520-headphone', 14500, 'sony-wh-ch520-headphone.png', '2023-04-11', 1),
+(5, 4, 25, 'Samsung Watch 4 Smartwatch', 'samsung-watch-4-smartwatch', 36499, 'samsung-watch-4.png', '2021-08-27', 1),
+(6, 5, 16, 'LG B3 77 inch Ultra HD 4K Smart OLED TV', 'lg-b3-77-inch-ultra-hd-4k-smart-oled-tv', 629000, 'OLED77B3PUA_gallery_01_front_3000x3000.png', '2023-04-03', 1),
+(7, 1, 4, 'Vivo Y200e 5G (6GB RAM + 128)', 'vivo-y200e-5g-6gb-ram-128', 69999, 'vivo-y200e-5g.webp', '2024-02-22', 1),
+(8, 1, 4, 'Vivo Y200e 5G (8GB RAM + 128)', 'vivo-y200e-5g-8gb-ram-128', 77999, 'vivo-y200e-5g.webp', '2024-02-22', 1),
+(9, 1, 4, 'Vivo V30 Pro (8GB RAM + 256)', 'vivo-v30-pro-8gb-ram-256', 141000, 'vivo-v30-pro.webp', '2024-03-07', 1),
+(10, 1, 4, 'Vivo V30 Pro (12GB RAM + 512)', 'vivo-v30-pro-12gb-ram-512', 150000, 'vivo-v30-pro.webp', '2024-03-07', 1),
+(11, 1, 5, 'Tecno Camon 20', 'tecno-camon-20', 60999, 'tecno-camon-20-pro-pakistan-priceoye-i672r-500x500.png', '2023-06-15', 1),
+(12, 2, 18, 'Dell Vostro 3520 Laptop (12th Gen Core i5/ 8GB/ 512GB SSD/ Win11)', 'dell-vostro-3520-laptop-12th-gen-core-i5-8gb-512gb-ssd-win11', 204999, 'notebook-vostro-15-3520.jpg', '2022-01-09', 1),
+(13, 2, 23, 'Asus VivoBook 15 (2020) M515DA-EJ521T Laptop', 'asus-vivobook-15-2020-m515da-ej521t-laptop', 141930, 'asus-vivobook-15-2020-m515da-ej521t.jpg', '2020-12-15', 1),
+(14, 2, 19, 'Lenovo IdeaPad D330 82H0001YIN Laptop', 'lenovo-ideapad-d330-82h0001yin-laptop', 85465, 'Lenovo IdeaPad D330 82H0001YIN Laptop.png', '2022-02-18', 1),
+(15, 5, 24, 'Samsung UA85CU8000KXXL 85 inches 4K Smart TV', 'samsung-ua85cu8000kxxl-85-inches-4k-smart-tv', 846999, 'samsung-ua85cu8000kxxl.webp', '2023-04-01', 1),
+(16, 4, 28, 'Amazfit T-Rex Ultra Smartwatch', 'amazfit-t-rex-ultra-smartwatch', 87499, 'amazfit-t-rex-ultra-smartwatch.webp', '2023-03-20', 1),
+(17, 3, 31, 'HP Bluetooth Headset 500 Headphone', 'hp-bluetooth-headset-500-headphone', 26799, 'hp-bluetooth-headset-500-headphone.webp', '2020-09-15', 1),
+(18, 3, 34, 'boAt Rockerz 235V2', 'boat-rockerz-235v2', 2500, 'boat-rockerz-235v2.webp', '2022-06-01', 1),
+(19, 1, 4, 'Vivo X Fold 3 Pro', 'vivo-x-fold-3-pro', 384999, 'vivo-x-fold-3-pro.webp', '2024-07-30', 1);
 
 -- --------------------------------------------------------
 

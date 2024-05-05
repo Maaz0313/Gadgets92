@@ -1,3 +1,0 @@
-RewriteEngine On
-
-RewriteRule ^mobiles/([^/]+)$ mobiles/product.php?slug=$1 [QSA,L]

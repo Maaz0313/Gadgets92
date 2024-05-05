@@ -1,6 +1,5 @@
 <?php
 date_default_timezone_set('Asia/Karachi');
-require('../inc/header.php');
 require('../dbcon.php');
 require('../inc/functions.inc.php');
 
@@ -16,7 +15,7 @@ if (empty($id)) {
 
 $sql = "SELECT *
     FROM products
-    INNER JOIN sm_watch_specs ON products.product_id = sm_watch_specs.product_id 
+    INNER JOIN headset_specs ON products.product_id = headset_specs.product_id 
     INNER JOIN brands ON products.brand_id = brands.brand_id
     WHERE products.product_id = $id";
 $result = mysqli_query($con, $sql);
@@ -205,34 +204,9 @@ if (isset($_POST['submit'])) {
                     <span class="fs-4" style="font-weight: 700;">Rs. <?= formatPrice($row['price']) ?> <span style="font-size: 13px;" class="fw-normal ">(onwards)</span></span>
                 </div>
                 <div class="row">
-                    <span class="greycolor font13">
-                        Available in 2 stores
-                    </span>
-                </div>
-                <div class="row">
                     <span>
-                        Realme Narzo N53 best price in Pakistan is at Rs. 35,000. The lowest price of Realme Narzo
-                        N53
-                        is Rs. 35,000 at Daraz.pk. The price was updated on January 1, 2024.
+                    <?= $row['product_description'] ?>
                     </span>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-4">
-                        <div class="card text-center">
-                            <div class="card-header p-0  bg-primary text-white">Amazon.in</div>
-                            <div class="card-footer p-0 bg-secondary-subtle">
-                                <h4 class="card-title mt-2">Rs. 8,999</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 sc-crd">
-                        <div class="card border-warning text-center">
-                            <div class="card-header p-0 bg-info text-white ">Flipkart.com</div>
-                            <div class="card-footer p-0 bg-secondary-subtle">
-                                <h4 class="card-title mt-2">Rs. 9,197</h4>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="row mt-4">
                     <h6 class="fw-bolder ">Key Specifications</h6>

@@ -2,10 +2,12 @@
 date_default_timezone_set('Asia/Karachi');
 require('../dbcon.php');
 require('../inc/functions.inc.php');
-$slug = isset($_GET['slug']) ? mysqli_real_escape_string($con, $_GET['slug']) : '';
-$id = isset($_GET['id']) ? mysqli_real_escape_string($con, $_GET['id']) : '';
+$slug = $_GET['slug'];
+// $id = isset($_GET['id']) ? mysqli_real_escape_string($con, $_GET['id']) : '';
+// echo $slug;
+// exit(0);
 
-if (empty($id)) {
+if (empty($slug)) {
     ?>
     <script>
         window.location.href = $base_url;
@@ -18,7 +20,20 @@ $sql = "SELECT *
     FROM products
     INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id 
     INNER JOIN brands ON products.brand_id = brands.brand_id
-    WHERE products.product_id = $id";
+    WHERE products.product_slug = $slug";
+// echo $slug;
+// echo $sql;
+// exit(0);
+try {
+    $result = mysqli_query($con, $sql);
+
+} catch (\mysqli_sql_exception $th) {
+    // echo $th->getMessage();
+}
+finally
+{
+    $result = mysqli_query($con, $sql);
+}
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 if ($row === null) {

@@ -29,6 +29,9 @@ if ($row === null) {
     <?php
     exit;
 }
+$title = $row['product_name'];
+$description = $row['product_description'];
+require('../inc/header.php');
 
 if (isset($_POST['submit'])) {
     $heading = isset($_POST['heading']) ? mysqli_real_escape_string($con, $_POST['heading']) : '';

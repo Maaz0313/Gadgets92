@@ -1,4 +1,7 @@
 <?php
+$title = "Headset Finder";
+$description = "Ditch the decision fatigue. Find a headset that suits your needs using our comprehensive headset finder tool.";
+
 require('../inc/header.php');
 require('../dbcon.php');
 require('../inc/functions.inc.php');

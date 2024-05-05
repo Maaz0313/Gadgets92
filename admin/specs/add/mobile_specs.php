@@ -12,7 +12,6 @@ $productId = isset($_GET['product_id']) ? sanitize_data($_GET['product_id']) : 0
 if(isset($_POST['submit'])) {
     
 // Sanitize input data
-$releaseDate = sanitize_data($_POST['release_date']);
 $deviceType = sanitize_data($_POST['device_type']);
 $sim = sanitize_data($_POST['sim']);
 $os = sanitize_data($_POST['os']);
@@ -54,8 +53,8 @@ $loudSpeaker = sanitize_data($_POST['loud_speaker']);
 $fingerprintSensor = sanitize_data($_POST['fingerprint_sensor']);
 $otherSensors = sanitize_data($_POST['other_sensors']);
     // Insert query
-    $insertQuery = "INSERT INTO `mobile_specs` (`product_id`, `release_date`, `device_type`, `sim`, `os`, `dimensions`, `weight`, `waterproof`, `build_material`, `colors`, `touch_screen`, `display`, `screen_size`, `screen_resolution`, `bezel_less_display`, `screen_protection`, `rear_camera`, `sensor`, `flash`, `rear_video_recording`, `rear_features`, `front_camera`, `ram`, `chipset`, `gpu`, `cpu_cores`, `internal_storage`, `sd_card_slot`, `battery_capacity`, `battery_features`, `fast_charging`, `network_support`, `bluetooth`, `wifi`, `usb`, `gps`, `nfc`, `audio_jack`, `fm_radio`, `loud_speaker`, `fingerprint_sensor`, `other_sensors`) 
-    VALUES ('$productId', '$releaseDate', '$deviceType', '$sim', '$os', '$dimensions', '$weight', '$waterproof', '$buildMaterial', '$colors', '$touchScreen', '$display', '$screenSize', '$screenResolution', '$bezelLessDisplay', '$screenProtection', '$rearCamera', '$sensor', '$flash', '$rearVideoRecording', '$rearFeatures', '$frontCamera', '$ram', '$chipset', '$gpu', '$cpuCores', '$internalStorage', '$sdCardSlot', '$battery_capacity', '$battery_features', '$fastCharging', '$networkSupport', '$bluetooth', '$wifi', '$usb', '$gps', '$nfc', '$audioJack', '$fmRadio', '$loudSpeaker', '$fingerprintSensor', '$otherSensors')";
+    $insertQuery = "INSERT INTO `mobile_specs` (`product_id`, `device_type`, `sim`, `os`, `dimensions`, `weight`, `waterproof`, `build_material`, `colors`, `touch_screen`, `display`, `screen_size`, `screen_resolution`, `bezel_less_display`, `screen_protection`, `rear_camera`, `sensor`, `flash`, `rear_video_recording`, `rear_features`, `front_camera`, `ram`, `chipset`, `gpu`, `cpu_cores`, `internal_storage`, `sd_card_slot`, `battery_capacity`, `battery_features`, `fast_charging`, `network_support`, `bluetooth`, `wifi`, `usb`, `gps`, `nfc`, `audio_jack`, `fm_radio`, `loud_speaker`, `fingerprint_sensor`, `other_sensors`) 
+    VALUES ('$productId', '$deviceType', '$sim', '$os', '$dimensions', '$weight', '$waterproof', '$buildMaterial', '$colors', '$touchScreen', '$display', '$screenSize', '$screenResolution', '$bezelLessDisplay', '$screenProtection', '$rearCamera', '$sensor', '$flash', '$rearVideoRecording', '$rearFeatures', '$frontCamera', '$ram', '$chipset', '$gpu', '$cpuCores', '$internalStorage', '$sdCardSlot', '$battery_capacity', '$battery_features', '$fastCharging', '$networkSupport', '$bluetooth', '$wifi', '$usb', '$gps', '$nfc', '$audioJack', '$fmRadio', '$loudSpeaker', '$fingerprintSensor', '$otherSensors')";
     if ($con->query($insertQuery) === TRUE) {
         $_SESSION['success_msg'] = "Mobile specs added successfully.";
         ?><script>window.location.href = "../products/index.php";</script><?php
@@ -100,10 +99,6 @@ $otherSensors = sanitize_data($_POST['other_sensors']);
                     </div>
                     <div class="card-body">
                         <form method="post">
-                            <div class="form-group">
-                                <label for="release_date">Release Date</label>
-                                <input type="date" id="release_date" name="release_date" class="form-control" required>
-                            </div>
                             <div class="form-group">
                                 <label for="device_type">Device Type</label>
                                 <input type="text" id="device_type" name="device_type" class="form-control" required>

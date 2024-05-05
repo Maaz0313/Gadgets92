@@ -1,4 +1,6 @@
 <?php
+$title = "Laptop Finder";
+$description = "Ditch the decision fatigue. Find a laptop that suits your needs using our comprehensive laptop finder tool.";
 require('../inc/header.php');
 require('../dbcon.php');
 require('../inc/functions.inc.php');

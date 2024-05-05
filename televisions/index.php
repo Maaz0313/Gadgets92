@@ -1,4 +1,7 @@
 <?php
+$title = "Television Finder";
+$description = "Ditch the decision fatigue. Find a television that suits your needs using our comprehensive television finder tool.";
+
 require('../inc/header.php');
 require('../dbcon.php');
 require('../inc/functions.inc.php');

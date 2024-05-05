@@ -1,9 +1,10 @@
 <?php
 date_default_timezone_set('Asia/Karachi');
-require('../inc/header.php');
 require('../dbcon.php');
 require('../inc/functions.inc.php');
+$slug = isset($_GET['slug']) ? mysqli_real_escape_string($con, $_GET['slug']) : '';
 $id = isset($_GET['id']) ? mysqli_real_escape_string($con, $_GET['id']) : '';
+
 if (empty($id)) {
     ?>
     <script>
@@ -21,7 +22,11 @@ $sql = "SELECT *
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 if ($row === null) {
-    header('Location: /');
+    ?>
+    <script>
+        window.location.href = $base_url;
+    </script>
+    <?php
     exit;
 }
 
@@ -48,9 +53,13 @@ if(isset($_POST['submit'])) {
 $review_sql = "SELECT * FROM user_reviews WHERE product_id = $id";
 $review_result = mysqli_query($con, $review_sql);
 if ($review_result === false) {
-    // handle the error
+    $_SESSION['fail_msg'] = "Something went wrong";
+    ?><script>window.location.href = 'product.php?id=<?= $id ?>';</script><?php
+    exit;
 }
-
+$title = $row['product_name'];
+$description = $row['product_description'];
+require('../inc/header.php');
 if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
     if (isset($_SESSION['success_msg'])) {
         echo '<div class="alert alert-success" role="alert">
@@ -65,6 +74,8 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
         unset($_SESSION['fail_msg']);
     }
 }
+
+
 ?>
 <div class="box pb-3">
     <!-- features overview -->
@@ -193,34 +204,9 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                     <span class="fs-4" style="font-weight: 700;">Rs. <?= formatPrice($row['price']) ?> <span style="font-size: 13px;" class="fw-normal ">(onwards)</span></span>
                 </div>
                 <div class="row">
-                    <span class="greycolor font13">
-                        Available in 2 stores
-                    </span>
-                </div>
-                <div class="row">
                     <span>
-                        Realme Narzo N53 best price in Pakistan is at Rs. 35,000. The lowest price of Realme Narzo
-                        N53
-                        is Rs. 35,000 at Daraz.pk. The price was updated on January 1, 2024.
+                        <?= $row['product_description'] ?>
                     </span>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-4">
-                        <div class="card text-center">
-                            <div class="card-header p-0  bg-primary text-white">Amazon.in</div>
-                            <div class="card-footer p-0 bg-secondary-subtle">
-                                <h4 class="card-title mt-2">Rs. 8,999</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 sc-crd">
-                        <div class="card border-warning text-center">
-                            <div class="card-header p-0 bg-info text-white ">Flipkart.com</div>
-                            <div class="card-footer p-0 bg-secondary-subtle">
-                                <h4 class="card-title mt-2">Rs. 9,197</h4>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="row mt-4">
                     <h6 class="fw-bolder ">Key Specifications</h6>

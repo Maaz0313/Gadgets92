@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
     $brandId = sanitize_data($_POST['brand_id']);
     $productName = sanitize_data($_POST['product_name']);
     $slug = sanitize_data($_POST['product_slug']);
+    $productDesc = sanitize_data($_POST['product_description']);
     $price = sanitize_data($_POST['price']);
     $releaseDate = sanitize_data($_POST['release_date']);
     $targetDir = '../images/products/';
@@ -41,7 +42,7 @@ if (isset($_POST['submit'])) {
                 }
 
                 if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
-                    $sql = "INSERT INTO products(category_id, brand_id, product_name, product_slug, price, release_date, product_image) VALUES('$categoryId', '$brandId', '$productName', '$slug', '$price', '$releaseDate', '$fileName')";
+                    $sql = "INSERT INTO products(category_id, brand_id, product_name, product_slug, product_description, price, release_date, product_image) VALUES('$categoryId', '$brandId', '$productName', '$slug', '$productDesc', '$price', '$releaseDate', '$fileName')";
                     $insertProductResult = mysqli_query($con, $sql);
                     if ($insertProductResult) {
                         $_SESSION['success_msg'] = "Product added successfully";
@@ -161,6 +162,10 @@ if (isset($_POST['submit'])) {
                                 <label for="product_name">Product Name</label>
                                 <input type="text" name="product_name" id="product_name" class="form-control is-valid" required>
                                 <input type="text" class="valid-feedback border-0" id="product_slug" name="product_slug" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="product_description">Product Description</label>
+                                <textarea name="product_description" id="product_description" class="form-control" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="price">Price</label>

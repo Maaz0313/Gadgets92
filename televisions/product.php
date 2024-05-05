@@ -1,6 +1,5 @@
 <?php
 date_default_timezone_set('Asia/Karachi');
-require('../inc/header.php');
 require('../dbcon.php');
 require('../inc/functions.inc.php');
 
@@ -21,6 +20,9 @@ $sql = "SELECT *
     WHERE products.product_id = $id";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
+$title = $row['product_name'];
+$description = $row['product_description'];
+
 if ($row === null) {
 ?>
     <script>
@@ -29,7 +31,7 @@ if ($row === null) {
     <?php
     exit;
 }
-
+require('../inc/header.php');
 if (isset($_POST['submit'])) {
     $heading = isset($_POST['heading']) ? mysqli_real_escape_string($con, $_POST['heading']) : '';
     $summary = isset($_POST['summary']) ? mysqli_real_escape_string($con, $_POST['summary']) : '';
@@ -59,6 +61,9 @@ if (isset($_POST['submit'])) {
             if ($review_result === false) {
                 // handle the error
             }
+            $title = $row['product_name'];
+$description = $row['product_description'];
+require('../inc/header.php');
 
             if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                 if (isset($_SESSION['success_msg'])) {

@@ -1,9 +1,11 @@
 <?php
+$title = "Mobile Finder";
+$description = "Ditch the decision fatigue. Find a mobile that suits your needs using our comprehensive mobile finder tool.";
 require('../inc/header.php');
 require('../dbcon.php');
 require('../inc/functions.inc.php');
 
-
+// var_dump($_GET);
 
 if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
     $page_no = $_GET['page_no'];

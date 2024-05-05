@@ -23,6 +23,7 @@ if (isset($_POST['update'])) {
     $brandId = sanitize_data($_POST['brand_id']);
     $productName = sanitize_data($_POST['product_name']);
     $slug = sanitize_data($_POST['product_slug']);
+    $productDesc = sanitize_data($_POST['product_description']);
     $price = sanitize_data($_POST['price']);
     $releaseDate = sanitize_data($_POST['release_date']);
     $targetDir = '../images/products/';
@@ -169,6 +170,10 @@ if (isset($_POST['update'])) {
                                 <label for="product_name">Product Name</label>
                                 <input type="text" name="product_name" id="product_name" class="form-control is-valid" value="<?= $product['product_name'] ?>">
                                 <input type="text" class="valid-feedback border-0" id="product_slug" name="product_slug" value="<?= $product['product_slug'] ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="product_description">Product Description</label>
+                                <textarea name="product_description" id="product_description" class="form-control" required><?= $product['product_description'] ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="price">Price</label>

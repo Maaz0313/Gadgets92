@@ -17,7 +17,6 @@ $row = mysqli_fetch_assoc($result);
 if (isset($_POST['submit'])) {
 
     // Sanitize input data
-    $releaseDate = sanitize_data($_POST['release_date']);
     $deviceType = sanitize_data($_POST['device_type']);
     $sim = sanitize_data($_POST['sim']);
     $os = sanitize_data($_POST['os']);
@@ -59,7 +58,7 @@ if (isset($_POST['submit'])) {
     $fingerprintSensor = sanitize_data($_POST['fingerprint_sensor']);
     $otherSensors = sanitize_data($_POST['other_sensors']);
     // Update query
-    $updateQuery = "UPDATE `mobile_specs` SET `release_date`='$releaseDate', `device_type`='$deviceType', `sim`='$sim', `os`='$os', `dimensions`='$dimensions', `weight`='$weight', `waterproof`='$waterproof', `build_material`='$buildMaterial', `colors`='$colors', `touch_screen`='$touchScreen', `display`='$display', `screen_size`='$screenSize', `screen_resolution`='$screenResolution', `bezel_less_display`='$bezelLessDisplay', `screen_protection`='$screenProtection', `rear_camera`='$rearCamera', `sensor`='$sensor', `flash`='$flash', `rear_video_recording`='$rearVideoRecording', `rear_features`='$rearFeatures', `front_camera`='$frontCamera', `ram`='$ram', `chipset`='$chipset', `gpu`='$gpu', `cpu_cores`='$cpuCores', `internal_storage`='$internalStorage', `sd_card_slot`='$sdCardSlot', `battery_capacity`='$battery_capacity', `battery_features`='$battery_features', `fast_charging`='$fastCharging', `network_support`='$networkSupport', `bluetooth`='$bluetooth', `wifi`='$wifi', `usb`='$usb', `gps`='$gps', `nfc`='$nfc', `audio_jack`='$audioJack', `fm_radio`='$fmRadio', `loud_speaker`='$loudSpeaker', `fingerprint_sensor`='$fingerprintSensor', `other_sensors`='$otherSensors' WHERE `product_id`='$productId'";
+    $updateQuery = "UPDATE `mobile_specs` SET `device_type`='$deviceType', `sim`='$sim', `os`='$os', `dimensions`='$dimensions', `weight`='$weight', `waterproof`='$waterproof', `build_material`='$buildMaterial', `colors`='$colors', `touch_screen`='$touchScreen', `display`='$display', `screen_size`='$screenSize', `screen_resolution`='$screenResolution', `bezel_less_display`='$bezelLessDisplay', `screen_protection`='$screenProtection', `rear_camera`='$rearCamera', `sensor`='$sensor', `flash`='$flash', `rear_video_recording`='$rearVideoRecording', `rear_features`='$rearFeatures', `front_camera`='$frontCamera', `ram`='$ram', `chipset`='$chipset', `gpu`='$gpu', `cpu_cores`='$cpuCores', `internal_storage`='$internalStorage', `sd_card_slot`='$sdCardSlot', `battery_capacity`='$battery_capacity', `battery_features`='$battery_features', `fast_charging`='$fastCharging', `network_support`='$networkSupport', `bluetooth`='$bluetooth', `wifi`='$wifi', `usb`='$usb', `gps`='$gps', `nfc`='$nfc', `audio_jack`='$audioJack', `fm_radio`='$fmRadio', `loud_speaker`='$loudSpeaker', `fingerprint_sensor`='$fingerprintSensor', `other_sensors`='$otherSensors' WHERE `product_id`='$productId'";
     $res = $con->query($updateQuery);
     if ($res) {
         $_SESSION['success_msg'] = "Mobile specs updated successfully.";
@@ -109,10 +108,6 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="card-body">
                         <form method="post">
-                            <div class="form-group">
-                                <label for="release_date">Release Date</label>
-                                <input type="date" id="release_date" name="release_date" class="form-control" value="<?= $row['release_date']; ?>" required>
-                            </div>
                             <div class="form-group">
                                 <label for="device_type">Device Type</label>
                                 <input type="text" id="device_type" name="device_type" class="form-control" value="<?= $row['device_type']; ?>" required>

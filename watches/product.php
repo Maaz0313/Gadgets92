@@ -1,6 +1,5 @@
 <?php
 date_default_timezone_set('Asia/Karachi');
-require('../inc/header.php');
 require('../dbcon.php');
 require('../inc/functions.inc.php');
 
@@ -21,6 +20,9 @@ $sql = "SELECT *
     WHERE products.product_id = $id";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
+$title = $row['product_name'];
+$description = $row['product_description'];
+require('../inc/header.php');
 if ($row === null) {
 ?>
     <script>

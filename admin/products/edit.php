@@ -28,9 +28,9 @@ if (isset($_POST['update'])) {
     $targetDir = '../images/products/';
     $fileName = $_FILES['product_image']['name'];
     $targetFile = $targetDir . basename($fileName);
-    
-    
-    
+
+
+
 
     // Update product details in the database
     $updateQuery = "UPDATE products SET category_id = '$categoryId', brand_id = '$brandId', product_name = '$productName', product_slug = '$slug',  price = '$price', release_date = '$releaseDate' WHERE product_id = '$productId'";
@@ -38,68 +38,72 @@ if (isset($_POST['update'])) {
 
 
     if (empty($_FILES['product_image']['name']) && $updateResult) {
-    $_SESSION['success_msg'] = "Product updated successfully";
-    echo '<script>window.location.href = "index.php";</script>';
-    exit(0);
-    }
-    else if (file_exists($targetFile)) {
-            $_SESSION['fail_msg'] = "File already exists. Please choose a different file.";
-            ?><script>window.location.href = "edit.php?id=<?=$productId?>";</script><?php
-            exit(0);
-        } 
-    else if(!file_exists($targetFile) && $updateResult) {
-        $allowedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
-        if (!in_array($_FILES['product_image']['type'], $allowedImageTypes) || $_FILES['product_image']['size'] > 500000) {
-            $_SESSION['fail_msg'] = "Sorry, only JPG, JPEG, PNG & GIF files under 500KB are allowed.";
-            ?><script>window.location.href = "edit.php?id=<?=$productId?>";</script><?php
-            exit(0);
-        }
-        if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
-            $updateImageQuery = "UPDATE products SET product_image = '$fileName' WHERE product_id = '$productId'";
-            $updateImageResult = mysqli_query($con, $updateImageQuery);
-            $_SESSION['success_msg'] = "Product updated successfully<br>";
-            echo '<script>window.location.href = "index.php";</script>';
-            exit(0);
-        }
-    }
-    else if(!file_exists($targetFile) && !$updateResult) {
-        $allowedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
-        if (!in_array($_FILES['product_image']['type'], $allowedImageTypes) || $_FILES['product_image']['size'] > 500000) {
-            $_SESSION['fail_msg'] = "Sorry, only JPG, JPEG, PNG & GIF files under 500KB are allowed.";
-            ?><script>window.location.href = "edit.php?id=<?=$productId?>";</script><?php
-            exit(0);
-        }
-        if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
-            $updateImageQuery = "UPDATE products SET product_image = '$fileName' WHERE product_id = '$productId'";
-            $updateImageResult = mysqli_query($con, $updateImageQuery);
-            $_SESSION['success_msg'] = "Product image updated successfully<br>";
-            echo '<script>window.location.href = "index.php";</script>';
-            exit(0);
-        }
-    }
-    else {
-        $_SESSION['fail_msg'] = "Failed to update product";
-        echo '<script>window.location.href = "edit.php?id=' . $productId . '";</script>';
+        $_SESSION['success_msg'] = "Product updated successfully";
+        echo '<script>window.location.href = "index.php";</script>';
         exit(0);
     }
-}
+    if (file_exists($targetFile)) {
+        $_SESSION['fail_msg'] = "File already exists. Please choose a different file.";
+?><script>
+            window.location.href = "edit.php?id=<?= $productId ?>";
+        </script><?php
+                    exit(0);
+                }
+                if (!file_exists($targetFile) && $updateResult) {
+                    $allowedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+                    if (!in_array($_FILES['product_image']['type'], $allowedImageTypes) || $_FILES['product_image']['size'] > 500000) {
+                        $_SESSION['fail_msg'] = "Sorry, only JPG, JPEG, PNG & GIF files under 500KB are allowed.";
+                    ?><script>
+                window.location.href = "edit.php?id=<?= $productId ?>";
+            </script><?php
+                        exit(0);
+                    }
+                    if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
+                        $updateImageQuery = "UPDATE products SET product_image = '$fileName' WHERE product_id = '$productId'";
+                        $updateImageResult = mysqli_query($con, $updateImageQuery);
+                        $_SESSION['success_msg'] = "Product updated successfully<br>";
+                        echo '<script>window.location.href = "index.php";</script>';
+                        exit(0);
+                    }
+                }
+                if (!file_exists($targetFile) && !$updateResult) {
+                    $allowedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+                    if (!in_array($_FILES['product_image']['type'], $allowedImageTypes) || $_FILES['product_image']['size'] > 500000) {
+                        $_SESSION['fail_msg'] = "Sorry, only JPG, JPEG, PNG & GIF files under 500KB are allowed.";
+                        ?><script>
+                window.location.href = "edit.php?id=<?= $productId ?>";
+            </script><?php
+                        exit(0);
+                    }
+                    if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
+                        $updateImageQuery = "UPDATE products SET product_image = '$fileName' WHERE product_id = '$productId'";
+                        $updateImageResult = mysqli_query($con, $updateImageQuery);
+                        $_SESSION['success_msg'] = "Product image updated successfully<br>";
+                        echo '<script>window.location.href = "index.php";</script>';
+                        exit(0);
+                    }
+                } else {
+                    $_SESSION['fail_msg'] = "Failed to update product b/c" . mysqli_error($con);
+                    echo '<script>window.location.href = "edit.php?id=' . $productId . '";</script>';
+                    exit(0);
+                }
+            }
 
-// Display status message
-if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
-    if (isset($_SESSION['success_msg'])) {
-        echo '<div class="alert alert-success" role="alert">
+            // Display status message
+            if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
+                if (isset($_SESSION['success_msg'])) {
+                    echo '<div class="alert alert-success" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
         ' . $_SESSION['success_msg'] . '</div>';
-        unset($_SESSION['success_msg']);
-    }
-    else {
-        echo '<div class="alert alert-danger" role="alert">
+                    unset($_SESSION['success_msg']);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
         ' . $_SESSION['fail_msg'] . '</div>';
-        unset($_SESSION['fail_msg']);
-    }
-}
-?>
+                    unset($_SESSION['fail_msg']);
+                }
+            }
+                        ?>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">

@@ -74,10 +74,16 @@ if (isset($_POST['submit'])) {
             </script>
         <?php
                         exit(0);
+                    } else {
+                        $_SESSION['fail_msg'] = "Could not add product b/c " . mysqli_error($con);
+        ?><script>
+                window.location.href = "add.php";
+            </script><?php
+                        exit(0);
                     }
                 } else {
                     $_SESSION['fail_msg'] = "Sorry, there was an error uploading your file.";
-        ?><script>
+                        ?><script>
             window.location.href = "add.php";
         </script><?php
                     exit(0);

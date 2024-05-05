@@ -125,7 +125,7 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                                                         break;
                                                 }
                                                 ?>
-                                                <a href="delete.php?id=<?= $id ?>" class="btn btn-danger btn-sm">Delete</a>
+                                                <a href="delete.php?id=<?= $id ?>&image=<?= $product_image ?>" class="btn btn-danger btn-sm">Delete</a>
                                             </td>
                                         </tr>
 

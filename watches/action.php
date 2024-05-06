@@ -32,11 +32,11 @@ if (isset($_POST['action'])) {
             <div class="card mb-3 p-3">
                 <div class="row g-0">
                     <div class="col-3 text-center">
-                        <a href="'. $base_url . '/watches/product.php?id=' . $row['product_id'] .'"><img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/'. $row['product_image'] .'" style="width: auto; height:150px"></a>
+                        <a href="'. $base_url . '/watches/' . $row['product_slug'] .'"><img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/'. $row['product_image'] .'" style="width: auto; height:150px"></a>
                         <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
                     </div>
                     <div class="col-9">
-                        <a class="text-decoration-none text-black" href="'. $base_url . '/watches/product.php?id=' . $row['product_id'] .'">
+                        <a class="text-decoration-none text-black" href="'. $base_url . '/watches/' . $row['product_slug'] .'">
                             <div class="card-body p-0">
                                 <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
                                     <div class="text-start">'. $row['product_name'] .'</div>

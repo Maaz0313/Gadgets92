@@ -3,8 +3,10 @@ date_default_timezone_set('Asia/Karachi');
 require('../dbcon.php');
 require('../inc/functions.inc.php');
 
-$id = isset($_GET['id']) ? mysqli_real_escape_string($con, $_GET['id']) : '';
-if (empty($id)) {
+$slug = isset($_GET['slug']) ? mysqli_real_escape_string($con, $_GET['slug']) : '';
+// echo $slug;
+// exit(0);
+if (empty($slug)) {
 ?>
     <script>
         window.location.href = $base_url;
@@ -17,7 +19,7 @@ $sql = "SELECT *
     FROM products
     INNER JOIN headset_specs ON products.product_id = headset_specs.product_id 
     INNER JOIN brands ON products.brand_id = brands.brand_id
-    WHERE products.product_id = $id";
+    WHERE products.product_slug = '$slug'";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 if ($row === null) {
@@ -28,6 +30,7 @@ if ($row === null) {
     <?php
     exit;
 }
+(int)$id = $row['product_id'];
 $title = $row['product_name'];
 $description = $row['product_description'];
 require('../inc/header.php');
@@ -43,13 +46,13 @@ if (isset($_POST['submit'])) {
         if ($res) {
             $_SESSION['success_msg'] = 'Review submitted successfully';
     ?><script>
-                window.location.href = 'product.php?id=<?= $id ?>';
+                window.location.href = '<?= $row['product_slug'] ?>';
             </script><?php
                         exit;
                     } else {
                         $_SESSION['fail_msg'] = 'There was an error with your submission. Please try again.';
                         ?><script>
-                window.location.href = 'product.php?id=<?= $id ?>';
+                window.location.href = '<?= $row['product_slug'] ?>';
             </script><?php
                         exit;
                     }
@@ -59,7 +62,7 @@ if (isset($_POST['submit'])) {
             $review_sql = "SELECT * FROM user_reviews WHERE product_id = $id";
             $review_result = mysqli_query($con, $review_sql);
             if ($review_result === false) {
-                $_SESSION['fail_msg']="Cannot submit your review. Please try again later.";
+                $_SESSION['fail_msg']="Cannot fetch all reviews. Please try again later.";
                 exit;
             }
 

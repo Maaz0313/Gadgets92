@@ -2,8 +2,7 @@
 date_default_timezone_set('Asia/Karachi');
 require('../dbcon.php');
 require('../inc/functions.inc.php');
-$slug = $_GET['slug'];
-// $id = isset($_GET['id']) ? mysqli_real_escape_string($con, $_GET['id']) : '';
+$slug = isset($_GET['slug']) ? mysqli_real_escape_string($con, $_GET['slug']) : '';
 // echo $slug;
 // exit(0);
 
@@ -20,20 +19,11 @@ $sql = "SELECT *
     FROM products
     INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id 
     INNER JOIN brands ON products.brand_id = brands.brand_id
-    WHERE products.product_slug = $slug";
+    WHERE products.product_slug = '$slug'";
 // echo $slug;
 // echo $sql;
 // exit(0);
-try {
-    $result = mysqli_query($con, $sql);
 
-} catch (\mysqli_sql_exception $th) {
-    // echo $th->getMessage();
-}
-finally
-{
-    $result = mysqli_query($con, $sql);
-}
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 if ($row === null) {
@@ -44,37 +34,42 @@ if ($row === null) {
     <?php
     exit;
 }
+$title = $row['product_name'];
+$description = $row['product_description'];
+require('../inc/header.php');
 
+(int)$id = $row['product_id'];
+// echo $id;
 if(isset($_POST['submit'])) {
     $heading = isset($_POST['heading']) ? mysqli_real_escape_string($con, $_POST['heading']) : '';
     $summary = isset($_POST['summary']) ? mysqli_real_escape_string($con, $_POST['summary']) : '';
-    if (isset($_SESSION['auth_user']['user_id']) && !empty($heading) && !empty($summary)) {
+    // if (isset($_SESSION['auth_user']['user_id']) && !empty($heading) && !empty($summary)) {
+        $user_id=$_SESSION['auth_user']['user_id'];
         $created_at = date('Y-m-d H:i:s');
-        $sql = "INSERT INTO user_reviews (product_id, user_id, review_heading, review_summary, created_at) VALUES ($id, "
-            . "{$_SESSION['auth_user']['user_id']}, '$heading', '$summary', '$created_at')";
+        $sql = "INSERT INTO user_reviews (product_id, user_id, review_heading, review_summary, created_at) VALUES ($id, 
+        '$user_id', '$heading', '$summary', '$created_at')";
+        echo $sql;
         $res = mysqli_query($con, $sql);
         if ($res) {
             $_SESSION['success_msg'] = 'Review submitted successfully';
-            ?><script>window.location.href = 'product.php?id=<?= $id ?>';</script><?php
+            ?><script>window.location.href = '<?= $row['product_slug'] ?>';</script><?php
             exit;
         } else {
             $_SESSION['fail_msg'] = 'There was an error with your submission. Please try again.';
-            ?><script>window.location.href = 'product.php?id=<?= $id ?>';</script><?php
+            ?><script>window.location.href = '<?= $row['product_slug'] ?>';</script><?php
             exit;
         }
-    }
+    // }
 }
 
 $review_sql = "SELECT * FROM user_reviews WHERE product_id = $id";
 $review_result = mysqli_query($con, $review_sql);
 if ($review_result === false) {
     $_SESSION['fail_msg'] = "Something went wrong";
-    ?><script>window.location.href = 'product.php?id=<?= $id ?>';</script><?php
+    ?><script>window.location.href = '<?= $row['product_slug'] ?>';</script><?php
     exit;
 }
-$title = $row['product_name'];
-$description = $row['product_description'];
-require('../inc/header.php');
+
 if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
     if (isset($_SESSION['success_msg'])) {
         echo '<div class="alert alert-success" role="alert">

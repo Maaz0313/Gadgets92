@@ -61,8 +61,8 @@ $sql = "SELECT *
     INNER JOIN brands ON products.brand_id = brands.brand_id
     WHERE products.status = 1 " . $whereClause . $orderClause . "
     LIMIT $offset, $total_records_per_page";
-echo $sql;
-exit(0);
+// echo $sql;
+// exit(0);
 $result = mysqli_query($con, $sql);
 if (!$result) {
     $_SESSION['fail_msg'] = mysqli_error($con);

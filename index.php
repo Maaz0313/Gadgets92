@@ -36,7 +36,7 @@ if (isset($_SESSION['status'])) {
             <!-- Product Card 1 -->
 
             <div class="product-card">
-                <a class="text-decoration-none text-black" href="mobiles/product.php?id=<?=$upcoming_row['product_id'] ?>">
+                <a class="text-decoration-none text-black" href="mobiles/<?=$upcoming_row['product_slug'] ?>">
                     <div class="product-image">
                         <img src="<?='admin/images/products/'.$upcoming_row['product_image'] ?>" alt="mobile img">
                     </div>
@@ -63,7 +63,7 @@ if (isset($_SESSION['status'])) {
         <div class="product-cards">
             <!-- Product Card 1 -->
             <?php
-            $latest_sql = "SELECT * FROM products INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id ORDER BY products.release_date DESC LIMIT 5";
+            $latest_sql = "SELECT * FROM products INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id WHERE products.release_date < CURDATE() ORDER BY products.release_date DESC LIMIT 5";
             $latest_result = mysqli_query($con, $latest_sql);
             if (!$latest_result) {
                 $_SESSION['fail_msg'] = mysqli_error($con);
@@ -71,7 +71,7 @@ if (isset($_SESSION['status'])) {
             while ($latest_row = mysqli_fetch_assoc($latest_result)) {
             ?>
             <div class="product-card">
-                <a class="text-decoration-none text-black" href="mobiles/product.php?id=<?=$latest_row['product_id'] ?>">
+                <a class="text-decoration-none text-black" href="mobiles/<?=$latest_row['product_slug'] ?>">
                     <div class="product-image">
                         <img src="<?='admin/images/products/'.$latest_row['product_image'] ?>" alt="Product 1">
                     </div>
@@ -106,7 +106,7 @@ if (isset($_SESSION['status'])) {
             while ($battery_row = mysqli_fetch_assoc($battery_result)) {
             ?>
             <div class="product-card">
-                <a class="text-decoration-none text-black" href="mobiles/product.php?id=<?=$battery_row['product_id'] ?>">
+                <a class="text-decoration-none text-black" href="mobiles/<?=$battery_row['product_slug'] ?>">
                     <div class="product-image">
                         <img src="<?='admin/images/products/'.$battery_row['product_image'] ?>" alt="Product 1">
                     </div>
@@ -141,7 +141,7 @@ if (isset($_SESSION['status'])) {
             while ($laptop_row = mysqli_fetch_assoc($laptop_result)) {
             ?>
             <div class="product-card">
-                <a class="text-decoration-none text-black" href="laptops/product.php?id=<?=$laptop_row['product_id'] ?>">
+                <a class="text-decoration-none text-black" href="laptops/<?=$laptop_row['product_slug'] ?>">
                     <div class="product-image">
                         <img src="<?='admin/images/products/'.$laptop_row['product_image'] ?>" alt="Product 1">
                     </div>

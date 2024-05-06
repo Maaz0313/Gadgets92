@@ -2,7 +2,8 @@
 require $_SERVER['DOCUMENT_ROOT'] . '/dbcon.php';
 $check = "SELECT * FROM admin_users";
 $res = mysqli_query($con, $check);
-$base_url = "http://gadgets92.test";
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$base_url = $protocol . $_SERVER['HTTP_HOST'];
 ?>
 
 <!doctype html>

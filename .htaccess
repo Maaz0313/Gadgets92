@@ -2,4 +2,6 @@ RewriteEngine On
 
 # Exclude "index.php" from rewriting in each directory
 RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/index\.php$
+RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/action\.php$
+
 RewriteRule ^(mobiles|laptops|watches|televisions|headsets)/([^/]+)/?$ $1/product.php?slug=$2 [QSA,L]

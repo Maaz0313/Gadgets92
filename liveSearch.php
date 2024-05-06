@@ -1,6 +1,7 @@
 <?php
 include('dbcon.php');
-$base_url = "http://gadgets92.test";
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$base_url = $protocol . $_SERVER['HTTP_HOST'];
 
 include('inc/functions.inc.php');
 $s1 = $_REQUEST["n"];

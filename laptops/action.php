@@ -1,7 +1,8 @@
 <?php
 require '../dbcon.php';
 require '../inc/functions.inc.php';
-$base_url = "http://gadgets92.test";
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$base_url = $protocol . $_SERVER['HTTP_HOST'];
 if (isset($_POST['action'])) {
     $sql = "SELECT * FROM products 
             INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id 
@@ -46,39 +47,39 @@ if (isset($_POST['action'])) {
         while ($row = mysqli_fetch_assoc($result)) {
             $output .= '
             <div class="card mb-3 p-3">
-                            <div class="row g-0">
-                                <div class="col-3 text-center">
-                                    <a href="'. $base_url . '/laptops/' . $row['product_slug'] .'"><img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/'. $row['product_image'] .'" style="width: auto; height:150px"></a>
-                                    <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
-                                </div>
-                                <div class="col-9">
-                                    <a class="text-decoration-none text-black" href="'. $base_url . '/laptops/' . $row['product_slug'] .'">
-                                        <div class="card-body p-0">
-                                            <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
-                                                <div class="text-start">'. $row['product_name'] .'</div>
+                <div class="row g-0">
+                    <div class="col-3 text-center">
+                        <a href="' . $base_url . '/laptops/' . $row['product_slug'] . '"><img class="bd-placeholder-img img-fluid rounded-start" alt="mobile-image" src="../admin/images/products/' . $row['product_image'] . '" style="width: auto; height:150px"></a>
+                        <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
+                    </div>
+                    <div class="col-9">
+                        <a class="text-decoration-none text-black" href="' . $base_url . '/laptops/' . $row['product_slug'] . '">
+                            <div class="card-body p-0">
+                                <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
+                                    <div class="text-start">' . $row['product_name'] . '</div>
 
-                                                <div class="text-end " style="font-size: 17px;">Rs. '. formatPrice($row['price']) .'</div>
-                                            </h5>
-                                            <p class="card-text">
+                                    <div class="text-end " style="font-size: 17px;">Rs. ' . formatPrice($row['price']) . '</div>
+                                </h5>
+                                <p class="card-text">
 
-                                            <div class="pro-grid-specs pl10 pr10 pb10">
-                                                <div class="lineheight20 specs font90">
-                                                    <ul class="key-specs row row-cols-md-2 gx-5">
-                                                        <li> '. $row['processor'] .' Processor</li>
-                                                        <li> '. $row['ram_memory'] . ' ' . $row['ram_type'] .' RAM</li>
-                                                        <li> '. $row['screen_size'] .' HD Display</li>
-                                                        <li> '. $row['ssd_storage'] .' SSD Storage</li>
-                                                        <li> '. $row['graphics'] .' Graphics</li>
-                                                        <li> '. $row['os'] .'</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            </p>
-                                        </div>
-                                    </a>
+                                <div class="pro-grid-specs pl10 pr10 pb10">
+                                    <div class="lineheight20 specs font90">
+                                        <ul class="key-specs row row-cols-md-2 gx-5">
+                                            <li> ' . $row['processor'] . ' Processor</li>
+                                            <li> ' . $row['ram_memory'] . ' ' . $row['ram_type'] . ' RAM</li>
+                                            <li> ' . $row['screen_size'] . ' HD Display</li>
+                                            <li> ' . $row['ssd_storage'] . ' SSD Storage</li>
+                                            <li> ' . $row['graphics'] . ' Graphics</li>
+                                            <li> ' . $row['os'] . '</li>
+                                        </ul>
+                                    </div>
                                 </div>
+                                </p>
                             </div>
-                        </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
             ';
         }
     } else {

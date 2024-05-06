@@ -1,7 +1,8 @@
 <?php
 require '../dbcon.php';
 require '../inc/functions.inc.php';
-$base_url = "http://gadgets92.test";
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$base_url = $protocol . $_SERVER['HTTP_HOST'];
 if (isset($_POST['action'])) {
     $sql = "SELECT * FROM products 
             INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id 

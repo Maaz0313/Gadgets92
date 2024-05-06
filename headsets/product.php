@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
             $review_sql = "SELECT * FROM user_reviews WHERE product_id = $id";
             $review_result = mysqli_query($con, $review_sql);
             if ($review_result === false) {
-                $_SESSION['fail_msg']="Cannot fetch all reviews. Please try again later.";
+                $_SESSION['fail_msg'] = "Cannot fetch all reviews. Please try again later.";
                 exit;
             }
 
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../../">Home</a></li>
                 <li class="breadcrumb-item"><a href="../watches/">Smart Watches</a></li>
-                <li class="breadcrumb-item"><a href="../watches/?brand=<?= $row['brand_name'] ?>"><?= $row['brand_name']; ?></a></li>
+                <li class="breadcrumb-item"><a href="../watches/?brand=<?= $row['brand_name'] ?>"><?= $row['brand_name'] ?></a></li>
                 <li class="breadcrumb-item active" aria-current="page"><?= $row['product_name'] ?></li>
             </ol>
         </nav>
@@ -208,7 +208,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="row">
                     <span>
-                    <?= $row['product_description'] ?>
+                        <?= $row['product_description'] ?>
                     </span>
                 </div>
                 <div class="row mt-4">
@@ -218,30 +218,34 @@ if (isset($_POST['submit'])) {
                     <div class="col-md-6">
                         <div class="row">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-calendar-date"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name">Release Date</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" class="bi bi-earbuds" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M6.825 4.138c.596 2.141-.36 3.593-2.389 4.117a4.4 4.4 0 0 1-2.018.054c-.048-.01.9 2.778 1.522 4.61l.41 1.205a.52.52 0 0 1-.346.659l-.593.19a.55.55 0 0 1-.69-.34L.184 6.99c-.696-2.137.662-4.309 2.564-4.8 2.029-.523 3.402 0 4.076 1.948zm-.868 2.221c.43-.112.561-.993.292-1.969-.269-.975-.836-1.675-1.266-1.563s-.561.994-.292 1.969.836 1.675 1.266 1.563m3.218-2.221c-.596 2.141.36 3.593 2.389 4.117a4.4 4.4 0 0 0 2.018.054c.048-.01-.9 2.778-1.522 4.61l-.41 1.205a.52.52 0 0 0 .346.659l.593.19c.289.092.6-.06.69-.34l2.536-7.643c.696-2.137-.662-4.309-2.564-4.8-2.029-.523-3.402 0-4.076 1.948m.868 2.221c-.43-.112-.561-.993-.292-1.969.269-.975.836-1.675 1.266-1.563s.561.994.292 1.969-.836 1.675-1.266 1.563" />
+                                </svg>
+                                <span style="padding-left: 9px;" class="key-spec-name">Design</span>
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= date("d M Y", strtotime($row['release_date']));  ?></span>
+                            <span style="padding-left: 37px;" class="key-spec-value fw-semibold"><?= $row['design'];  ?></span>
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
-                                <i class="fa fa-weight-hanging"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name">Weight</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" class="bi bi-earbuds" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M6.825 4.138c.596 2.141-.36 3.593-2.389 4.117a4.4 4.4 0 0 1-2.018.054c-.048-.01.9 2.778 1.522 4.61l.41 1.205a.52.52 0 0 1-.346.659l-.593.19a.55.55 0 0 1-.69-.34L.184 6.99c-.696-2.137.662-4.309 2.564-4.8 2.029-.523 3.402 0 4.076 1.948zm-.868 2.221c.43-.112.561-.993.292-1.969-.269-.975-.836-1.675-1.266-1.563s-.561.994-.292 1.969.836 1.675 1.266 1.563m3.218-2.221c-.596 2.141.36 3.593 2.389 4.117a4.4 4.4 0 0 0 2.018.054c.048-.01-.9 2.778-1.522 4.61l-.41 1.205a.52.52 0 0 0 .346.659l.593.19c.289.092.6-.06.69-.34l2.536-7.643c.696-2.137-.662-4.309-2.564-4.8-2.029-.523-3.402 0-4.076 1.948m.868 2.221c-.43-.112-.561-.993-.292-1.969.269-.975.836-1.675 1.266-1.563s.561.994.292 1.969-.836 1.675-1.266 1.563" />
+                                </svg>
+                                <span style="padding-left: 9px;" class="key-spec-name">Type</span>
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['weight'] ?></span>
+                            <span style="padding-left: 37px;" class="key-spec-value fw-semibold"><?= $row['type'] ?></span>
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-display"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name">Display</span>
+                                <i class="bi bi-headset"></i>
+                                <span style="padding-left: 9px;" class="key-spec-name">Buit-in Mic</span>
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?=$row['screen_size'].', '. $row['display']; ?></span>
+                            <span style="padding-left: 37px;" class="key-spec-value fw-semibold"><?= $row['built-in_mic'] == "1" ? "Yes" : "No" ?></span>
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
@@ -250,19 +254,21 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['battery_life']; ?></span>
+                            <span style="padding-left: 37px;" class="key-spec-value fw-semibold"><?= $row['battery_life'] ?></span>
                         </div>
 
                     </div>
                     <div class="col-md-6">
                         <div class="row">
                             <div class="d-flex align-items-center ">
-                                <i class="fa fa-person-running"></i>
-                                <span style="padding-left: 9px;" class="key-spec-name">Fitness Features</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" height="21">
+                                    <path d="M12,14c-1.1,0-2-.9-2-2s.9-2,2-2,2,.9,2,2-.9,2-2,2Zm0-3c-.55,0-1,.45-1,1s.45,1,1,1,1-.45,1-1-.45-1-1-1Zm-7.78,8.78C-.07,15.49-.07,8.51,4.22,4.22l-.71-.71C-1.16,8.19-1.16,15.81,3.51,20.49l.71-.71ZM20.49,3.51l-.71,.71c4.29,4.29,4.29,11.27,0,15.56l.71,.71c4.68-4.68,4.68-12.29,0-16.97ZM7.76,16.24c-2.34-2.34-2.34-6.15,0-8.49l-.71-.71c-1.32,1.32-2.05,3.08-2.05,4.95s.73,3.63,2.05,4.95l.71-.71ZM16.95,7.05l-.71,.71c2.34,2.34,2.34,6.15,0,8.49l.71,.71c2.73-2.73,2.73-7.17,0-9.9Z" />
+                                </svg>
+                                <span style="padding-left: 9px;" class="key-spec-name">Connectivity</span>
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['fitness_features']; ?></span>
+                            <span style="padding-left: 45px;" class="key-spec-value fw-semibold"><?= $row['connectivity'] ?></span>
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
@@ -271,31 +277,30 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['water_resistant']; ?></span>
+                            <span style="padding-left: 40px;" class="key-spec-value fw-semibold"><?= $row['water_resistant'] == "1" ? "Yes" : "No" ?></span>
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-robot"></i>
-                                <span style="padding-left: 8px;" class="key-spec-name">Compatible OS</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['compatible_os']; ?></span>
-                        </div>
-                        <div class="row pt-md-2 ">
-                            <div class="d-flex align-items-center ">
-                                <svg height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-                                    <g fill="#333" stroke="none" transform="translate(0.000000,24.000000) scale(0.006977,-0.006977)">
-                                        <path d="M1556 3299 c-551 -58 -1029 -396 -1267 -894 -381 -799 -40 -1749 763 -2125 417 -195 919 -195 1336 0 676 317 1041 1052 882 1781 -101 465 -411 863 -835 1074 -286 142 -575 196 -879 164z m444 -168 c442 -89 819 -380 1015 -786 54 -113 87 -210 116 -345 32 -151 32 -409 0 -560 -125 -582 -549 -1007 -1131 -1131 -138 -30 -398 -32 -535 -6 -589 114 -1031 549 -1156 1137 -30 142 -33 389 -5 535 85 457 377 840 793 1041 147 71 276 108 488 138 67 10 324 -4 415 -23z"></path>
-                                        <path d="M2208 2268 c-192 -25 -325 -204 -278 -373 29 -104 121 -170 344 -245 205 -69 266 -109 266 -175 0 -63 -25 -101 -89 -132 -124 -61 -327 -20 -371 74 -15 32 -16 33 -87 33 -40 0 -73 -4 -73 -8 0 -5 7 -32 16 -61 39 -132 180 -211 382 -212 134 -2 218 28 289 103 81 84 104 229 51 319 -51 86 -111 123 -321 196 -153 53 -213 81 -246 117 -20 22 -23 32 -19 77 5 44 11 58 41 85 21 20 59 40 94 50 50 15 69 16 136 6 97 -14 155 -45 182 -95 l20 -37 73 0 c39 0 72 4 72 8 0 5 -7 32 -16 61 -44 149 -243 238 -466 209z"></path>
-                                        <path d="M1069 2247 c-122 -42 -198 -112 -256 -232 -46 -97 -66 -213 -59 -335 20 -331 191 -511 486 -511 248 0 411 132 466 377 23 105 16 312 -15 406 -43 133 -142 243 -261 290 -43 17 -81 22 -175 25 -105 3 -128 1 -186 -20z m308 -147 c162 -71 237 -292 181 -530 -46 -191 -217 -295 -406 -246 -113 29 -184 98 -228 221 -25 71 -25 279 0 350 58 161 175 241 338 231 38 -3 88 -14 115 -26z"></path>
-                                    </g>
+                                <svg height="21" xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                    <path d="M83 384c-13-33-35-93.37-35-128C48 141.12 149.33 48 256 48s208 93.12 208 208c0 34.63-23 97-35 128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
+                                    <path d="M108.39 270.13l-13.69 8h0c-30.23 17.7-31.7 72.41-3.38 122.2s75.87 75.81 106.1 58.12h0l13.69-8a16.16 16.16 0 005.78-21.87L130 276a15.74 15.74 0 00-21.61-5.87zM403.61 270.13l13.69 8h0c30.23 17.69 31.74 72.4 3.38 122.19s-75.87 75.81-106.1 58.12h0l-13.69-8a16.16 16.16 0 01-5.78-21.87L382 276a15.74 15.74 0 0121.61-5.87z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
                                 </svg>
-                                <span style="padding-left: 7px;" class="key-spec-name">OS (Operating System)</span>
+                                <span style="padding-left: 8px;" class="key-spec-name">Driver Unit</span>
                             </div>
                         </div>
                         <div class="row">
-                            <span style="padding-left: 37px;" class="key-spec-value"><?= $row['os']; ?></span>
+                            <span style="padding-left: 40px;" class="key-spec-value fw-semibold"><?= $row['driver'] ?></span>
+                        </div>
+                        <div class="row pt-md-2 ">
+                            <div class="d-flex align-items-center ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path d="M4.516 21c-2.951-.61-4.516-3.09-4.516-5.5 0-2.615 1.731-5.198 5.283-5.5-1.415 1.591-2.283 3.708-2.283 6 0 1.782.618 3.6 1.516 5zm19.484-5.5c0 2.409-1.55 4.889-4.5 5.5.897-1.4 1.5-3.218 1.5-5 0-2.292-.868-4.409-2.283-6 3.552.303 5.283 2.886 5.283 5.5zm-5.074-7.487c.942.084 1.782.294 2.529.601-1.27-4.388-4.666-7.614-9.455-7.614-4.786 0-8.173 3.225-9.442 7.607.744-.303 1.582-.512 2.52-.595 1.347-2.538 3.842-4.04 6.922-4.034 3.081-.006 5.578 1.496 6.926 4.035zm-6.926.987c-3.865 0-7 3.134-7 7s3.135 7 7 7 7-3.134 7-7-3.135-7-7-7zm-2 11v-8l6 4-6 4" stroke="black" fill="none" />
+                                </svg>
+                                <span style="padding-left: 7px;" class="key-spec-name">Headset Controls</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span style="padding-left: 42px;" class="key-spec-value fw-semibold"><?= $row['control_features'] ?></span>
                         </div>
                     </div>
                 </div>
@@ -304,9 +309,9 @@ if (isset($_POST['submit'])) {
     </div>
     <!-- complete features -->
     <div class="container bg-light p-3 mb-3">
-        <h5 class="fw-bold pb-2"><?= $row['product_name']; ?> Full Specifications</h5>
+        <h5 class="fw-bold pb-2"><?= $row['product_name'] ?> Full Specifications</h5>
         <div class="category">
-            <h3 class="">General (5)
+            <h3 class="">General (7)
                 <span class="icon"><i class="bi bi-chevron-down"></i></span>
             </h3>
             <table>
@@ -324,114 +329,76 @@ if (isset($_POST['submit'])) {
                             Brand
                         </th>
                         <td>
-                            <?= $row['brand_name']; ?>
+                            <?= $row['brand_name'] ?>
                         </td>
                     </tr>
                     <th>
                         Model
                     </th>
                     <td>
-                        <?= $row['model']; ?>
+                        <?= $row['model'] ?>
                     </td>
                     </tr>
                     <tr>
                         <th>
-                            Operating System
+                            Type
                         </th>
                         <td>
-                            <?= $row['os']; ?>
+                            <?= $row['type'] ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Compatible OS
+                            Design
                         </th>
                         <td>
-                            <?= $row['compatible_os']; ?>
+                            <?= $row['design'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Connectivity
+                        </th>
+                        <td>
+                            <?= $row['connectivity'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Box Contents
+                        </th>
+                        <td>
+                            <?= $row['in_the_box'] ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="category">
-            <h3>Design (2) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Sound Features (2) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>
                         <th>
-                            Dial Shape
+                            Driver Unit
                         </th>
                         <td>
-                            <?= $row['dial_shape']; ?>
+                            <?= $row['driver'] ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Weight
+                            Frequency Response
                         </th>
                         <td>
-                            <?= $row['weight']; ?>
+                            <?= $row['frequency_response'] ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="category">
-            <h3>Display (3) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>
-                            Display Tech
-                        </th>
-                        <td>
-                            <?= $row['display']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Touch Screen
-                        </th>
-                        <td>
-                            <?= $row['touchscreen'] == 1 ? 'Yes' : 'No'; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Screen Size
-                        </th>
-                        <td>
-                            <?= $row['screen_size']; ?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="category">
-            <h3>Battery (2) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>
-                            Battery Type
-                        </th>
-                        <td>
-                            <?= $row['battery_type']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Battery Life
-                        </th>
-                        <td>
-                            <?= $row['battery_life']; ?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="category">
-            <h3>Network & Connectivity (4) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>General Features (6) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>
@@ -439,62 +406,78 @@ if (isset($_POST['submit'])) {
                             Bluetooth
                         </th>
                         <td>
-                            <?= $row['bluetooth']==1 ? 'Yes' : 'No'; ?>
+                            <?= $row['bluetooth'] ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Wi-Fi
+                            Controls
                         </th>
                         <td>
-                            <?= $row['wifi']; ?>
+                            <?= $row['controls'] ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            GPS
+                            Control Features
                         </th>
                         <td>
-                            <?= $row['gps']==1 ? 'Yes' : 'No'; ?>
+                            <?= $row['control_features'] ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Call Function
+                            Buit-in Mic
                         </th>
                         <td>
-                            <?= $row['call_function']==1 ? 'Yes' : 'No'; ?>
+                            <?= $row['built-in_mic'] == 1 ? "Yes" : "No" ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Water Resistant
+                        </th>
+                        <td>
+                            <?= $row['water_resistant'] == 1 ? "Yes" : "No" ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Additional Features
+                        </th>
+                        <td>
+                            <?= $row['additional_features'] ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="category">
-            <h3>Fitness & Other Features (3) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Battery & Charging (3) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>
                         <th>
-                            Fitness Features
+                            Battery Life
                         </th>
                         <td>
-                            <?= $row['fitness_features']; ?>
+                            <?= $row['battery_life'] ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Sensors
+                            Charging Port
                         </th>
                         <td>
-                            <?= $row['sensors']; ?>
+                            <?= $row['charging_port'] ?>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Extra Features
+                            Charging Time
                         </th>
                         <td>
-                            <?= $row['extra_features']; ?>
+                            <?= $row['charging_time'] ?>
                         </td>
                     </tr>
                 </tbody>

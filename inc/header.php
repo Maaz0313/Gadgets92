@@ -1,8 +1,9 @@
 <?php
 $link = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$base_url = "http://gadgets92.test";
 $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$base_url = $protocol . $_SERVER['HTTP_HOST'];
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -23,7 +24,7 @@ if (session_status() === PHP_SESSION_NONE) {
         }
         ?>Gadgets92
     </title>
-    <meta name="description" content="<?= isset($description)? $description : 'Gadgets92 is your one-stop shop for viewing all technical specifications of consumers electronic products like Smartphones, Laptops, Smartwatches etc.' ?>">
+    <meta name="description" content="<?= isset($description) ? $description : 'Gadgets92 is your one-stop shop for viewing all technical specifications of consumers electronic products like Smartphones, Laptops, Smartwatches etc.' ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -32,28 +33,24 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <!-- title icon -->
-    <link rel="shortcut icon" href="<?php echo $base_url; ?>/img/logo/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="<?php echo $base_url; ?>/css/style.css">
-
+    <link rel="shortcut icon" href="<?php echo $base_url ?>/img/logo/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="<?php echo $base_url ?>/css/style.css">
 </head>
 
 <body>
     <?php
     $res = explode('/', parse_url($url, PHP_URL_PATH));
-    if (isset($res[1]) && isset($res[2])) {
-        $res = $res[1] . '/' . $res[2];
-    }
-    else {
-        $res = $res[1];
-    }
+    (string)$res = $res[1];
+    // echo trim($res);
+    // die();
     // echo $res;
     ?>
     <header>
         <nav class="navbar navbar-expand-md bg-secondary">
             <div class="container">
                 <!-- Logo and Brand -->
-                <a class="navbar-brand d-flex align-items-center" href="<?= $base_url; ?>">
-                    <img src="<?php echo $base_url; ?>/img/logo/logo.png" alt="Logo" height="50" class="d-inline-block align-text-top">
+                <a class="navbar-brand d-flex align-items-center" href="<?= $base_url ?>">
+                    <img src="<?php echo $base_url ?>/img/logo/logo.png" alt="Logo" height="50" class="d-inline-block align-text-top">
                     <span class="fs-2" style="color: #122f42;">Gadgets<span style="color: #44a8eb;">92</span></span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="offcanvasWithBothOptions" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,12 +68,12 @@ if (session_status() === PHP_SESSION_NONE) {
                         <?php
                         if (isset($_SESSION["authenticated"])) {
                         ?>
-                            <a href="<?= $base_url; ?>/logout.php?continue=<?php echo $link ?>" class="btn btn-info text-white me-2">Logout</a>
+                            <a href="<?= $base_url ?>/logout.php?continue=<?php echo $link ?>" class="btn btn-info text-white me-2">Logout</a>
                         <?php
                         } else {
                         ?>
-                            <a href="<?= $base_url; ?>/login.php?continue=<?php echo $link ?>" class="btn btn-info text-white me-2">Login</a>
-                            <a href="<?= $base_url; ?>/signup.php" class="btn btn-primary">Signup</a>
+                            <a href="<?= $base_url ?>/login.php?continue=<?php echo $link ?>" class="btn btn-info text-white me-2">Login</a>
+                            <a href="<?= $base_url ?>/signup.php" class="btn btn-primary">Signup</a>
                         <?php
                         }
                         ?>
@@ -98,19 +95,19 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link <?= $res == "mobiles/" || $res == "mobiles/product.php" || $_SERVER['REQUEST_URI'] == "/mobiles/index.php" ? "active" : "text-white"; ?>" aria-current="page" href="<?= $base_url; ?>/mobiles/">Mobiles</a>
+                            <a class="nav-link <?= (trim($res) == 'mobiles') ? "active" : "text-white" ?>" aria-current="page" href="<?= $base_url ?>/mobiles/">Mobiles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?= $res == "laptops/" || $res == "laptops/product.php" || $_SERVER['REQUEST_URI'] == "/laptops/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/laptops/">Laptops</a>
+                            <a class="nav-link <?= (trim($res) == 'laptops') ? "active" : "text-white" ?>" href="<?= $base_url ?>/laptops/">Laptops</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?= $res == "televisions/" || $res == "televisions/product.php" || $_SERVER['REQUEST_URI'] == "/televisions/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/televisions/">Televisions</a>
+                            <a class="nav-link <?= (trim($res) == 'televisions') ? "active" : "text-white" ?>" href="<?= $base_url ?>/televisions/">Televisions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?= $res == "watches/" || $res == "watches/product.php" || $_SERVER['REQUEST_URI'] == "/watches/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/watches/">Smart Watches</a>
+                            <a class="nav-link <?= (trim($res) == 'watches') ? "active" : "text-white" ?>" href="<?= $base_url ?>/watches/">Smart Watches</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?= $res == "headsets/" || $res == "headsets/product.php" || $_SERVER['REQUEST_URI'] == "/headsets/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/headsets/">Headsets</a>
+                            <a class="nav-link <?= (trim($res) == 'headsets') ? "active" : "text-white" ?>" href="<?= $base_url ?>/headsets/">Headsets</a>
                         </li>
                     </ul>
                 </div>
@@ -121,8 +118,8 @@ if (session_status() === PHP_SESSION_NONE) {
         <div class="offcanvas offcanvas-start bg-secondary" data-bs-backdrop="true" data-bs-scroll="true" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title ms-3" id="navbarOffcanvasLabel">
-                    <a class="navbar-brand d-flex align-items-center" href="<?= $base_url; ?>">
-                        <img src="<?php echo $base_url; ?>/img/logo/logo.png" alt="Logo" height="50" class="d-inline-block align-text-top">
+                    <a class="navbar-brand d-flex align-items-center" href="<?= $base_url ?>">
+                        <img src="<?php echo $base_url ?>/img/logo/logo.png" alt="Logo" height="50" class="d-inline-block align-text-top">
                         <span class="fs-2" style="color: #122f42;">Gadgets<span style="color: #44a8eb;">92</span></span>
                     </a>
                 </h5>
@@ -132,31 +129,31 @@ if (session_status() === PHP_SESSION_NONE) {
                 <!-- Offcanvas menu items -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link ms-3 <?= $res == "mobiles/" || $res == "mobiles/product.php" || $_SERVER['REQUEST_URI'] == "/mobiles/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/mobiles/">Mobiles</a>
+                        <a class="nav-link ms-3 <?= (trim($res) == 'mobiles') ? "active" : "text-white" ?>" href="<?= $base_url ?>/mobiles/">Mobiles</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3 <?= $res == "laptops/" || $res == "laptops/product.php" || $_SERVER['REQUEST_URI'] == "/laptops/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/laptops/">Laptops</a>
+                        <a class="nav-link ms-3 <?= (trim($res) == 'laptops') ? "active" : "text-white" ?>" href="<?= $base_url ?>/laptops/">Laptops</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3 <?= $res == "televisions/" || $res == "televisions/product.php" || $_SERVER['REQUEST_URI'] == "/televisions/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/televisions/">Televisions</a>
+                        <a class="nav-link ms-3 <?= (trim($res) == 'televisions') ? "active" : "text-white" ?>" href="<?= $base_url ?>/televisions/">Televisions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3 <?= $res == "watches/" || $res == "watches/product.php" || $_SERVER['REQUEST_URI'] == "/watches/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/watches/">Smart Watches</a>
+                        <a class="nav-link ms-3 <?= (trim($res) == 'watches') ? "active" : "text-white" ?>" href="<?= $base_url ?>/watches/">Smart Watches</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-3 <?= $res == "headsets/" || $res == "headsets/product.php" || $_SERVER['REQUEST_URI'] == "/headsets/index.php" ? "active" : "text-white"; ?>" href="<?= $base_url; ?>/headsets/">Headsets</a>
+                        <a class="nav-link ms-3 <?= (trim($res) == 'headsets') ? "active" : "text-white" ?>" href="<?= $base_url ?>/headsets/">Headsets</a>
                     </li>
                     <li class="nav-item mt-3 ms-3">
                         <?php
                         if (isset($_SESSION["authenticated"])) {
                         ?>
-                            <a href="<?= $base_url; ?>/logout.php?continue=<?php echo $link ?>" class="btn btn-info text-white me-2">Logout</a>
+                            <a href="<?= $base_url ?>/logout.php?continue=<?php echo $link ?>" class="btn btn-info text-white me-2">Logout</a>
                         <?php
 
                         } else {
                         ?>
-                            <a href="<?= $base_url; ?>/login.php?continue=<?php echo $link ?>" class="btn btn-info text-white me-2">Login</a>
-                            <a href="<?= $base_url; ?>/signup.php" class="btn btn-primary">Signup</a>
+                            <a href="<?= $base_url ?>/login.php?continue=<?php echo $link ?>" class="btn btn-info text-white me-2">Login</a>
+                            <a href="<?= $base_url ?>/signup.php" class="btn btn-primary">Signup</a>
                         <?php
                         }
                         ?>

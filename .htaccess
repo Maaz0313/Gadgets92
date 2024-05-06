@@ -1,6 +1,6 @@
 RewriteEngine On
 
-# Exclude "index.php" from rewriting in each directory
+# Exclude "index.php" and "action.php" from rewriting in each directory
 RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/index\.php$
 RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/action\.php$
 

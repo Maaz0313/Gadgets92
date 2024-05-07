@@ -37,6 +37,11 @@ require('inc/header.php');
                         oninvalid="this.setCustomValidity('Please Enter your full name')" oninput="setCustomValidity('')">
                 </div>
                 <div class="col-12">
+                    <label for="validationDefault01" class="form-label">Profile Picture (jpg, png, jpeg, gif)<span class="req">*</span></label>
+                    <input type="file" class="form-control btn btn-primary" name="profile" id="validationDefault01" required
+                        oninvalid="this.setCustomValidity('Please Select your profile picture')" oninput="setCustomValidity('')">
+                </div>
+                <div class="col-12">
                     <label for="inputEmail4" class="form-label">Email address <span class="req">*</span></label>
                     <input type="email" class="form-control" name="email" id="inputEmail4" required
                         oninvalid="this.setCustomValidity('Please enter a valid email')" oninput="setCustomValidity('')">

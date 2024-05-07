@@ -40,8 +40,11 @@ function sendemail_verify($name, $email, $verify_token)
 
 if (isset($_POST['register_btn'])) {
     $name = htmlspecialchars($_POST['name']);
+    $profile = $_FILES['profile']['name'];
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['pwd']);
+    // hash the password
+    $password = password_hash($password, PASSWORD_DEFAULT);
     $verify_token = md5(rand());
     if (!empty($name) && !empty($email) && !empty($password)) {
         // Email exists or not
@@ -51,7 +54,24 @@ if (isset($_POST['register_btn'])) {
             $_SESSION['status'] = 'Email Already Exists';
             header('Location: signup.php');
         } else {
-            $insert_query = "INSERT INTO `users` (`name`, `email`, `password`, `verify_token`) VALUES ('$name', '$email', '$password', '$verify_token')";
+            //image format validation
+            $allowedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+            if (!in_array($_FILES['profile']['type'], $allowedImageTypes)) {
+                $_SESSION['status'] = 'Only JPG, JPEG, PNG & GIF files are allowed';
+                header('Location: signup.php');
+                exit(0);
+            }
+            else{
+                // Upload image
+            $img_ex = pathinfo($profile, PATHINFO_EXTENSION);
+            $img_ex_lc = strtolower($img_ex);
+            $new_img_name = uniqid("IMG-", true) . '.' . $img_ex_lc;
+            $img_upload_path = 'profiles/' . $new_img_name;
+            move_uploaded_file($_FILES['profile']['tmp_name'], $img_upload_path);
+            }
+
+            // Insert user data
+            $insert_query = "INSERT INTO `users` (`name`, `profile`, `email`, `password`, `verify_token`) VALUES ('$name', '$new_img_name', '$email', '$password', '$verify_token')";
             $insert_query_run = mysqli_query($con, $insert_query);
 
             if ($insert_query_run) {

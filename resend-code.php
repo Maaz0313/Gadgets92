@@ -24,12 +24,12 @@ if(isset($_POST['resend_btn']))
                 $mail->isSMTP();
                 $mail->Host = 'smtp.office365.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'gadgets92@outlook.com';
-                $mail->Password = 'gweb2000';
+                $mail->Username = 'gadgets92.web@gmail.com';
+                $mail->Password = 'vgfncqofrefttnfw';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->setFrom('gadgets92@outlook.com', 'Gadgets92');
+                $mail->setFrom('gadgets92.web@gmail.com', 'Gadgets92');
                 $mail->addAddress($email);
 
                 $mail->isHTML(true);

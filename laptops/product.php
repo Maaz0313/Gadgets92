@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
                 }
             }
 
-            $review_sql = "SELECT * FROM user_reviews WHERE product_id = $id";
+            $review_sql = "SELECT * FROM user_reviews INNER JOIN users ON user_reviews.user_id = users.id WHERE product_id = $id";
             $review_result = mysqli_query($con, $review_sql);
             if ($review_result === false) {
                 // handle the error
@@ -743,12 +743,12 @@ if (isset($_POST['submit'])) {
         ?>
             <div class="d-flex flex-row p-3">
 
-                <img src="https://i.ibb.co/DgxpBYp/agRGhBc.jpg" width="40" height="40" class="rounded-circle me-2">
+                <img src="<?= $base_url.'/profiles/'.$review_row['profile'] ?>" width="40" height="40" class="rounded-circle me-2">
 
                 <div class="w-100">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex flex-row align-items-center">
-                            <span class="me-2"><?= $_SESSION['auth_user']['username'] ?></span>
+                            <span class="me-2"><?= $review_row['name'] ?></span>
                         </div>
                         <small><?= facebook_time_ago($review_row['created_at']) ?></small>
                     </div>

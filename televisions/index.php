@@ -115,14 +115,18 @@ if (!$result) {
     }
 </style>
 <?php
-if (isset($_SESSION['status'])) {
-?>
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <strong><?= $_SESSION['status']; ?></strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-<?php
-    unset($_SESSION['status']);
+if (isset($_SESSION['success_msg'])) {
+    echo '<div class="alert alert-success" role="alert">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+' . $_SESSION['success_msg'] . '</div>';
+    unset($_SESSION['success_msg']);
+} 
+
+if (isset($_SESSION['fail_msg'])) {
+    echo '<div class="alert alert-danger" role="alert">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+' . $_SESSION['fail_msg'] . '</div>';
+    unset($_SESSION['fail_msg']);
 }
 ?>
 <main class="box pb-3">

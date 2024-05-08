@@ -22,31 +22,30 @@ if (isset($_POST['login_btn'])) {
                         'profile' => $row['profile'],
                         'email' => $row['email']
                     ];
-                    $_SESSION['status'] = "You have logged in successfully!";
+                    $_SESSION['succuss_msg'] = "You have logged in successfully!";
                     if (isset($_GET['continue'])) {
                         header('Location: ' . $_GET['continue']);
                         exit(0);
-                    } else {
-                        header('Location: index.php');
-                        exit(0);
                     }
+                    header('Location: index.php');
+                    exit(0);
                 } else {
-                    $_SESSION['status'] = "Password is incorrect!";
+                    $_SESSION['fail_msg'] = "Password is incorrect!";
                     header('Location: login.php');
                     exit(0);
                 }
             } else {
-                $_SESSION['status'] = "Please verify your email address to login!";
+                $_SESSION['fail_msg'] = "Please verify your email address to login!";
                 header('Location: login.php');
                 exit(0);
             }
         } else {
-            $_SESSION['status'] = "Email or Password is Invalid!";
+            $_SESSION['fail_msg'] = "Email or Password is Invalid!";
             header('Location: login.php');
             exit(0);
         }
     } else {
-        $_SESSION['status'] = "All fields are required!";
+        $_SESSION['fail_msg'] = "All fields are required!";
         header('Location: login.php');
         exit(0);
     }

@@ -51,13 +51,13 @@ if (isset($_POST['register_btn'])) {
         $email_check_query = "SELECT `email` FROM `users` WHERE `email` = '$email' LIMIT 1";
         $email_check_query_run = mysqli_query($con, $email_check_query);
         if (mysqli_num_rows($email_check_query_run) > 0) {
-            $_SESSION['status'] = 'Email Already Exists';
+            $_SESSION['fail_msg'] = 'Email Already Exists';
             header('Location: signup.php');
         } else {
             //image format validation
             $allowedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
             if (!in_array($_FILES['profile']['type'], $allowedImageTypes)) {
-                $_SESSION['status'] = 'Only JPG, JPEG, PNG & GIF files are allowed';
+                $_SESSION['fail_msg'] = 'Only JPG, JPEG, PNG & GIF files are allowed';
                 header('Location: signup.php');
                 exit(0);
             }
@@ -76,17 +76,17 @@ if (isset($_POST['register_btn'])) {
 
             if ($insert_query_run) {
                 sendemail_verify("$name", "$email", "$verify_token");
-                $_SESSION['status'] = 'Registration Successful! Please check your inbox or spam folder to verify your Email Address.';
+                $_SESSION['succuss_msg'] = 'Registration Successful! Please check your inbox or spam folder to verify your Email Address.';
                 header('Location: login.php');
             } else {
-                $_SESSION['status'] = "Registration Failed";
+                $_SESSION['fail_msg'] = "Registration Failed";
                 header('Location: signup.php');
             }
         }
     }
     else
     {
-        $_SESSION['status'] = "Please fill all the fields";
+        $_SESSION['fail_msg'] = "Please fill all the fields";
         header('Location: signup.php');
         exit(0);
     }

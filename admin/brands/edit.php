@@ -2,7 +2,7 @@
 session_start();
 require '../../dbcon.php';
 if (!isset($_SESSION['ADMIN_LOGIN'])) {
-    $_SESSION['status'] = "Please login first to access Admin Dashboard";
+    $_SESSION['succuss_msg'] = "Please login first to access Admin Dashboard";
     header('Location: login.php');
     exit(0);
 }
@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
     $result = mysqli_query($con, $sql);
     $row = mysqli_fetch_assoc($result);
 } else {
-    $_SESSION['status'] = "Brand not found";
+    $_SESSION['fail_msg'] = "Brand not found";
 ?>
     <script>
         window.location.href = 'index.php';
@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
     $sql = "UPDATE brands SET brand_name = '$brand_name' WHERE brand_id = $id";
     $update_brand = mysqli_query($con, $sql);
     if ($update_brand) {
-        $_SESSION['status'] = "Brand updated successfully";
+        $_SESSION['succuss_msg'] = "Brand updated successfully";
     ?>
         <script>
             window.location.href = 'index.php';
@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
         mysqli_close($con);
         exit(0);
     } else {
-        $_SESSION['status'] = "Failed to update brand" . mysqli_error($con);
+        $_SESSION['fail_msg'] = "Failed to update brand" . mysqli_error($con);
     ?>
         <script>
             window.location.href = 'index.php';
@@ -46,17 +46,18 @@ if (isset($_POST['submit'])) {
         exit(0);
     }
 }
-?>
 
-<?php
-if (isset($_SESSION['status'])) {
-    echo '<div class="alert alert-info alert-dismissible fade show" role="alert">
-                            ' . $_SESSION['status'] . '
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>';
-    unset($_SESSION['status']);
+if (isset($_SESSION['success_msg'])) {
+    echo '<div class="alert alert-success" role="alert">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+' . $_SESSION['success_msg'] . '</div>';
+    unset($_SESSION['success_msg']);
+} 
+if (isset($_SESSION['fail_msg'])) {
+    echo '<div class="alert alert-danger" role="alert">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+' . $_SESSION['fail_msg'] . '</div>';
+    unset($_SESSION['fail_msg']);
 }
 ?>
 

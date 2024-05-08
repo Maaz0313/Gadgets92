@@ -4,7 +4,7 @@
 require $_SERVER['DOCUMENT_ROOT'] . '/dbcon.php';
 session_start();
 if (isset($_SESSION['ADMIN_LOGIN'])) {
-    $_SESSION['status'] = "Already logged in";
+    $_SESSION['fail_msg'] = "Already logged in";
     header('Location: dashboard.php');
     exit(0);
 }
@@ -19,10 +19,11 @@ if (isset($_POST['submit'])) {
         $_SESSION['ADMIN_LOGIN'] = 'YES';
         $_SESSION['ADMIN_USERNAME'] = $username;
         $_SESSION['ROLE'] = $row['role'];
+        $_SESSION['success_msg'] = "Login successful";
         header('Location: dashboard.php');
         exit(0);
     } else {
-        $_SESSION['status'] = "Please enter correct login details";
+        $_SESSION['fail_msg'] = "Please enter correct login details";
         header('Location: login.php');
         exit(0);
     }
@@ -114,10 +115,13 @@ if (isset($_POST['submit'])) {
                     </form>
                     <div class="field_error">
                         <?php
-                            if(isset($_SESSION['status']))
-                            {
-                                echo $_SESSION['status'];
-                                unset($_SESSION['status']);
+                            if (isset($_SESSION['success_msg'])) {
+                                echo $_SESSION['success_msg'];
+                                unset($_SESSION['success_msg']);
+                            } 
+                            if (isset($_SESSION['fail_msg'])) {
+                                echo $_SESSION['fail_msg'];
+                                unset($_SESSION['fail_msg']);
                             }
                         ?>
                     </div>

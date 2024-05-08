@@ -16,32 +16,32 @@ if(isset($_GET['token']))
             $update_query_run = mysqli_query($con, $update_query);
             if($update_query_run)
             {
-                $_SESSION['status'] = "Your Email is verified. Please Login.";
+                $_SESSION['succuss_msg'] = "Your Email is verified. Please Login.";
                 header('Location: login.php');
                 exit(0);
             }
             else
             {
-                $_SESSION['status'] = "Email Verification failed. Please try again.";
+                $_SESSION['fail_msg'] = "Email Verification failed. Please try again.";
                 header('Location: login.php');
                 exit(0);
             }
         }
         else
         {
-            $_SESSION['status'] = "Your Email is already verified. Please Login.";
+            $_SESSION['fail_msg'] = "Your Email is already verified. Please Login.";
             header('Location: login.php');
             exit(0);
         }
     }
     else
     {
-        $_SESSION['status'] = "Invalid token. Please try again.";
+        $_SESSION['fail_msg'] = "Invalid token. Please try again.";
         header('Location: login.php');
     }
 }
 else
 {
-    $_SESSION['status'] = 'Not Allowed.';
+    $_SESSION['fail_msg'] = 'Not Allowed.';
     header('Location: login.php');
 }

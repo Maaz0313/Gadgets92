@@ -63,19 +63,19 @@ if (isset($_POST['submit'])) {
                     exit();
                 }
             }
-            if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
-                if (isset($_SESSION['success_msg'])) {
-                    echo '<div class="alert alert-success" role="alert">
+
+            if (isset($_SESSION['success_msg'])) {
+                echo '<div class="alert alert-success" role="alert">
                     <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
                     ' . $_SESSION['success_msg'] . '</div>';
-                    unset($_SESSION['success_msg']);
-                }
-                else {
-                    echo '<div class="alert alert-danger" role="alert">
+                unset($_SESSION['success_msg']);
+            } 
+
+            if (isset($_SESSION['fail_msg'])) {
+                echo '<div class="alert alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
                     ' . $_SESSION['fail_msg'] . '</div>';
-                    unset($_SESSION['fail_msg']);
-                }
+                unset($_SESSION['fail_msg']);
             }
                     ?>
 

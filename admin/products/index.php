@@ -6,32 +6,34 @@ require '../inc/header.php';
 
 if (!isset($_SESSION['ADMIN_LOGIN'])) {
     $_SESSION['fail_msg'] = "Please login first to access Admin Dashboard";
-    ?><script>window.location.href = '../login.php';</script><?php
-    exit(0);
-}
-//inner join of products, brands and categories
-$fetch_products = "SELECT products.product_id, products.product_name, products.product_image, products.release_date,
+?><script>
+        window.location.href = '../login.php';
+    </script><?php
+                exit(0);
+            }
+            //inner join of products, brands and categories
+            $fetch_products = "SELECT products.product_id, products.product_name, products.product_image, products.release_date,
 categories.cat_name, brands.brand_name
 FROM products
 INNER JOIN categories ON products.category_id = categories.cat_id
-INNER JOIN brands ON products.brand_id = brands.brand_id";;
-$products = mysqli_query($con, $fetch_products);
-$products_count = mysqli_num_rows($products);
-if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
-    if (isset($_SESSION['success_msg'])) {
-        echo '<div class="alert alert-success" role="alert">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-        ' . $_SESSION['success_msg'] . '</div>';
-        unset($_SESSION['success_msg']);
-    }
-    else {
-        echo '<div class="alert alert-danger" role="alert">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-        ' . $_SESSION['fail_msg'] . '</div>';
-        unset($_SESSION['fail_msg']);
-    }
+INNER JOIN brands ON products.brand_id = brands.brand_id";
+            $products = mysqli_query($con, $fetch_products);
+            $products_count = mysqli_num_rows($products);
+
+if (isset($_SESSION['success_msg'])) {
+    echo '<div class="alert alert-success" role="alert">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+' . $_SESSION['success_msg'] . '</div>';
+    unset($_SESSION['success_msg']);
+} 
+
+if (isset($_SESSION['fail_msg'])) {
+    echo '<div class="alert alert-danger" role="alert">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+' . $_SESSION['fail_msg'] . '</div>';
+    unset($_SESSION['fail_msg']);
 }
-?>
+                ?>
 
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
@@ -101,23 +103,23 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                                                 <?php
                                                 switch ($category_name) {
                                                     case 'mobiles':
-                                                        echo '<a href="../specs/edit/mobile_specs.php?id='. $id.'" class="btn btn-success btn-sm">Edit Specs</a>';
+                                                        echo '<a href="../specs/edit/mobile_specs.php?id=' . $id . '" class="btn btn-success btn-sm">Edit Specs</a>';
                                                         break;
 
                                                     case 'laptops':
-                                                        echo '<a href="../specs/edit/laptop_specs.php?id='. $id.'" class="btn btn-success btn-sm">Edit Specs</a>';
+                                                        echo '<a href="../specs/edit/laptop_specs.php?id=' . $id . '" class="btn btn-success btn-sm">Edit Specs</a>';
                                                         break;
-                                                        
+
                                                     case 'headsets':
-                                                        echo '<a href="../specs/edit/headset_specs.php?id='. $id.'" class="btn btn-success btn-sm">Edit Specs</a>';
+                                                        echo '<a href="../specs/edit/headset_specs.php?id=' . $id . '" class="btn btn-success btn-sm">Edit Specs</a>';
                                                         break;
 
                                                     case 'smart watches':
-                                                        echo '<a href="../specs/edit/smartwatch_specs.php?id='. $id.'" class="btn btn-success btn-sm">Edit Specs</a>';
+                                                        echo '<a href="../specs/edit/smartwatch_specs.php?id=' . $id . '" class="btn btn-success btn-sm">Edit Specs</a>';
                                                         break;
-                                        
+
                                                     case 'televisions':
-                                                        echo '<a href="../specs/edit/tv_specs.php?id='. $id.'" class="btn btn-success btn-sm">Edit Specs</a>';
+                                                        echo '<a href="../specs/edit/tv_specs.php?id=' . $id . '" class="btn btn-success btn-sm">Edit Specs</a>';
                                                         break;
 
                                                     default:

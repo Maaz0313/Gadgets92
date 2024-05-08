@@ -47,11 +47,11 @@ function send_contact_email($name, $email, $subject, $msg)
 
         $mail->send();
 
-        $_SESSION['status'] = 'Thank you for contacting us. We will get back to you shortly.';
+        $_SESSION['succuss_msg'] = 'Thank you for contacting us. We will get back to you shortly.';
         header('Location: contact.php');
         exit(0);
     } catch (Exception $e) {
-        $_SESSION['status'] = 'Oops, something went wrong. Please try again later. Error: ' . $mail->ErrorInfo;
+        $_SESSION['fail_msg'] = 'Oops, something went wrong. Please try again later. Error: ' . $mail->ErrorInfo;
         header('Location: contact.php');
         exit(0);
     }
@@ -68,12 +68,12 @@ if (isset($_POST['btn_submit_contact'])) {
         if ($result) {
             send_contact_email("$name", "$email", "$subject", "$message");
         } else {
-            $_SESSION['status'] = "Error: " . mysqli_error($con);
+            $_SESSION['fail_msg'] = "Error: " . mysqli_error($con);
             header('Location: contact.php');
             exit(0);
         }
     } else {
-        $_SESSION['status'] = "Please fill all the fields";
+        $_SESSION['fail_msg'] = "Please fill all the fields";
         header('Location: contact.php');
         exit(0);
     }

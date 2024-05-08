@@ -7,20 +7,21 @@ require '../functions/logic.php';
 $title = "Categories";
 require '../inc/header.php';
 
-if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
-    if (isset($_SESSION['success_msg'])) {
-        echo '<div class="alert alert-success" role="alert">
+
+if (isset($_SESSION['success_msg'])) {
+    echo '<div class="alert alert-success" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
         ' . $_SESSION['success_msg'] . '</div>';
-        unset($_SESSION['success_msg']);
-    }
-    else {
-        echo '<div class="alert alert-danger" role="alert">
+    unset($_SESSION['success_msg']);
+} 
+
+if (isset($_SESSION['fail_msg'])) {
+    echo '<div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
         ' . $_SESSION['fail_msg'] . '</div>';
-        unset($_SESSION['fail_msg']);
-    }
+    unset($_SESSION['fail_msg']);
 }
+
 ?>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
@@ -67,9 +68,8 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                                 <?php
                                 $query = "SELECT * FROM categories";
                                 $result = mysqli_query($con, $query);
-                                while($row = mysqli_fetch_assoc($result))
-                                {
-                                    ?>
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
                                     <tr role="row" class="even">
                                         <td class="sorting_1"><?= $row['cat_name'] ?></td>
                                         <td>
@@ -77,7 +77,7 @@ if (isset($_SESSION['success_msg']) || isset($_SESSION['fail_msg'])) {
                                             <a href="delete.php?id=<?= $row['cat_id'] ?>" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
-                                    <?php
+                                <?php
                                 }
                                 mysqli_close($con);
                                 ?>

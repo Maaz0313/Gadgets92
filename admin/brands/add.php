@@ -4,7 +4,7 @@ require '../../dbcon.php';
 $title = "Add Brand";
 require '../inc/header.php';
 if (!isset($_SESSION['ADMIN_LOGIN'])) {
-    $_SESSION['status'] = "Please login first to access Admin Dashboard";
+    $_SESSION['succuss_msg'] = "Please login first to access Admin Dashboard";
     header('Location: login.php');
     exit(0);
 }
@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
     $sql = "INSERT INTO brands(brand_name, cat_id) VALUES('$brand_name', '$cat_id')";
     $insert_brand = mysqli_query($con, $sql);
     if ($insert_brand) {
-        $_SESSION['status'] = "Brand added successfully";
+        $_SESSION['succuss_msg'] = "Brand added successfully";
         ?>
         <script>
             window.location.href = 'index.php';
@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
         <?php
         mysqli_close($con);
     } else {
-        $_SESSION['status'] = "Failed to add brand" . mysqli_error($con);
+        $_SESSION['fail_msg'] = "Failed to add brand" . mysqli_error($con);
         ?>
         <script>
             window.location.href = 'index.php';

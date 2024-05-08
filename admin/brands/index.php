@@ -4,7 +4,7 @@ require '../../dbcon.php';
 $title = "Brands";
 require '../inc/header.php';
 if (!isset($_SESSION['ADMIN_LOGIN'])) {
-    $_SESSION['status'] = "Please login first to access Admin Dashboard";
+    $_SESSION['fail_msg'] = "Please login first to access Admin Dashboard";
     ?>
     <script>
         window.location.href = "../login.php";
@@ -15,16 +15,17 @@ if (!isset($_SESSION['ADMIN_LOGIN'])) {
 
 $query = "SELECT * FROM brands INNER JOIN categories ON brands.cat_id = categories.cat_id ORDER BY brand_id DESC";
 $result = mysqli_query($con, $query);
-?>
-<?php
-if (isset($_SESSION['status'])) {
-    echo '<div class="alert alert-info alert-dismissible fade show" role="alert">
-                            ' . $_SESSION['status'] . '
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>';
-    unset($_SESSION['status']);
+if (isset($_SESSION['success_msg'])) {
+    echo '<div class="alert alert-success" role="alert">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+' . $_SESSION['success_msg'] . '</div>';
+    unset($_SESSION['success_msg']);
+} 
+if (isset($_SESSION['fail_msg'])) {
+    echo '<div class="alert alert-danger" role="alert">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+' . $_SESSION['fail_msg'] . '</div>';
+    unset($_SESSION['fail_msg']);
 }
 ?>
 <div class="breadcrumbs">

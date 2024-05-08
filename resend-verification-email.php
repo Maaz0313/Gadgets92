@@ -9,15 +9,17 @@ require('inc/header.php');
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <?php
-                if(isset($_SESSION['status']))
-                {
-                    ?>
-                    <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    <strong><?= $_SESSION['status']; ?></strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    <?php
-                    unset($_SESSION['status']);
+                if (isset($_SESSION['success_msg'])) {
+                    echo '<div class="alert alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                ' . $_SESSION['success_msg'] . '</div>';
+                    unset($_SESSION['success_msg']);
+                } 
+                if (isset($_SESSION['fail_msg'])) {
+                    echo '<div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                ' . $_SESSION['fail_msg'] . '</div>';
+                    unset($_SESSION['fail_msg']);
                 }
                 ?>
                 <div class="card" style="border:1px solid rgba(0, 0, 0, 0.175);">

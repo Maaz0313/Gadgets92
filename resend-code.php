@@ -44,31 +44,31 @@ if(isset($_POST['resend_btn']))
                 $mail->Body    = $email_template;
 
                 $mail->send();
-                $_SESSION['status'] = "Verification code sent to your email address";
+                $_SESSION['succuss_msg'] = "Verification code sent to your email address";
                 header('Location: login.php');
 
             }
             catch (Exception $e)
             {
-                $_SESSION['status'] = "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                $_SESSION['fail_msg'] = "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
                 header('Location: resend-verification-email.php');
             }
         }
         else
         {
-            $_SESSION['status'] = "Email already verified";
+            $_SESSION['fail_msg'] = "Email already verified";
             header('Location: resend-verification-email.php');
         }
     }
     else
     {
-        $_SESSION['status'] = "Email does not exist";
+        $_SESSION['fail_msg'] = "Email does not exist";
         header('Location: resend-verification-email.php');
     }
     }
     else
     {
-        $_SESSION['status'] = "Email is required";
+        $_SESSION['fail_msg'] = "Email is required";
         header('Location: resend-verification-email.php');
         exit(0);
     }

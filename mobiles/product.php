@@ -230,7 +230,7 @@ if (isset($_POST['submit'])) {
                     <div class="col-md-6">
                         <div class="row">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-calendar-date-fill"></i>
+                                <i class="bi bi-calendar-date"></i>
                                 <span style="padding-left: 9px;" class="key-spec-name">Release Date</span>
                             </div>
                         </div>
@@ -248,7 +248,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-hdd-rack"></i>
+                                <i class="fal fa-database"></i>
                                 <span style="padding-left: 9px;" class="key-spec-name">Storage</span>
                             </div>
                         </div>
@@ -279,7 +279,7 @@ if (isset($_POST['submit'])) {
                     <div class="col-md-6">
                         <div class="row">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-camera-fill"></i>
+                            <i class="fal fa-camera-alt"></i>
                                 <span style="padding-left: 9px;" class="key-spec-name">Rear Camera</span>
                             </div>
                         </div>
@@ -297,7 +297,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="row pt-md-2 ">
                             <div class="d-flex align-items-center ">
-                                <i class="bi bi-battery-half"></i>
+                                <i class="fal fa-battery-bolt"></i>
                                 <span style="padding-left: 9px;" class="key-spec-name">Battery</span>
                             </div>
                         </div>

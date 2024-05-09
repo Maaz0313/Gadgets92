@@ -10,7 +10,7 @@ require('inc/header.php');
 ?>
 <main class="bg-secondary-subtle py-2">
   <div class="form-signin w-100 m-auto">
-    <form class="text-center" action="login_code.php" method="post">
+    <form class="text-center" action="login_code.php<?php if(isset($_GET['continue'])){ echo('?continue='.$_GET['continue']);}?>" method="post">
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
       <?php
       if (isset($_SESSION['success_msg'])) {

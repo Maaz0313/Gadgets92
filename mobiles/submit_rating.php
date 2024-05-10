@@ -26,7 +26,7 @@ if (isset($_POST["rating_data"])) {
 
 	$statement->execute($data);
 
-	$_SESSION["success_msg"] = "Your Review & Rating Successfully Submitted";
+	echo "Your Review & Rating Successfully Submitted";
 
 }
 

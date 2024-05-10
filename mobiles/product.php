@@ -70,6 +70,9 @@ if (isset($_SESSION['fail_msg'])) {
 
 
 ?>
+<div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+</div>
 <div class="box pb-3">
     <!-- features overview -->
     <div class="bg-light container mb-3">
@@ -795,6 +798,9 @@ if (isset($_SESSION['fail_msg'])) {
             </div>
         </div>
         <!-- offcanvas ends -->
+        <div id="review_content">
+            <!-- All reviews here -->
+        </div>
         <?php
         while ($review_row = mysqli_fetch_assoc($review_result)) {
             ?>
@@ -917,10 +923,10 @@ require '../inc/footer.php';
 
                         $('#review_summary').val('');
 
-                        // load_rating_data();
+                        load_rating_data();
 
-                        // $('#alert').addClass('show');
-                        // $('#alert').prepend(data);
+                        $('.alert-success').addClass('show');
+                        $('.alert-success').prepend(data);
                     }
                 })
             }

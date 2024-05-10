@@ -38,6 +38,7 @@ function formatPrice($num)
 
 function facebook_time_ago($timestamp)  
  {  
+      date_default_timezone_set('Asia/Karachi');
       $time_ago = strtotime($timestamp);  
       $current_time = time();  
       $time_difference = $current_time - $time_ago;  

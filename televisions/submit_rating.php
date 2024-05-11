@@ -1,5 +1,5 @@
 <?php
-require('../inc/functions.inc.php');
+require ('../inc/functions.inc.php');
 $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 $base_url = $protocol . $_SERVER['HTTP_HOST'];
 
@@ -48,7 +48,7 @@ if (isset($_POST["action"])) {
 	$query = "SELECT user_reviews.*, users.name, users.profile FROM user_reviews INNER JOIN users ON user_reviews.user_id = users.id WHERE product_id = $product_id";
 
 	$result = $connect->query($query, PDO::FETCH_ASSOC);
-
+	//write if there's no review exists
 	if ($result->rowCount() == 0) {
 		$output = '';
 	} else {
@@ -102,7 +102,5 @@ if (isset($_POST["action"])) {
 			'review_data' => $review_content
 		);
 	}
-
 	echo json_encode($output);
-
 }

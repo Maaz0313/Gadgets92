@@ -41,21 +41,6 @@ require ('../inc/header.php');
 (int) $id = $row['product_id'];
 // echo $id;
 
-
-$review_sql = "SELECT user_reviews.*, users.name, users.profile FROM user_reviews INNER JOIN users ON user_reviews.user_id = users.id WHERE product_id = $id";
-$review_result = mysqli_query($con, $review_sql);
-if ($review_result === false) {
-    $_SESSION['fail_msg'] = "Something went wrong";
-    ?>
-    <script>
-        window.location.href = '<?= $row['product_slug'] ?>';
-    </script>
-    <?php
-    exit;
-}
-
-// $review_row = mysqli_fetch_assoc($review_result);
-// var_dump($review_row);
 if (isset($_SESSION['success_msg'])) {
     echo '<div class="alert alert-success" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
@@ -72,9 +57,6 @@ if (isset($_SESSION['fail_msg'])) {
 
 
 ?>
-<div class="alert alert-success alert-dismissible d-none" role="alert">
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
 <div class="box pb-3">
     <!-- features overview -->
     <div class="bg-light container mb-3">
@@ -183,7 +165,7 @@ if (isset($_SESSION['fail_msg'])) {
                     </div>
                 </div>
                 <div class="position-relative overflow-hidden mx-auto mt-2">
-                    <div class="status-badge badge_0">Out of Stock</div>
+
                     <div class="m-0 p-0 border-0 d-block-tablet product-img mb-0 modulo-lightbox">
                         <div class="m-0 p-0 border-0">
                             <figure class="p-3 bg-secondary-subtle text-center rounded-3">
@@ -196,36 +178,6 @@ if (isset($_SESSION['fail_msg'])) {
                                         alt="<?= $row['product_name'] ?>">
                                 </a>
                             </figure>
-                            <div class="position-absolute top-0 ms-2_2 mt-2_2 text-center">
-                                <ul class="list-unstyled phone-img">
-                                    <li>
-                                        <span class="li-img">
-                                            <img class="ls-is-cached lazyloaded"
-                                                data-src="../admin/images/products/<?= $row['product_image'] ?>"
-                                                src="../admin/images/products/<?= $row['product_image'] ?>"
-                                                alt="Realme Narzo N53 (8GB RAM + 128GB)">
-                                        </span>
-                                    </li>
-                                    <li class="position-relative">
-                                        <a class="text-decoration-none none text-black fw-bold lh_10 pro-glr-img-count"
-                                            data-rel="smrt_glr" data-thumb="https://cdn.findprix.com/media/mobiles/"
-                                            href="https://cdn.findprix.com/media/mobiles/realme-narzo-n53-1.webp"
-                                            target="_blank">
-                                            <span class="d-block font50 greycolor">PHOTOS</span><span
-                                                class="d-block">+6</span>
-                                        </a>
-                                    </li>
-                                    <li class="cmpr d-flex flex-row align-items-center  justify-content-center text-black font90 cursorpointer"
-                                        data_id="2826" data_name="Realme Narzo N53 (8GB RAM + 128GB)"
-                                        data_slug="realme-narzo-n53-8gb-ram-128gb" data_img="realme-narzo-n53.webp"
-                                        data_price="11999.00"><svg width="18px" height="18px" viewBox="0 0 20 20"
-                                            fill="#000" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M10 1.6a8.4 8.4 0 1 0 0 16.8 8.4 8.4 0 0 0 0-16.8zm5 9.4h-4v4H9v-4H5V9h4V5h2v4h4v2z">
-                                            </path>
-                                        </svg></li>
-                                </ul>
-                            </div>
                             <div data-bs-toggle="modal" data-bs-target="#exampleModalCenter"
                                 class="modal-trg font90 cursorpointer d-flex align-items-center flex-row position-absolute top-0 right-0 m-3 "
                                 data-popup="share_product">
@@ -753,21 +705,6 @@ if (isset($_SESSION['fail_msg'])) {
     <div class="container bg-light p-3" id="review">
         <div class="d-flex align-items-center p-2">
             <h5 class="fw-semibold" style="flex: 1;">User Reviews</h5>
-            <!-- review button -->
-            <?php
-            if (isset($_SESSION['authenticated'], $_SESSION['auth_user'])) {
-                ?>
-                <button class="btn btn-primary fw-medium text-end" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Write a Review</button>
-                <?php
-            } else {
-                ?>
-                <a class="btn btn-primary fw-medium text-end" href="../login.php?continue=<?php echo $link ?>">Login to
-                    Review</a>
-                <?php
-            }
-            ?>
-
         </div>
         <!-- offcanvas starts -->
         <div class="offcanvas offcanvas-bottom w-90 mx-auto h-auto " tabindex="-1" id="offcanvasBottom"
@@ -800,32 +737,92 @@ if (isset($_SESSION['fail_msg'])) {
             </div>
         </div>
         <!-- offcanvas ends -->
+        <div class="card border">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4 text-center">
+                        <h1 class="text-warning mt-4 mb-4">
+                            <b><span id="average_rating">0.0</span> / 5</b>
+                        </h1>
+                        <div class="mb-3">
+                            <i class="fas fa-star star-light mr-1 main_star"></i>
+                            <i class="fas fa-star star-light mr-1 main_star"></i>
+                            <i class="fas fa-star star-light mr-1 main_star"></i>
+                            <i class="fas fa-star star-light mr-1 main_star"></i>
+                            <i class="fas fa-star star-light mr-1 main_star"></i>
+                        </div>
+                        <h3><span id="total_review">0</span> Review</h3>
+                    </div>
+                    <div class="col-sm-4">
+                        <p>
+                        <div class="progress-label-left"><b>5</b> <i class="fas fa-star text-warning"></i></div>
+
+                        <div class="progress-label-right">(<span id="total_five_star_review">0</span>)</div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                aria-valuemax="100" id="five_star_progress"></div>
+                        </div>
+                        </p>
+                        <p>
+                        <div class="progress-label-left"><b>4</b> <i class="fas fa-star text-warning"></i></div>
+
+                        <div class="progress-label-right">(<span id="total_four_star_review">0</span>)</div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                aria-valuemax="100" id="four_star_progress"></div>
+                        </div>
+                        </p>
+                        <p>
+                        <div class="progress-label-left"><b>3</b> <i class="fas fa-star text-warning"></i></div>
+
+                        <div class="progress-label-right">(<span id="total_three_star_review">0</span>)</div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                aria-valuemax="100" id="three_star_progress"></div>
+                        </div>
+                        </p>
+                        <p>
+                        <div class="progress-label-left"><b>2</b> <i class="fas fa-star text-warning"></i></div>
+
+                        <div class="progress-label-right">(<span id="total_two_star_review">0</span>)</div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                aria-valuemax="100" id="two_star_progress"></div>
+                        </div>
+                        </p>
+                        <p>
+                        <div class="progress-label-left"><b>1</b> <i class="fas fa-star text-warning"></i></div>
+
+                        <div class="progress-label-right">(<span id="total_one_star_review">0</span>)</div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                aria-valuemax="100" id="one_star_progress"></div>
+                        </div>
+                        </p>
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <h3 class="mt-4 mb-3">Write Review Here</h3>
+                        <?php
+                        if (isset($_SESSION['authenticated'], $_SESSION['auth_user'])) {
+                            ?>
+                            <button class="btn btn-primary fw-medium text-end" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Write a Review</button>
+                            <?php
+                        } else {
+                            ?>
+                            <a class="btn btn-primary fw-medium text-end"
+                                href="../login.php?continue=<?php echo $link ?>">Login to
+                                Review</a>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="review_content">
             <!-- All reviews here -->
         </div>
-        <?php
-        while ($review_row = mysqli_fetch_assoc($review_result)) {
-            // var_dump($review_row);
-            ?>
-            <div class="d-flex flex-row p-3">
-
-                <img src="<?= $base_url . '/profiles/' . $review_row['profile'] ?>" width="40" height="40"
-                    class="rounded-circle me-2">
-
-                <div class="w-100">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex flex-row align-items-center">
-                            <span class="me-2"><?= $review_row['name'] ?></span>
-                        </div>
-                        <small><?= facebook_time_ago($review_row['created_at']) ?></small>
-                    </div>
-                    <h5 style="font-size: 15px;" class="fw-bold "><?= $review_row['review_heading'] ?></h5>
-                    <p class="text-justify comment-text mb-0"><?= $review_row['review_summary'] ?></p>
-                </div>
-            </div>
-            <?php
-        }
-        ?>
     </div>
 </div>
 <?php
@@ -917,20 +914,18 @@ require '../inc/footer.php';
                     method: "POST",
                     data: { product_id: product_id, user_id: user_id, rating_data: rating_data, review_heading: review_heading, review_summary: review_summary },
                     success: function (data) {
+
+                        //reset form data
+                        reset_background();
+                        $('#review_heading').val('');
+                        $('#review_summary').val('');
+                        //hide offcanvas
                         $('#offcanvasBottom').removeClass('show');
                         $('.offcanvas-backdrop').remove();
-                        reset_background();
-
-                        //reset form data by input tags
-                        $('#review_heading').val('');
-
-                        $('#review_summary').val('');
-
+                        $('body').removeAttr('style');
+                        alert(data);
                         load_rating_data();
 
-                        $('.alert-success').removeClass('d-none');
-                        $('.alert-success').addClass('d-block');
-                        $('.alert-success').prepend(data);
                     }
                 })
             }
@@ -940,10 +935,11 @@ require '../inc/footer.php';
         load_rating_data();
 
         function load_rating_data() {
+            var product_id = $('#product_id').val();
             $.ajax({
                 url: "submit_rating.php",
                 method: "POST",
-                data: { action: 'load_data' },
+                data: { action: 'load_data', product_id: product_id },
                 dataType: "JSON",
                 success: function (data) {
                     $('#average_rating').text(data.average_rating);
@@ -979,21 +975,27 @@ require '../inc/footer.php';
 
                     $('#one_star_progress').css('width', (data.one_star_review / data.total_review) * 100 + '%');
 
-                    if (data.review_data.length > 0) {
+                    if (Object.keys(data).length == 0) {
+                        $('#review_content').html('<h3 class="text-center mt-4">No reviews yet</h3>');
+                    }
+                    if (Object.keys(data).length > 0) {
                         var html = '';
 
                         for (var count = 0; count < data.review_data.length; count++) {
-                            html += '<div class="row mb-3">';
+                            
+                            html += '<div class="d-flex flex-row p-3">';
 
-                            html += '<div class="col-sm-1"><div class="rounded-circle bg-danger text-white pt-2 pb-2"><h3 class="text-center">' + data.review_data[count].user_name.charAt(0) + '</h3></div></div>';
+                            html += '<img src="' + data.review_data[count].profile + '" width="40" height="40"class="rounded-circle me-2">';
 
-                            html += '<div class="col-sm-11">';
+                            html += '<div class="w-100">';
 
-                            html += '<div class="card">';
+                            html += '<div class="d-flex justify-content-between align-items-center">';
 
-                            html += '<div class="card-header"><b>' + data.review_data[count].user_name + '</b></div>';
+                            html += '<div class="d-flex flex-row align-items-center"><span class="me-2">' + data.review_data[count].user_name + '</span></div>';
 
-                            html += '<div class="card-body">';
+                            html += '<small>' + data.review_data[count].datetime + '</small>';
+
+                            html += '</div>';
 
                             for (var star = 1; star <= 5; star++) {
                                 var class_name = '';
@@ -1005,19 +1007,12 @@ require '../inc/footer.php';
                                     class_name = 'star-light';
                                 }
 
-                                html += '<i class="fas fa-star ' + class_name + ' mr-1"></i>';
+                                html += '<i class="fas fa-star ' + class_name + '"></i>';
                             }
 
-                            html += '<br />';
+                            html += '<h5 style="font-size: 15px;" class="fw-bold ">' + data.review_data[count].review_heading + '</h5>';
 
-                            html += data.review_data[count].user_review;
-
-                            html += '</div>';
-
-                            html += '<div class="card-footer text-right">On ' + data.review_data[count].datetime + '</div>';
-
-                            html += '</div>';
-
+                            html += '<p class="text-justify comment-text mb-0">' + data.review_data[count].review_summary + '</p>';
                             html += '</div>';
 
                             html += '</div>';

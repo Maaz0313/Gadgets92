@@ -166,7 +166,7 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
                 <div class="position-relative overflow-hidden mx-auto mt-2">
-                    <div class="status-badge badge_0">Out of Stock</div>
+                    
                     <div class="m-0 p-0 border-0 d-block-tablet product-img mb-0 modulo-lightbox">
                         <div class="m-0 p-0 border-0">
                             <figure class="p-3 bg-secondary-subtle text-center rounded-3">
@@ -174,24 +174,7 @@ if (isset($_POST['submit'])) {
                                     <img class="blend-mode ls-is-cached lazyloaded" data-src="../admin/images/products/<?= $row['product_image'] ?>" src="../admin/images/products/<?= $row['product_image'] ?>" alt="<?= $row['product_name'] ?>">
                                 </a>
                             </figure>
-                            <div class="position-absolute top-0 ms-2_2 mt-2_2 text-center">
-                                <ul class="list-unstyled phone-img">
-                                    <li>
-                                        <span class="li-img">
-                                            <img class="ls-is-cached lazyloaded" data-src="../admin/images/products/<?= $row['product_image'] ?>" src="../admin/images/products/<?= $row['product_image'] ?>" alt="Realme Narzo N53 (8GB RAM + 128GB)">
-                                        </span>
-                                    </li>
-                                    <li class="position-relative">
-                                        <a class="text-decoration-none none text-black fw-bold lh_10 pro-glr-img-count" data-rel="smrt_glr" data-thumb="https://cdn.findprix.com/media/mobiles/" href="https://cdn.findprix.com/media/mobiles/realme-narzo-n53-1.webp" target="_blank">
-                                            <span class="d-block font50 greycolor">PHOTOS</span><span class="d-block">+6</span>
-                                        </a>
-                                    </li>
-                                    <li class="cmpr d-flex flex-row align-items-center  justify-content-center text-black font90 cursorpointer" data_id="2826" data_name="Realme Narzo N53 (8GB RAM + 128GB)" data_slug="realme-narzo-n53-8gb-ram-128gb" data_img="realme-narzo-n53.webp" data_price="11999.00"><svg width="18px" height="18px" viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 1.6a8.4 8.4 0 1 0 0 16.8 8.4 8.4 0 0 0 0-16.8zm5 9.4h-4v4H9v-4H5V9h4V5h2v4h4v2z">
-                                            </path>
-                                        </svg></li>
-                                </ul>
-                            </div>
+                            
                             <div data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="modal-trg font90 cursorpointer d-flex align-items-center flex-row position-absolute top-0 right-0 m-3 " data-popup="share_product">
                                 <svg fill="#888" width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M19.675 7.415 12.8 1.479C12.198 0.959 11.25 1.381 11.25 2.188v3.127C4.975 5.387 0 6.645 0 12.591c0 2.4 1.546 4.778 3.255 6.021 0.533 0.388 1.293 -0.099 1.097 -0.728C2.581 12.219 5.192 10.715 11.25 10.628V14.063c0 0.809 0.949 1.229 1.55 0.71l6.875 -5.938c0.432 -0.374 0.433 -1.045 0 -1.419z">

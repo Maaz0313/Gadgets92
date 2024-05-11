@@ -42,7 +42,7 @@ require ('../inc/header.php');
 // echo $id;
 
 
-$review_sql = "SELECT * FROM user_reviews INNER JOIN users ON user_reviews.user_id = users.id WHERE product_id = $id";
+$review_sql = "SELECT user_reviews.*, users.name, users.profile FROM user_reviews INNER JOIN users ON user_reviews.user_id = users.id WHERE product_id = $id";
 $review_result = mysqli_query($con, $review_sql);
 if ($review_result === false) {
     $_SESSION['fail_msg'] = "Something went wrong";
@@ -54,6 +54,8 @@ if ($review_result === false) {
     exit;
 }
 
+// $review_row = mysqli_fetch_assoc($review_result);
+// var_dump($review_row);
 if (isset($_SESSION['success_msg'])) {
     echo '<div class="alert alert-success" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
@@ -70,8 +72,8 @@ if (isset($_SESSION['fail_msg'])) {
 
 
 ?>
-<div class="alert alert-success" role="alert">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+<div class="alert alert-success alert-dismissible d-none" role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <div class="box pb-3">
     <!-- features overview -->
@@ -803,6 +805,7 @@ if (isset($_SESSION['fail_msg'])) {
         </div>
         <?php
         while ($review_row = mysqli_fetch_assoc($review_result)) {
+            // var_dump($review_row);
             ?>
             <div class="d-flex flex-row p-3">
 
@@ -814,7 +817,7 @@ if (isset($_SESSION['fail_msg'])) {
                         <div class="d-flex flex-row align-items-center">
                             <span class="me-2"><?= $review_row['name'] ?></span>
                         </div>
-                        <small><?= facebook_time_ago("{$review_row['created_at']}") ?></small>
+                        <small><?= facebook_time_ago($review_row['created_at']) ?></small>
                     </div>
                     <h5 style="font-size: 15px;" class="fw-bold "><?= $review_row['review_heading'] ?></h5>
                     <p class="text-justify comment-text mb-0"><?= $review_row['review_summary'] ?></p>
@@ -925,7 +928,8 @@ require '../inc/footer.php';
 
                         load_rating_data();
 
-                        $('.alert-success').addClass('show');
+                        $('.alert-success').removeClass('d-none');
+                        $('.alert-success').addClass('d-block');
                         $('.alert-success').prepend(data);
                     }
                 })

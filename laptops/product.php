@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
                 }
             }
 
-            $review_sql = "SELECT * FROM user_reviews INNER JOIN users ON user_reviews.user_id = users.id WHERE product_id = $id";
+            $review_sql = "SELECT user_reviews.*, users.name, users.profile FROM user_reviews INNER JOIN users ON user_reviews.user_id = users.id WHERE product_id = $id";
             $review_result = mysqli_query($con, $review_sql);
             if ($review_result === false) {
                 // handle the error

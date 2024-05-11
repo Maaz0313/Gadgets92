@@ -849,7 +849,7 @@ require '../inc/footer.php';
                     $('#one_star_progress').css('width', (data.one_star_review / data.total_review) * 100 + '%');
                     
                     if (Object.keys(data).length == 0) {
-                        $('#review_content').html('<h3 class="text-center mt-4">No reviews yet</h3>');
+                        $('#review_content').html('<h3 class="text-center mt-4">No reviews yet!</h3>');
                     }
                     if (Object.keys(data).length > 0) {
                         var html = '';

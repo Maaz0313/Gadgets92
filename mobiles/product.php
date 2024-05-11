@@ -844,6 +844,24 @@ require '../inc/footer.php';
     .star-light {
         color: #b5bec7;
     }
+    .half {
+  display: inline-block;
+  position: relative;
+  font-size: 100px;
+  color: #b5bec7;
+}
+
+.half::before {
+  font-family: 'FontAwesome 5 Pro';
+  content: "\f005";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40%;
+  overflow: hidden;
+  color: #f80;
+}
+
 </style>
 <script>
 
@@ -953,7 +971,24 @@ require '../inc/footer.php';
                             $(this).addClass('text-warning');
                             $(this).addClass('star-light');
                         }
+
+                        if (getDecimalPortion(data.average_rating) > 0.0) {
+                            $(this).last('.main_star').addClass('half');
+                        }
                     });
+
+                    function getDecimalPortion(number) {
+                        // Convert the number to a string and split it at the decimal point
+                        var parts = number.toString().split(".");
+
+                        // If there is no decimal part, return 0
+                        if (parts.length === 1) {
+                            return "0.00";
+                        }
+
+                        // Return the decimal part, rounded to two decimal places
+                        return parseFloat("0." + parts[1]).toFixed(2);
+                    }
 
                     $('#total_five_star_review').text(data.five_star_review);
 
@@ -982,7 +1017,7 @@ require '../inc/footer.php';
                         var html = '';
 
                         for (var count = 0; count < data.review_data.length; count++) {
-                            
+
                             html += '<div class="d-flex flex-row p-3">';
 
                             html += '<img src="' + data.review_data[count].profile + '" width="40" height="40"class="rounded-circle me-2">';

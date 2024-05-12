@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 06, 2024 at 06:30 PM
+-- Generation Time: May 12, 2024 at 09:41 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -127,6 +127,22 @@ CREATE TABLE `contact` (
   `subject` varchar(255) DEFAULT NULL,
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`id`, `name`, `email`, `subject`, `message`) VALUES
+(1, 'Maaz', 'maaztajammul63@gmail.com', 'Laravel tutorial', 'Hiiiiiiiiiiiii'),
+(2, 'Maaz', 'maaztajammul63@gmail.com', 'Laravel tutorial', 'Hiiii\r\n'),
+(3, 'Maaz', 'maaztajammul63@gmail.com', 'Laravel tutorial', 'Hiiii'),
+(4, 'Maaz', 'maaztajammul63@gmail.com', 'Hi', 'Hiiiiiiiiiiii'),
+(5, 'Maaz', 'maaztajammul63@gmail.com', 'Laravel tutorial', 'HIIIIIIIIIIIIIIIIIIIIIIII\r\n'),
+(6, 'Maaz', 'maaztajammul63@gmail.com', 'Laravel tutorial', 'Hiiiiiiiiii'),
+(7, 'Saad Tajammul', 'saadtajammul63@gmail.com', 'Hi', 'Hiiiiiiiiiiiiii'),
+(8, 'Saad Tajammul', 'saadtajammul63@gmail.com', 'Hi', 'Hiiiiiiiiiiiiiiiii'),
+(9, 'Saad Tajammul', 'saadtajammul63@gmail.com', 'Hi', 'Hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii'),
+(10, 'Maaz Tajammul', 'maaztajammul63@gmail.com', 'Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor at nisi id pellentesque. Vivamus at diam dolor. Quisque et tristique urna, vel tincidunt est. Phasellus ac velit pharetra, luctus massa in, molestie eros. Nam nibh tellus, efficitur eu lobortis nec, faucibus nec orci. Nam at dictum urna. Sed nisl nunc, pellentesque eu lectus ac, congue luctus orci.\r\n\r\nDuis malesuada pellentesque purus in laoreet. Aenean tempus ullamcorper felis id vehicula. Vivamus id arcu at mi scelerisque dignissim. Curabitur nec nibh arcu. Nullam lorem leo, condimentum non tristique fermentum, euismod vitae ligula. Curabitur ultricies ultricies posuere. Fusce nec mi consequat, bibendum velit et, ultricies purus. Quisque ac faucibus eros, nec mollis eros. Cras posuere interdum sollicitudin. Duis mollis consectetur cursus. Curabitur pharetra orci euismod magna varius interdum. Morbi quis tincidunt augue, eget aliquam sapien. Morbi rutrum ac ipsum ut ultrices. Integer auctor blandit ex at faucibus.\r\n\r\nMorbi in venenatis arcu, feugiat imperdiet orci. Curabitur facilisis tincidunt lorem nec efficitur. Aenean ultrices rutrum nulla tristique condimentum. Aliquam pretium nulla eget est sodales, eu euismod enim malesuada. Sed pellentesque nibh ut consectetur commodo. Mauris porta quis erat at faucibus. Aenean egestas placerat rhoncus. Aliquam imperdiet nibh non bibendum sagittis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec pulvinar nulla sit amet nulla dapibus volutpat. Nunc id risus eleifend, finibus erat ac, vulputate ligula.\r\n\r\nPraesent in lacinia risus, a molestie augue. Fusce fermentum eros ante. Phasellus ut iaculis felis. Suspendisse finibus eleifend scelerisque. Suspendisse potenti. Vestibulum ut magna accumsan orci efficitur ultricies. Praesent suscipit in magna a blandit. Cras faucibus enim pulvinar dui porttitor luctus. Aliquam at urna nec elit tincidunt lobortis vel vel mauris. Etiam at dolor neque. Sed et felis eget velit aliquet euismod eget suscipit augue. Nunc in turpis posuere odio dignissim elementum a non sapien. Proin vitae est metus. Aliquam pellentesque eros sed urna ultricies, nec posuere quam consequat. Ut ullamcorper ut eros id rhoncus. Maecenas sollicitudin a mauris eget ullamcorper.\r\n\r\nVestibulum eu ornare neque. Phasellus vestibulum turpis id lorem pharetra fringilla. Suspendisse ante odio, iaculis at mi placerat, rhoncus tincidunt quam. Aenean auctor, lorem a congue sollicitudin, justo felis vehicula lectus, et porta nulla lectus non lectus. Aliquam ligula dui, accumsan non lorem sit amet, imperdiet consequat lacus. Nunc iaculis odio a arcu tempor vulputate. Nullam sagittis feugiat fringilla. Aenean lectus lorem, elementum eget tristique nec, lacinia non magna. Suspendisse potenti. Praesent massa urna, tempor at eros id, molestie ornare purus. Aenean ac laoreet nisl. Nulla bibendum ultrices purus eu viverra. Quisque eget tincidunt sapien, vel fringilla augue. Mauris id magna ullamcorper, pharetra mi vitae, suscipit odio. Nam vel libero sit amet sapien efficitur euismod eget ut ante. Mauris dictum erat eu turpis efficitur, at fringilla lectus interdum.');
 
 -- --------------------------------------------------------
 
@@ -314,7 +330,7 @@ INSERT INTO `products` (`product_id`, `category_id`, `brand_id`, `product_name`,
 (3, 2, 15, 'HP 15s-FR5012TU Intel Core i3 12th Gen (8GB/512GB SSD/Win 11)', 'hp-15s-fr5012tu-intel-core-i3-12th-gen-8gb-512gb-ssd-win-11', '', 132900, 'hp-15s-fr5012tu-lapt.png', '2024-02-28', 1),
 (4, 3, 8, 'Sony WH-CH520 Headphone', 'sony-wh-ch520-headphone', '', 14500, 'sony-wh-ch520-headphone.png', '2023-04-11', 1),
 (5, 4, 25, 'Samsung Watch 4 Smartwatch', 'samsung-watch-4-smartwatch', '', 36499, 'samsung-watch-4.png', '2021-08-27', 1),
-(6, 5, 16, 'LG B3 77 inch Ultra HD 4K Smart OLED TV', 'lg-b3-77-inch-ultra-hd-4k-smart-oled-tv', '', 629000, 'OLED77B3PUA_gallery_01_front_3000x3000.png', '2023-04-03', 1),
+(6, 5, 16, 'LG B3 77 inch Ultra HD 4K Smart OLED TV', 'lg-b3-77-inch-ultra-hd-4k-smart-oled-tv', 'The LG B3 is a 77-inch 4K UHD OLED TV with a Smart webOS 23 and ThinQ AI. It has a self-lit OLED display that provides infinite contrast and perfect black, and an a7 AI Processor Gen6 for an outstanding picture. The TV also has a 120 Hz refresh rate, HDR10, HLG, and Dolby Vision compatibility, and built-in Amazon Alexa. It also works with Google Assistant, AirPlay 2, and Apple HomeKit.', 629000, 'OLED77B3PUA_gallery_01_front_3000x3000.png', '2023-04-03', 1),
 (7, 1, 4, 'Vivo Y200e 5G (6GB RAM + 128)', 'vivo-y200e-5g-6gb-ram-128', '', 69999, 'vivo-y200e-5g.webp', '2024-02-22', 1),
 (8, 1, 4, 'Vivo Y200e 5G (8GB RAM + 128)', 'vivo-y200e-5g-8gb-ram-128', '', 77999, 'vivo-y200e-5g.webp', '2024-02-22', 1),
 (9, 1, 4, 'Vivo V30 Pro (8GB RAM + 256)', 'vivo-v30-pro-8gb-ram-256', '', 141000, 'vivo-v30-pro.webp', '2024-03-07', 1),
@@ -422,8 +438,9 @@ INSERT INTO `tv_specs` (`spec_id`, `product_id`, `model`, `launch_year`, `in_the
 CREATE TABLE `users` (
   `id` int NOT NULL,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `profile` varchar(255) NOT NULL,
   `email` varchar(150) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `verify_token` varchar(191) NOT NULL,
   `verify_status` tinyint NOT NULL DEFAULT '0' COMMENT '0=no, 1=yes',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -433,9 +450,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `verify_token`, `verify_status`, `created_at`) VALUES
-(1, 'Maaz', 'maaztajammul63@gmail.com', 'maaz', '33ba087cbca6cc482e5566e933d2dbdc', 1, '2024-02-10 13:01:16'),
-(2, 'Kami', 'kami.009211@gmail.com', 'kami', 'f900cc923ae127b9162120313eb2b02a', 0, '2024-02-24 13:09:12');
+INSERT INTO `users` (`id`, `name`, `profile`, `email`, `password`, `verify_token`, `verify_status`, `created_at`) VALUES
+(1, 'Maaz Tajammul', 'IMG-663a73b4258165.36266781.jpg', 'maaztajammul63@gmail.com', '$2y$10$ngTFlt6lWhuXjUi7DIrkb.Mctg/7Tr0hsWfKnYqXbJN0JhkNTO3vO', 'ecd45075479c8237086cbee8c3c33634', 1, '2024-05-07 18:32:20');
 
 -- --------------------------------------------------------
 
@@ -447,6 +463,7 @@ CREATE TABLE `user_reviews` (
   `id` int NOT NULL,
   `product_id` int NOT NULL,
   `user_id` int NOT NULL,
+  `rating` tinyint UNSIGNED NOT NULL COMMENT '1-5',
   `review_heading` varchar(50) NOT NULL,
   `review_summary` text NOT NULL,
   `created_at` timestamp NOT NULL
@@ -456,13 +473,16 @@ CREATE TABLE `user_reviews` (
 -- Dumping data for table `user_reviews`
 --
 
-INSERT INTO `user_reviews` (`id`, `product_id`, `user_id`, `review_heading`, `review_summary`, `created_at`) VALUES
-(1, 11, 1, 'Amazing Mobile', 'Very nice mobile phone ', '2024-03-25 06:00:32'),
-(2, 11, 1, 'High performance mobile ', 'The mobile\'s performance is very good for gamers.', '2024-03-25 06:14:19'),
-(5, 7, 1, 'Amazing Vivo', 'hiiiiiiiii', '2024-05-05 18:17:46'),
-(6, 3, 1, 'Amazing HP', 'Laptop', '2024-05-05 18:20:03'),
-(7, 3, 1, 'Amazing HP student', 'laptop ', '2024-05-05 18:22:14'),
-(8, 6, 1, 'good TV', 'TV', '2024-05-05 18:27:16');
+INSERT INTO `user_reviews` (`id`, `product_id`, `user_id`, `rating`, `review_heading`, `review_summary`, `created_at`) VALUES
+(1, 19, 1, 3, 'Very expensive ', 'Very expensive ', '2024-05-07 18:43:41'),
+(2, 7, 1, 5, 'Amazing Vivo', 'Hiiiiiiiiiiiiiii', '2024-05-10 13:35:14'),
+(3, 7, 1, 3, 'Very expensive mobile ', 'Mobile is very expensive ', '2024-05-11 07:44:00'),
+(4, 7, 1, 5, 'Gorgeous mobile ', 'Very beautiful and gorgeous mobile ', '2024-05-11 08:00:51'),
+(5, 7, 1, 5, 'Example review ', 'Lorem ipsum ', '2024-05-11 08:02:48'),
+(6, 7, 1, 5, 'Hi Review', 'Example review ', '2024-05-11 08:05:19'),
+(7, 7, 1, 5, 'good mobile ', 'bla blah', '2024-05-11 08:38:11'),
+(8, 7, 1, 2, 'Very expensive ', 'expensive ', '2024-05-11 08:40:44'),
+(9, 3, 1, 5, 'Amazing Laptop for coders', 'This is an amazing Laptop for coders', '2024-05-11 11:42:58');
 
 --
 -- Indexes for dumped tables
@@ -577,7 +597,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `headset_specs`
@@ -619,13 +639,13 @@ ALTER TABLE `tv_specs`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user_reviews`
 --
 ALTER TABLE `user_reviews`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

@@ -75,6 +75,49 @@ body {
     box-shadow: none;
 }
 
+.avatar-sm {
+    font-size: .875rem;
+    width: 36px;
+    height: 36px;
+}
+
+.avatar {
+    font-size: 1rem;
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    color: #fff;
+    border-radius: 50%;
+    background-color: #adb5bd;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-xl {
+    height: 5rem;
+    width: 5rem;
+}
+
+.media-body {
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.text-sm {
+    font-size: .875rem !important;
+}
+
+.font-weight-bold {
+    font-weight: 600 !important;
+}
+
+input[readonly] {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 2px 0 !important;
+}
+
 .custom-form {
     display: flex;
     justify-content: flex-end;

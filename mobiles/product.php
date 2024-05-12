@@ -745,11 +745,7 @@ if (isset($_SESSION['fail_msg'])) {
                             <b><span id="average_rating">0.0</span> / 5</b>
                         </h1>
                         <div class="mb-3">
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
+                            <span class="star-rating"></span>
                         </div>
                         <h3><span id="total_review">0</span> Review</h3>
                     </div>
@@ -844,24 +840,19 @@ require '../inc/footer.php';
     .star-light {
         color: #b5bec7;
     }
-    .half {
-  display: inline-block;
-  position: relative;
-  font-size: 100px;
-  color: #b5bec7;
-}
 
-.half::before {
-  font-family: 'FontAwesome 5 Pro';
-  content: "\f005";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 40%;
-  overflow: hidden;
-  color: #f80;
-}
+    .star-rating::before {
+        content: "⭐⭐⭐⭐⭐";
+        font-size: 16px;
+    }
 
+    .star-rating {
+        display: inline-block;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: rgba(0, 0, 0, 0.1);
+        background-color: #b5bec7;
+    }
 </style>
 <script>
 
@@ -963,32 +954,8 @@ require '../inc/footer.php';
                     $('#average_rating').text(data.average_rating);
                     $('#total_review').text(data.total_review);
 
-                    var count_star = 0;
-
-                    $('.main_star').each(function () {
-                        count_star++;
-                        if (Math.ceil(data.average_rating) >= count_star) {
-                            $(this).addClass('text-warning');
-                            $(this).addClass('star-light');
-                        }
-
-                        if (getDecimalPortion(data.average_rating) > 0.0) {
-                            $(this).last('.main_star').addClass('half');
-                        }
-                    });
-
-                    function getDecimalPortion(number) {
-                        // Convert the number to a string and split it at the decimal point
-                        var parts = number.toString().split(".");
-
-                        // If there is no decimal part, return 0
-                        if (parts.length === 1) {
-                            return "0.00";
-                        }
-
-                        // Return the decimal part, rounded to two decimal places
-                        return parseFloat("0." + parts[1]).toFixed(2);
-                    }
+                    var percentageStarRating = (data.average_rating / 5) * 100;
+                    $('.star-rating').css('background-image', 'linear-gradient(to right, gold 0%, gold ' + percentageStarRating + '%, transparent ' + percentageStarRating + '%, transparent 100%)');
 
                     $('#total_five_star_review').text(data.five_star_review);
 

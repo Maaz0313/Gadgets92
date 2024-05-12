@@ -617,11 +617,7 @@ if (isset($_SESSION['fail_msg'])) {
                             <b><span id="average_rating">0.0</span> / 5</b>
                         </h1>
                         <div class="mb-3">
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
+                            <span class="star-rating"></span>
                         </div>
                         <h3><span id="total_review">0</span> Review</h3>
                     </div>
@@ -715,6 +711,19 @@ require '../inc/footer.php';
 
     .star-light {
         color: #b5bec7;
+    }
+
+    .star-rating::before {
+        content: "⭐⭐⭐⭐⭐";
+        font-size: 16px;
+    }
+
+    .star-rating {
+        display: inline-block;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: rgba(0, 0, 0, 0.1);
+        background-color: #b5bec7;
     }
 </style>
 <script>
@@ -820,13 +829,8 @@ require '../inc/footer.php';
 
                     var count_star = 0;
 
-                    $('.main_star').each(function () {
-                        count_star++;
-                        if (Math.ceil(data.average_rating) >= count_star) {
-                            $(this).addClass('text-warning');
-                            $(this).addClass('star-light');
-                        }
-                    });
+                    var percentageStarRating = (data.average_rating / 5) * 100;
+                    $('.star-rating').css('background-image', 'linear-gradient(to right, gold 0%, gold ' + percentageStarRating + '%, transparent ' + percentageStarRating + '%, transparent 100%)');
 
                     $('#total_five_star_review').text(data.five_star_review);
 
@@ -847,7 +851,7 @@ require '../inc/footer.php';
                     $('#two_star_progress').css('width', (data.two_star_review / data.total_review) * 100 + '%');
 
                     $('#one_star_progress').css('width', (data.one_star_review / data.total_review) * 100 + '%');
-                    
+
                     if (Object.keys(data).length == 0) {
                         $('#review_content').html('<h3 class="text-center mt-4">No reviews yet!</h3>');
                     }

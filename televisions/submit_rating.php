@@ -45,7 +45,7 @@ if (isset($_POST["action"])) {
 	$review_content = array();
 
 	$product_id = $_POST["product_id"];
-	$query = "SELECT user_reviews.*, users.name, users.profile FROM user_reviews INNER JOIN users ON user_reviews.user_id = users.id WHERE product_id = $product_id";
+	$query = "SELECT user_reviews.*, users.name, users.profile FROM user_reviews INNER JOIN users ON user_reviews.user_id = users.id WHERE product_id = $product_id ORDER BY created_at DESC";
 
 	$result = $connect->query($query, PDO::FETCH_ASSOC);
 	//write if there's no review exists

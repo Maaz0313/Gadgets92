@@ -18,11 +18,11 @@ if (session_status() === PHP_SESSION_NONE) {
     <title>
         <?php
         if (isset($title)) {
-            echo $title . " | ";
+            echo $title . " | Gadgets92";
         } else {
-            echo "";
+            echo "Gadgets92 - your one-stop shop for viewing tech specs of electronic products";
         }
-        ?>Gadgets92
+        ?>
     </title>
     <meta name="description"
         content="<?= isset($description) ? $description : 'Gadgets92 is your one-stop shop for viewing all technical specifications of consumers electronic products like Smartphones, Laptops, Smartwatches etc.' ?>">

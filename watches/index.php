@@ -5,25 +5,6 @@ require('../dbcon.php');
 require('../inc/header.php');
 require('../inc/functions.inc.php');
 
-if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
-    $page_no = $_GET['page_no'];
-} else {
-    $page_no = 1;
-}
-$total_records_per_page = 10;
-$offset = ($page_no - 1) * $total_records_per_page;
-$previous_page = $page_no - 1;
-$next_page = $page_no + 1;
-$adjacents = "2";
-$result_count = mysqli_query(
-    $con,
-    "SELECT COUNT(*) AS total_records FROM products
-    INNER JOIN sm_watch_specs ON products.product_id = sm_watch_specs.product_id"
-);
-$total_records = mysqli_fetch_array($result_count);
-$total_records = $total_records['total_records'];
-$total_no_of_pages = ceil($total_records / $total_records_per_page);
-$second_last = $total_no_of_pages - 1;
 $searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
 $brand = isset($_GET['brand']) ? mysqli_real_escape_string($con, $_GET['brand']) : '';
 $whereClause = '';
@@ -39,6 +20,28 @@ if ($brand) {
 } else {
     $whereClause .= '';
 }
+// page nos. logic
+if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
+    $page_no = $_GET['page_no'];
+} else {
+    $page_no = 1;
+}
+$total_records_per_page = 10;
+$offset = ($page_no - 1) * $total_records_per_page;
+$previous_page = $page_no - 1;
+$next_page = $page_no + 1;
+$adjacents = "2";
+$result_count = mysqli_query(
+    $con,
+    "SELECT COUNT(*) AS total_records FROM products
+    INNER JOIN sm_watch_specs ON products.product_id = sm_watch_specs.product_id". $whereClause
+);
+$total_records = mysqli_fetch_array($result_count);
+$total_records = $total_records['total_records'];
+$total_no_of_pages = ceil($total_records / $total_records_per_page);
+$second_last = $total_no_of_pages - 1;
+
+// final query
 $sql = "SELECT *
     FROM products
     INNER JOIN sm_watch_specs ON products.product_id = sm_watch_specs.product_id

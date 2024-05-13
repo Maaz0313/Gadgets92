@@ -52,7 +52,7 @@ if (isset($_POST['action'])) {
                                             <li> '. ($row['touchscreen'] == 1 ? 'Touchscreen' : 'No Touchscreen') .'</li>
                                             <li> '. $row['screen_size'] .' Display</li>
                                             <li> '. $row['battery_life'] .'</li>
-                                            <li> '. $row['features'] .'</li>
+                                            <li> '. (isset($row['water_resistant']) ? 'Water Resistant' : 'No Water Resistant').'</li>
                                             <li> '. $row['extra_features'] .'</li>
                                             <li> '. $row['os'] .'</li>
                                         </ul>

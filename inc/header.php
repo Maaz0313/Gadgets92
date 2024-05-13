@@ -3,7 +3,7 @@ $link = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $base_url = $protocol . $_SERVER['HTTP_HOST'];
-
+// echo $base_url;
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -201,13 +201,45 @@ if (session_status() === PHP_SESSION_NONE) {
                             href="<?= $base_url ?>/headsets/">Headsets</a>
                     </li>
                     <li class="nav-item mt-3 ms-3">
-                        <?php
+                    <?php
                         if (isset($_SESSION["authenticated"])) {
                             ?>
-                            <a href="<?= $base_url ?>/logout.php?continue=<?php echo $link ?>"
-                                class="btn btn-info text-white me-2">Logout</a>
+                            <ul class="navbar-nav d-flex">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link pe-0" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <div class="d-flex align-items-center">
+                                            <?php
+                                            $fetch_profile = mysqli_query($con, "SELECT `profile` FROM `users` WHERE `id` = '{$_SESSION['auth_user']['user_id']}'");
+                                            if($fetch_profile) {
+                                                $profile = mysqli_fetch_assoc($fetch_profile);
+                                            }?>
+                                            <img class="avatar avatar-sm rounded-circle" alt="Image placeholder"
+                                                    src="<?=$base_url?>/profiles/<?=$profile['profile']?>.?>">
+                                            </img>
+                                            <div class="media-body ms-2 d-block ">
+                                                <span class="mb-0 text-sm  font-weight-bold"><?=$_SESSION['auth_user']["username"]?></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                                        <a href="<?= $base_url ?>/profile/index.php" class="dropdown-item">
+                                            <i class="ni ni-single-02"></i>
+                                            <span>My Profile</span>
+                                        </a>
+                                        <a href="<?= $base_url ?>/profile/edit.php" class="dropdown-item">
+                                            <i class="ni ni-settings-gear-65"></i>
+                                            <span>Edit Profile</span>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="<?= $base_url ?>/logout.php?continue=<?php echo $link ?>" class="dropdown-item">
+                                            <i class="ni ni-user-run"></i>
+                                            <span>Logout</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
                             <?php
-
                         } else {
                             ?>
                             <a href="<?= $base_url ?>/login.php?continue=<?php echo $link ?>"

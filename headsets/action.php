@@ -29,6 +29,7 @@ if (isset($_POST['action'])) {
         $water_resistant = implode("','", $_POST['water_resistant']);
         $sql .= " AND headset_specs.water_resistant IN ('" . $water_resistant . "')";
     }
+    
     $result = mysqli_query($con, $sql);
     $output = '';
     if (mysqli_num_rows($result) > 0) {

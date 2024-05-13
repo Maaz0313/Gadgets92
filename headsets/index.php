@@ -9,6 +9,19 @@ require('../inc/functions.inc.php');
 $searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
 $brand = isset($_GET['brand']) ? mysqli_real_escape_string($con, $_GET['brand']) : '';
 $whereClause = '';
+$filter_option = isset($_GET['sort']) && in_array($_GET['sort'], ['low_price', 'high_price']) ? $_GET['sort'] : "";
+$orderClause = '';
+// echo "filter option: " . $filter_option;
+switch ($filter_option) {
+    case "low_price":
+        $orderClause .= " ORDER BY products.price ASC";
+        $low_price_selected = "selected";
+        break;
+    case "high_price":
+        $orderClause .= " ORDER BY products.price DESC";
+        $high_price_selected = "selected";
+        break;
+}
 
 if ($searchTerm) {
     $whereClause = " AND products.product_name LIKE '%" . mysqli_real_escape_string($con, $searchTerm) . "%'";
@@ -35,7 +48,7 @@ $adjacents = "2";
 $result_count = mysqli_query(
     $con,
     "SELECT COUNT(*) AS total_records FROM products
-    INNER JOIN headset_specs ON products.product_id = headset_specs.product_id". $whereClause
+    INNER JOIN headset_specs ON products.product_id = headset_specs.product_id WHERE products.status = 1 ". $whereClause
 );
 $total_records = mysqli_fetch_array($result_count);
 $total_records = $total_records['total_records'];
@@ -46,7 +59,7 @@ $sql = "SELECT *
     FROM products
     INNER JOIN headset_specs ON products.product_id = headset_specs.product_id
     INNER JOIN brands ON products.brand_id = brands.brand_id
-    WHERE products.status = 1 " . $whereClause . "
+    WHERE products.status = 1 " . $whereClause . $orderClause . "
     LIMIT $offset, $total_records_per_page";
 $result = mysqli_query($con, $sql);
 if (!$result) {
@@ -336,10 +349,16 @@ if (isset($_SESSION['fail_msg'])) {
                         </svg>
                     </span>
                     Sort By
-                    <select class="position-absolute top-0 start-0 d-block opacity-0 " name="" id="">
-                        <option value="">Latest</option>
-                        <option value="">Lowest Price</option>
-                        <option value="">Highest Price</option>
+                    <select class="position-absolute top-0 d-block opacity-0" onchange="sort_product_drop()" id="sort_product">
+                        <option value="latest" <?= isset($latest_selected) ? $latest_selected : '' ?>>
+                            Latest
+                        </option>
+                        <option value="low_price" <?= isset($low_price_selected) ? $low_price_selected : '' ?>>
+                            Lowest Price
+                        </option>
+                        <option value="high_price" <?= isset($high_price_selected) ? $high_price_selected : '' ?>>
+                            Highest Price
+                        </option>
                     </select>
                 </span>
 
@@ -666,4 +685,8 @@ require('../inc/footer.php');
             return filterData;
         }
     });
+    function sort_product_drop() {
+        var sort_product = $('#sort_product').val();
+        window.location.href = "index.php?sort=" + sort_product;
+    }
 </script>

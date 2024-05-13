@@ -1,6 +1,7 @@
 <?php
 session_start();
 $title = "Contact Us";
+require('dbcon.php');
 require('inc/header.php');
 ?>
 <style>

@@ -1,9 +1,8 @@
 <?php
+require ('../dbcon.php');
 require ('../inc/header.php');
 require ('../inc/functions.inc.php');
-require ('../dbcon.php');
-if (!isset($_SESSION['auth_user']))
-{
+if (!isset($_SESSION['auth_user'])) {
     ?>
     <script>
         window.location.href = "../login.php";
@@ -12,10 +11,13 @@ if (!isset($_SESSION['auth_user']))
     $_SESSION['fail_msg'] = "Please login first to access your profile page.";
     exit(0);
 }
-$id = (int)$_SESSION['auth_user']['user_id'];
-$sql = "SELECT * FROM users WHERE id=".$id;
+$id = (int) $_SESSION['auth_user']['user_id'];
+$sql = "SELECT * FROM users WHERE id=" . $id;
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
+
+//Image Update Logic
+
 
 if (isset($_POST['submit'])) {
     $name = sanitize_data($_POST['name']);
@@ -57,7 +59,7 @@ if (isset($_SESSION['success_msg'])) {
 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 ' . $_SESSION['success_msg'] . '</div>';
     unset($_SESSION['success_msg']);
-} 
+}
 if (isset($_SESSION['fail_msg'])) {
     echo '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -75,7 +77,8 @@ if (isset($_SESSION['fail_msg'])) {
                     <div class="rounded-top"
                         style="background: url(../img/bg/profile-bg.jpg) no-repeat; background-size: cover; height: 100px">
                     </div>
-                    <div class="card px-4 pt-2 pb-4 shadow-sm rounded-top-0 rounded-bottom-0 rounded-bottom-md-2" style="background-color: #1e293b;">
+                    <div class="card px-4 pt-2 pb-4 shadow-sm rounded-top-0 rounded-bottom-0 rounded-bottom-md-2"
+                        style="background-color: #1e293b;">
                         <div class="d-flex align-items-end justify-content-between">
                             <div class="d-flex align-items-center">
                                 <div class="me-2 position-relative d-flex justify-content-end align-items-end mt-n5">
@@ -120,11 +123,30 @@ if (isset($_SESSION['fail_msg'])) {
                         <div class="card-body">
                             <div class="d-lg-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-center mb-4 mb-lg-0">
-                                    <img src="<?= $base_url ?>/profiles/<?= $row['profile'] ?>" name="" id="img-uploaded"
-                                        class="avatar-xl rounded-circle" alt="avatar">
+                                    <div class="user-box">
+                                        <div class="img-relative">
+                                            <!-- Loading image -->
+                                            <div class="overlay uploadProcess" style="display: none;">
+                                                <div class="overlay-content"><img src="../img/loading.gif" /></div>
+                                            </div>
+                                            <!-- Hidden upload form -->
+                                            <form method="post" action="upload.php" enctype="multipart/form-data"
+                                                id="picUploadForm" target="uploadTarget">
+                                                <input type="file" name="picture" id="fileInput" style="display:none" />
+                                            </form>
+                                            <iframe id="uploadTarget" name="uploadTarget" src="#"
+                                                style="width:0;height:0;border:0px solid #fff;"></iframe>
+                                            <!-- Image update link -->
+                                            <a class="editLink" href="javascript:void(0);"><img
+                                                    src="../img/edit.png" /></a>
+                                            <!-- Profile image -->
+                                            <img src="<?= $base_url ?>/profiles/<?= $row['profile'] ?>"
+                                                id="imagePreview">
+                                        </div>
+                                    </div>
                                     <div class="ms-3">
                                         <h4 class="mb-0 text-white">Change Image</h4>
-                                        <p class="mb-0">PNG or JPG no bigger than 800px wide and tall.</p>
+                                        <p class="mb-0">JPG, PNG, GIF no bigger than 80px wide and tall.</p>
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +159,8 @@ if (isset($_SESSION['fail_msg'])) {
                                     <!-- Full name -->
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label" for="fname">Full Name</label>
-                                        <input type="text" name="name" id="fname" class="form-control" placeholder="Full Name" value="<?= $row['name'] ?>" required>
+                                        <input type="text" name="name" id="fname" class="form-control"
+                                            placeholder="Full Name" value="<?= $row['name'] ?>" required>
                                         <div class="invalid-feedback">Please enter full name.</div>
                                     </div>
                                     <!-- Email -->
@@ -148,21 +171,25 @@ if (isset($_SESSION['fail_msg'])) {
                                     <!-- Password -->
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label" for="password">Password</label>
-                                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" value="<?= $row['password'] ?>" required>
+                                        <input type="password" name="password" id="password" class="form-control"
+                                            placeholder="Password" value="<?= $row['password'] ?>" required>
                                         <div class="invalid-feedback">Please enter password.</div>
                                     </div>
                                     <!-- Confirm Password -->
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label" for="password2">Confirm Password</label>
-                                        <input type="password" name="conf_password" id="password2" class="form-control" placeholder="Confirm Password" value="<?= $row['password'] ?>" required>
+                                        <input type="password" name="conf_password" id="password2" class="form-control"
+                                            placeholder="Confirm Password" value="<?= $row['password'] ?>" required>
                                         <div class="invalid-feedback">Please enter confirm password.</div>
                                     </div>
                                     <div class="mb-3 col-12 col-md-6">
-                                        <button type="button" class="btn btn-dark" id="toggle">Show/Hide Password</button>
+                                        <button type="button" class="btn btn-dark" id="toggle">Show/Hide
+                                            Password</button>
                                     </div>
                                     <div class="col-12">
                                         <!-- Button -->
-                                        <button class="btn btn-primary" type="submit" name="submit">Update Profile</button>
+                                        <button class="btn btn-primary" type="submit" name="submit">Update
+                                            Profile</button>
                                     </div>
                                 </form>
                             </div>
@@ -175,11 +202,51 @@ if (isset($_SESSION['fail_msg'])) {
 </main>
 <?php require '../inc/footer.php'; ?>
 <script>
-    $(document).ready(function() {
-      $('#toggle').click(function() {
-        var passwordField = $('#password, #password2');
-        var type = passwordField.attr('type') === 'password' ? 'text' : 'password';
-        passwordField.attr('type', type);
-      });
+    $(document).ready(function () {
+        //If image edit link is clicked
+        $(".editLink").on('click', function (e) {
+            e.preventDefault();
+            $("#fileInput:hidden").trigger('click');
+        });
+
+        //On select file to upload
+        $("#fileInput").on('change', function () {
+            var image = $('#fileInput').val();
+            var img_ex = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+            //validate file type
+            if (!img_ex.exec(image)) {
+                alert('Please upload only .jpg/.jpeg/.png/.gif file.');
+                $('#fileInput').val('');
+                return false;
+            } else {
+                $('.uploadProcess').show();
+                $('#uploadForm').hide();
+                $("#picUploadForm").submit();
+            }
+        });
     });
+
+    //After completion of image upload process
+    function completeUpload(success, fileName) {
+        if (success == 1) {
+            $('#imagePreview').attr("src", "");
+            $('#imagePreview, .avatar-sm , .avatar-xl').attr("src", fileName);
+
+            $('#fileInput').attr("value", fileName);
+            $('.uploadProcess').hide();
+        } else {
+            $('.uploadProcess').hide();
+            alert('There was an error during file upload!');
+        }
+        return true;
+    }
+    $(document).ready(function () {
+        $('#toggle').click(function () {
+            var passwordField = $('#password, #password2');
+            var type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+            passwordField.attr('type', type);
+        });
+    });
+
 </script>

@@ -1,7 +1,7 @@
 <?php
 session_start();
-include('inc/header.php');
 require('dbcon.php');
+include('inc/header.php');
 include('inc/functions.inc.php');
 if (isset($_SESSION['success_msg'])) {
     echo '<div class="alert alert-success alert-dismissible fade show" role="alert">

@@ -1,6 +1,7 @@
 <?php
 $title = "About Us";
 session_start();
+require('dbcon.php');
 require('inc/header.php');
 ?>
 

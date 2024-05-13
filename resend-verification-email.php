@@ -1,6 +1,7 @@
 <?php
 session_start();
 $title = "Resend Verification Email";
+require('dbcon.php');
 require('inc/header.php');
 ?>
 

@@ -7,6 +7,7 @@ if (isset($_SESSION["authenticated"]))
     header("Location: index.php");
     exit(0);
 }
+require('dbcon.php');
 require('inc/header.php'); 
 ?>
     <link rel="stylesheet" href="css/signup.css">
@@ -43,6 +44,9 @@ require('inc/header.php');
                     <label for="validationDefault01" class="form-label">Profile Picture (jpg, png, jpeg, gif)<span class="req">*</span></label>
                     <input type="file" class="form-control btn btn-primary" name="profile" id="validationDefault01" required
                         oninvalid="this.setCustomValidity('Please Select your profile picture')" oninput="setCustomValidity('')">
+                    <p class="text-muted">The image should be no bigger than 80px wide and tall.
+
+</p></p>
                 </div>
                 <div class="col-12">
                     <label for="inputEmail4" class="form-label">Email address <span class="req">*</span></label>

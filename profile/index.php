@@ -1,6 +1,15 @@
 <?php
-require ('../inc/header.php');
 require ('../dbcon.php');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$id = (int)$_SESSION['auth_user']['user_id'];
+$sql = "SELECT * FROM users WHERE id=".$id;
+$result = mysqli_query($con, $sql);
+$row = mysqli_fetch_assoc($result);
+$title = $row['name'];
+require ('../inc/header.php');
+
 if (!isset($_SESSION['auth_user']))
 {
     ?>
@@ -11,10 +20,6 @@ if (!isset($_SESSION['auth_user']))
     $_SESSION['fail_msg'] = "Please login first to access your profile page.";
     exit(0);
 }
-$id = (int)$_SESSION['auth_user']['user_id'];
-$sql = "SELECT * FROM users WHERE id=".$id;
-$result = mysqli_query($con, $sql);
-$row = mysqli_fetch_assoc($result);
 if (isset($_SESSION['success_msg'])) {
     echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -66,7 +71,7 @@ if (isset($_SESSION['fail_msg'])) {
                                     </div>
                                 </div>
                                 <div class="d-flex flex-column">
-                                    <a class="mb-2" href="../logout.php"><button type="button" class="btn btn-danger">Logout</button></a>
+                                    <a class="mb-2" href="../logout.php?continue=<?=$link?>"><button type="button" class="btn btn-danger">Logout</button></a>
                                     <!-- delete account btn -->
                                     <a href="../profile/delete.php"><button type="button" class="btn btn-danger">Delete Account</button></a>
                                     <p class="text-black-50 text-sm">Your account will be deleted immediately.</p>

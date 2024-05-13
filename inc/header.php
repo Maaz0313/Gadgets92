@@ -81,9 +81,13 @@ if (session_status() === PHP_SESSION_NONE) {
                                     <a class="nav-link pe-0" href="#" role="button" data-bs-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
                                         <div class="d-flex align-items-center">
+                                            <?php
+                                            $fetch_profile = mysqli_query($con, "SELECT `profile` FROM `users` WHERE `id` = '{$_SESSION['auth_user']['user_id']}'");
+                                            if($fetch_profile) {
+                                                $profile = mysqli_fetch_assoc($fetch_profile);
+                                            }?>
                                             <img class="avatar avatar-sm rounded-circle" alt="Image placeholder"
-                                                    src="<?=$base_url?>/profiles/<?=$_SESSION['auth_user']["profile"]?>.?>">
-
+                                                    src="<?=$base_url?>/profiles/<?=$profile['profile']?>.?>">
                                             </img>
                                             <div class="media-body ms-2 d-block ">
                                                 <span class="mb-0 text-sm  font-weight-bold"><?=$_SESSION['auth_user']["username"]?></span>

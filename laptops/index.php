@@ -1,8 +1,8 @@
 <?php
 $title = "Laptop Finder";
 $description = "Ditch the decision fatigue. Find a laptop that suits your needs using our comprehensive laptop finder tool.";
-require('../inc/header.php');
 require('../dbcon.php');
+require('../inc/header.php');
 require('../inc/functions.inc.php');
 
 if (isset($_GET['page_no']) && $_GET['page_no'] != "") {

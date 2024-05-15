@@ -61,13 +61,16 @@ $offset = ($page_no - 1) * $total_records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
 $adjacents = "2";
+$count_query = "SELECT COUNT(*) AS total_records FROM products
+INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id WHERE products.status = 1 ";
+$count_final_query = $count_query.$whereClause;
 $result_count = mysqli_query(
     $con,
-    "SELECT COUNT(*) AS total_records FROM products
-    INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id WHERE products.status = 1 " . $whereClause
+    $count_final_query
 );
 $total_records = mysqli_fetch_array($result_count);
 $total_records = $total_records['total_records'];
+// echo $total_records;
 $total_no_of_pages = ceil($total_records / $total_records_per_page);
 $second_last = $total_no_of_pages - 1;
 // final query
@@ -254,7 +257,7 @@ if (isset($_SESSION['fail_msg'])) {
                             </h2>
 
                             <div id="brands" class="accordion-collapse collapse">
-                                <form class="accordion-body" method="get" id="brand-filter-form">
+                                <div class="accordion-body" id="brand-filter-form">
                                     <input class="form-control shadow-none mb-3" type="search" name="" id=""
                                         placeholder="Search brands">
                                     <?php
@@ -273,7 +276,7 @@ if (isset($_SESSION['fail_msg'])) {
                                         <?php
                                     }
                                     ?>
-                                </form>
+                                </div>
                             </div>
                         </div>
                         <div class="accordion-item">
@@ -588,7 +591,7 @@ if (isset($_SESSION['fail_msg'])) {
                         </h2>
 
                         <div id="brands" class="accordion-collapse collapse">
-                            <form class="accordion-body" method="get" id="brand-filter-form">
+                            <div class="accordion-body" id="brand-filter-form">
                                 <input class="form-control shadow-none mb-3" type="search" name="" id=""
                                     placeholder="Search brands">
                                 <?php
@@ -607,7 +610,7 @@ if (isset($_SESSION['fail_msg'])) {
                                     <?php
                                 }
                                 ?>
-                            </form>
+                            </div>
                         </div>
                     </div>
                     <div class="accordion-item">

@@ -55,7 +55,7 @@ if (isset($_POST['action'])) {
     $result_count = mysqli_query(
         $con,
         "SELECT COUNT(*) AS total_records FROM products
-    INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id WHERE products.status = 1 " . $whereClause
+    INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id INNER JOIN brands ON products.brand_id = brands.brand_id  WHERE products.status = 1 " . $whereClause
     );
     $total_records = mysqli_fetch_array($result_count);
     $total_records = $total_records['total_records'];

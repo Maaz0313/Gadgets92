@@ -5,9 +5,8 @@ $base_url = $protocol . $_SERVER['HTTP_HOST'];
 
 include('inc/functions.inc.php');
 $s1 = $_REQUEST["n"];
-$select_query = "select * from products where product_name like '%" . $s1 . "%'";
+$select_query = "SELECT * FROM products where product_name LIKE '%" . $s1 . "%'";
 $sql = mysqli_query($con, $select_query) or die(mysqli_error($con));
-$row = mysqli_fetch_array($sql);
 
 $s = "";
 while ($row = mysqli_fetch_array($sql)) {
@@ -33,7 +32,7 @@ while ($row = mysqli_fetch_array($sql)) {
     }
     $s .= "
     <li class='p-3 d-inline'>
-        <a class='link-p-colr' href='" . $base_url . $url ."/product.php?id=" . $row['product_id'] . "'>
+        <a class='link-p-colr' href='" . $base_url . $url."/" . $row['product_slug'] . "'>
             <div class='live-outer'>
                 <div class='live-im'>
                     <img style='width: fit-content; height: 60px;' src='" . $base_url . "/admin/images/products/" . $row['product_image'] . "'/>

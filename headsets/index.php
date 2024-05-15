@@ -1,9 +1,9 @@
 <?php
 $title = "Headset Finder";
 $description = "Ditch the decision fatigue. Find a headset that suits your needs using our comprehensive headset finder tool.";
-require('../dbcon.php');
-require('../inc/header.php');
-require('../inc/functions.inc.php');
+require ('../dbcon.php');
+require ('../inc/header.php');
+require ('../inc/functions.inc.php');
 
 
 $searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
@@ -48,7 +48,7 @@ $adjacents = "2";
 $result_count = mysqli_query(
     $con,
     "SELECT COUNT(*) AS total_records FROM products
-    INNER JOIN headset_specs ON products.product_id = headset_specs.product_id WHERE products.status = 1 ". $whereClause
+    INNER JOIN headset_specs ON products.product_id = headset_specs.product_id WHERE products.status = 1 " . $whereClause
 );
 $total_records = mysqli_fetch_array($result_count);
 $total_records = $total_records['total_records'];
@@ -64,11 +64,11 @@ $sql = "SELECT *
 $result = mysqli_query($con, $sql);
 if (!$result) {
     $_SESSION['fail_msg'] = mysqli_error($con);
-?>
+    ?>
     <script>
         window.location.href = "index.php";
     </script>
-<?php
+    <?php
 }
 ?>
 <style>
@@ -135,7 +135,7 @@ if (isset($_SESSION['success_msg'])) {
 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 ' . $_SESSION['success_msg'] . '</div>';
     unset($_SESSION['success_msg']);
-} 
+}
 
 if (isset($_SESSION['fail_msg'])) {
     echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -158,23 +158,27 @@ if (isset($_SESSION['fail_msg'])) {
             <h4 class="fw-bold">Headset Finder - Find Your Desired Headset</h4>
         </div>
         <div class="row">
-            <p>Ditch the decision fatigue. Find a headset that suits your needs using our comprehensive headset finder tool.</p>
+            <p>Ditch the decision fatigue. Find a headset that suits your needs using our comprehensive headset finder
+                tool.</p>
         </div>
     </div>
     <!-- filters shown on mobile screens only -->
     <div class="container-lg bg-white mb-1 d-md-none d-lg-none d-xl-none">
         <div class="row">
-            <div class="col py-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+            <div class="col py-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight">
                 <span class="d-flex-center d-flex-justify-center">
                     <span class="d-flex-center pe-1">
-                        <svg fill="#111" width="15px" height="15px" viewBox="0 -2.5 29 29" xmlns="http://www.w3.org/2000/svg">
+                        <svg fill="#111" width="15px" height="15px" viewBox="0 -2.5 29 29"
+                            xmlns="http://www.w3.org/2000/svg">
                             <path d="m11.2 24 6.4-4v-6.4l11.2-13.6h-28.8l11.2 13.6z"></path>
                         </svg>
                     </span>
                     Filters</span>
             </div>
             <!-- offcanvas starts -->
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasRightLabel">Filters</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -183,21 +187,24 @@ if (isset($_SESSION['fail_msg'])) {
                     <div class="accordion" id="accordionPanelsStayOpenExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                    aria-controls="panelsStayOpen-collapseOne">
                                     Search
                                 </button>
                             </h2>
                             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                                 <div class="accordion-body">
-                                    <form role="search" action="" method="get">
-                                        <input type="search" name="search" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
-                                    </form>
+                                    <input type="search" name="search" class="form-control shadow-none" id="search_text"
+                                        placeholder="Search Headsets" aria-label="Search" />
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                <button class="accordion-button shadow-none collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseTwo">
                                     Price
                                 </button>
                             </h2>
@@ -219,34 +226,40 @@ if (isset($_SESSION['fail_msg'])) {
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button shadow-none collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseThree">
                                     Brands
                                 </button>
                             </h2>
 
                             <div id="brands" class="accordion-collapse collapse">
-                                <form class="accordion-body" method="get" id="brand-filter-form">
-                                    <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
+                                <div class="accordion-body" id="brand-filter-form">
+                                    <input class="form-control shadow-none mb-3" type="search" name="" id=""
+                                        placeholder="Search brands">
                                     <?php
                                     $brand_sql = "SELECT * FROM brands WHERE cat_id = 3 ORDER BY brand_name";
                                     $brand_result = mysqli_query($con, $brand_sql);
                                     while ($brand_row = mysqli_fetch_assoc($brand_result)) {
-                                    ?>
+                                        ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" name="brand" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                    name="brand" value="<?= $brand_row['brand_name'] ?>" id="brand">
                                                 <?= $brand_row['brand_name'] ?>
                                             </label>
                                         </div>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
-                                </form>
+                                </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#type_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button shadow-none collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#type_id" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseThree">
                                     Type
                                 </button>
                             </h2>
@@ -256,14 +269,15 @@ if (isset($_SESSION['fail_msg'])) {
                                     $type_query = "SELECT DISTINCT `type` FROM headset_specs ORDER BY `type`";
                                     $type_result = mysqli_query($con, $type_query);
                                     while ($type_row = mysqli_fetch_assoc($type_result)) {
-                                    ?>
+                                        ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $type_row['type'] ?>" id="type">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                    value="<?= $type_row['type'] ?>" id="type">
                                                 <?= $type_row['type'] ?>
                                             </label>
                                         </div>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </div>
@@ -271,7 +285,9 @@ if (isset($_SESSION['fail_msg'])) {
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#design_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button shadow-none collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#design_id" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseThree">
                                     Design
                                 </button>
                             </h2>
@@ -281,14 +297,15 @@ if (isset($_SESSION['fail_msg'])) {
                                     $design_query = "SELECT DISTINCT design FROM headset_specs ORDER BY design";
                                     $design_result = mysqli_query($con, $design_query);
                                     while ($design_row = mysqli_fetch_assoc($design_result)) {
-                                    ?>
+                                        ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $design_row['design'] ?>" id="design">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                    value="<?= $design_row['design'] ?>" id="design">
                                                 <?= $design_row['design'] ?>
                                             </label>
                                         </div>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </div>
@@ -296,7 +313,9 @@ if (isset($_SESSION['fail_msg'])) {
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#conn" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button shadow-none collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#conn" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseThree">
                                     Connectivity
                                 </button>
                             </h2>
@@ -306,14 +325,15 @@ if (isset($_SESSION['fail_msg'])) {
                                     $conn_query = "SELECT DISTINCT connectivity FROM headset_specs ORDER BY connectivity";
                                     $conn_result = mysqli_query($con, $conn_query);
                                     while ($conn_row = mysqli_fetch_assoc($conn_result)) {
-                                    ?>
+                                        ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $conn_row['connectivity'] ?>" id="connectivity">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                    value="<?= $conn_row['connectivity'] ?>" id="connectivity">
                                                 <?= $conn_row['connectivity'] ?>
                                             </label>
                                         </div>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </div>
@@ -321,7 +341,9 @@ if (isset($_SESSION['fail_msg'])) {
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#water" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#water" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseThree">
                                     Water Resistant
                                 </button>
                             </h2>
@@ -329,7 +351,8 @@ if (isset($_SESSION['fail_msg'])) {
                                 <div class="accordion-body">
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="1" id="water_resistant">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                value="1" id="water_resistant">
                                             Water Resistant
                                         </label>
                                     </div>
@@ -343,13 +366,15 @@ if (isset($_SESSION['fail_msg'])) {
             <div class="col py-2">
                 <span class="d-flex-center d-flex-justify-center position-relative">
                     <span class="d-flex-center pe-1">
-                        <svg width="15px" height="15px" viewBox="0.1 0.07 0.2 0.26" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <svg width="15px" height="15px" viewBox="0.1 0.07 0.2 0.26" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink">
                             <path fill="#111" d="M0.275 0.175h-0.15l0.075 -0.1z"></path>
                             <path fill="#111" d="M0.125 0.225h0.15l-0.075 0.1z"></path>
                         </svg>
                     </span>
                     Sort By
-                    <select class="position-absolute top-0 d-block opacity-0" onchange="sort_product_drop()" id="sort_product">
+                    <select class="position-absolute top-0 d-block opacity-0" onchange="sort_product_drop()"
+                        id="sort_product">
                         <option value="latest" <?= isset($latest_selected) ? $latest_selected : '' ?>>
                             Latest
                         </option>
@@ -372,21 +397,24 @@ if (isset($_SESSION['fail_msg'])) {
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseOne">
                                 Search
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                             <div class="accordion-body">
-                                <form role="search" action="" method="get">
-                                    <input type="search" name="search" class="form-control shadow-none" placeholder="Search Mobile" aria-label="Search">
-                                </form>
+                                <input type="search" name="search" class="form-control shadow-none" id="search_text"
+                                    placeholder="Search Headsets" aria-label="Search" />
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                            <button class="accordion-button shadow-none collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseTwo">
                                 Price
                             </button>
                         </h2>
@@ -408,34 +436,40 @@ if (isset($_SESSION['fail_msg'])) {
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
                                 Brands
                             </button>
                         </h2>
 
                         <div id="brands" class="accordion-collapse collapse">
-                            <form class="accordion-body" method="get" id="brand-filter-form">
-                                <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
+                            <div class="accordion-body" id="brand-filter-form">
+                                <input class="form-control shadow-none mb-3" type="search" name="" id=""
+                                    placeholder="Search brands">
                                 <?php
                                 $brand_sql = "SELECT * FROM brands WHERE cat_id = 3 ORDER BY brand_name";
                                 $brand_result = mysqli_query($con, $brand_sql);
                                 while ($brand_row = mysqli_fetch_assoc($brand_result)) {
-                                ?>
+                                    ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" name="brand" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                name="brand" value="<?= $brand_row['brand_name'] ?>" id="brand">
                                             <?= $brand_row['brand_name'] ?>
                                         </label>
                                     </div>
-                                <?php
+                                    <?php
                                 }
                                 ?>
-                            </form>
+                            </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#type_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#type_id" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
                                 Type
                             </button>
                         </h2>
@@ -445,14 +479,15 @@ if (isset($_SESSION['fail_msg'])) {
                                 $type_query = "SELECT DISTINCT `type` FROM headset_specs ORDER BY `type`";
                                 $type_result = mysqli_query($con, $type_query);
                                 while ($type_row = mysqli_fetch_assoc($type_result)) {
-                                ?>
+                                    ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $type_row['type'] ?>" id="type">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                value="<?= $type_row['type'] ?>" id="type">
                                             <?= $type_row['type'] ?>
                                         </label>
                                     </div>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                             </div>
@@ -460,7 +495,9 @@ if (isset($_SESSION['fail_msg'])) {
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#design_id" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#design_id" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
                                 Design
                             </button>
                         </h2>
@@ -470,14 +507,15 @@ if (isset($_SESSION['fail_msg'])) {
                                 $design_query = "SELECT DISTINCT design FROM headset_specs ORDER BY design";
                                 $design_result = mysqli_query($con, $design_query);
                                 while ($design_row = mysqli_fetch_assoc($design_result)) {
-                                ?>
+                                    ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $design_row['design'] ?>" id="design">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                value="<?= $design_row['design'] ?>" id="design">
                                             <?= $design_row['design'] ?>
                                         </label>
                                     </div>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                             </div>
@@ -485,7 +523,9 @@ if (isset($_SESSION['fail_msg'])) {
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#conn" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#conn" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
                                 Connectivity
                             </button>
                         </h2>
@@ -495,14 +535,15 @@ if (isset($_SESSION['fail_msg'])) {
                                 $conn_query = "SELECT DISTINCT connectivity FROM headset_specs ORDER BY connectivity";
                                 $conn_result = mysqli_query($con, $conn_query);
                                 while ($conn_row = mysqli_fetch_assoc($conn_result)) {
-                                ?>
+                                    ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $conn_row['connectivity'] ?>" id="connectivity">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                value="<?= $conn_row['connectivity'] ?>" id="connectivity">
                                             <?= $conn_row['connectivity'] ?>
                                         </label>
                                     </div>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                             </div>
@@ -510,7 +551,9 @@ if (isset($_SESSION['fail_msg'])) {
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#water" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#water" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
                                 Water Resistant
                             </button>
                         </h2>
@@ -518,7 +561,8 @@ if (isset($_SESSION['fail_msg'])) {
                             <div class="accordion-body">
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input shadow-none product_check" type="checkbox" value="1" id="water_resistant">
+                                        <input class="form-check-input shadow-none product_check" type="checkbox"
+                                            value="1" id="water_resistant">
                                         Water Resistant
                                     </label>
                                 </div>
@@ -536,16 +580,25 @@ if (isset($_SESSION['fail_msg'])) {
                         <div class="card mb-3 p-3">
                             <div class="row g-0">
                                 <div class="col-3 text-center">
-                                    <a href="<?= $base_url . '/headsets/' . $row['product_slug'] ?>"><img class="bd-placeholder-img img-fluid rounded-start" alt="<?= $row['product_name'] ?>" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px"></a>
-                                    <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
+                                    <a href="<?= $base_url . '/headsets/' . $row['product_slug'] ?>"><img
+                                            class="bd-placeholder-img img-fluid rounded-start"
+                                            alt="<?= $row['product_name'] ?>"
+                                            src="../admin/images/products/<?= $row['product_image'] ?>"
+                                            style="width: auto; height:150px"></a>
+                                    <div class="row d-flex justify-content-center mt-3 fw-bold cmpr"
+                                        style="font-size: 13px;cursor: pointer;">+ Compare</div>
                                 </div>
                                 <div class="col-9">
-                                    <a class="text-decoration-none text-black" href="<?= $base_url . '/headsets/' . $row['product_slug'] ?>">
+                                    <a class="text-decoration-none text-black"
+                                        href="<?= $base_url . '/headsets/' . $row['product_slug'] ?>">
                                         <div class="card-body p-0">
-                                            <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
+                                            <h5
+                                                class="card-title fw-bold d-flex align-items-center justify-content-between">
                                                 <div class="text-start"><?= $row['product_name'] ?></div>
 
-                                                <div class="text-end " style="font-size: 17px;">Rs. <?= formatPrice($row['price']) ?></div>
+                                                <div class="text-end " style="font-size: 17px;">Rs.
+                                                    <?= formatPrice($row['price']) ?>
+                                                </div>
                                             </h5>
                                             <p class="card-text">
 
@@ -556,7 +609,8 @@ if (isset($_SESSION['fail_msg'])) {
                                                         <li> <?= $row['type'] ?></li>
                                                         <li> <?= $row['battery_life'] ?> Battery Life</li>
                                                         <li> <?= $row['connectivity'] ?> Connectivity</li>
-                                                        <li> <?= $row['built-in_mic'] == '1' ? 'Built-in Mic' : 'No Built-in Mic' ?></li>
+                                                        <li> <?= $row['built-in_mic'] == '1' ? 'Built-in Mic' : 'No Built-in Mic' ?>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -567,91 +621,116 @@ if (isset($_SESSION['fail_msg'])) {
                             </div>
                         </div>
                     <?php } ?>
+                    <nav aria-label="...">
+                        <ul class="pagination justify-content-center">
+
+                            <li class="page-item <?= $page_no <= 1 ? 'disabled' : '' ?>">
+                                <a class="page-link" <?php if ($page_no > 1) {
+                                    echo "href='?page_no=$previous_page'";
+                                } ?>>Previous</a>
+                            </li>
+
+                            <?php
+                            if ($total_no_of_pages <= 10) {
+                                for ($counter = 1; $counter <= $total_no_of_pages; $counter++) {
+                                    if ($counter == $page_no) {
+                                        echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
+                                    } else {
+                                        echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                                    }
+                                }
+                            } elseif ($total_no_of_pages > 10) {
+
+                                if ($page_no <= 4) {
+                                    for ($counter = 1; $counter < 8; $counter++) {
+                                        if ($counter == $page_no) {
+                                            echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
+                                        } else {
+                                            echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                                        }
+                                    }
+                                    echo "<li class='page-item'><a class='page-link'>...</a></li>";
+                                    echo "<li class='page-item'><a class='page-link href='?page_no=$second_last'>$second_last</a></li>";
+                                    echo "<li class='page-item'><a class='page-link href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
+                                } elseif ($page_no > 4 && $page_no < $total_no_of_pages - 4) {
+                                    echo "<li class='page-item'><a class='page-link href='?page_no=1'>1</a></li>";
+                                    echo "<li class='page-item'><a class='page-link href='?page_no=2'>2</a></li>";
+                                    echo "<li class='page-item'><a class='page-link>...</a></li>";
+                                    for ($counter = $page_no - $adjacents; $counter <= $page_no + $adjacents; $counter++) {
+                                        if ($counter == $page_no) {
+                                            echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
+                                        } else {
+                                            echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                                        }
+                                    }
+                                    echo "<li class='page-item'><a class='page-link'>...</a></li>";
+                                    echo "<li class='page-item'><a class='page-link' href='?page_no=$second_last'>$second_last</a></li>";
+                                    echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
+                                } else {
+                                    echo "<li class='page-item'><a class='page-link' href='?page_no=1'>1</a></li>";
+                                    echo "<li class='page-item'><a class='page-link' href='?page_no=2'>2</a></li>";
+                                    echo "<li class='page-item'><a class='page-link'>...</a></li>";
+
+                                    for ($counter = $total_no_of_pages - 6; $counter <= $total_no_of_pages; $counter++) {
+                                        if ($counter == $page_no) {
+                                            echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
+                                        } else {
+                                            echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                                        }
+                                    }
+                                }
+                            }
+                            ?>
+
+                            <li class="page-item <?= $page_no >= $total_no_of_pages ? 'disabled' : '' ?>">
+                                <a class="page-link" <?php if ($page_no < $total_no_of_pages) {
+                                    echo "href='?page_no=$next_page'";
+                                } ?>>Next</a>
+                            </li>
+                            <?php if ($page_no < $total_no_of_pages) {
+                                echo "<li class='page-item'><a class='page-link href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
+                            } ?>
+                        </ul>
+                    </nav>
                 </div>
                 <!-- Pagination -->
-                <nav aria-label="...">
-                    <ul class="pagination justify-content-center">
-                        <?php // if($page_no > 1){ echo "<li><a href='?page_no=1'>First Page</a></li>"; } 
-                        ?>
 
-                        <li class="page-item <?= $page_no <= 1 ? 'disabled' : '' ?>">
-                            <a class="page-link" <?php if ($page_no > 1) {
-                                                        echo "href='?page_no=$previous_page'";
-                                                    } ?>>Previous</a>
-                        </li>
-
-                        <?php
-                        if ($total_no_of_pages <= 10) {
-                            for ($counter = 1; $counter <= $total_no_of_pages; $counter++) {
-                                if ($counter == $page_no) {
-                                    echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
-                                } else {
-                                    echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
-                                }
-                            }
-                        } elseif ($total_no_of_pages > 10) {
-
-                            if ($page_no <= 4) {
-                                for ($counter = 1; $counter < 8; $counter++) {
-                                    if ($counter == $page_no) {
-                                        echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
-                                    } else {
-                                        echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
-                                    }
-                                }
-                                echo "<li class='page-item'><a class='page-link'>...</a></li>";
-                                echo "<li class='page-item'><a class='page-link href='?page_no=$second_last'>$second_last</a></li>";
-                                echo "<li class='page-item'><a class='page-link href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
-                            } elseif ($page_no > 4 && $page_no < $total_no_of_pages - 4) {
-                                echo "<li class='page-item'><a class='page-link href='?page_no=1'>1</a></li>";
-                                echo "<li class='page-item'><a class='page-link href='?page_no=2'>2</a></li>";
-                                echo "<li class='page-item'><a class='page-link>...</a></li>";
-                                for ($counter = $page_no - $adjacents; $counter <= $page_no + $adjacents; $counter++) {
-                                    if ($counter == $page_no) {
-                                        echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
-                                    } else {
-                                        echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
-                                    }
-                                }
-                                echo "<li class='page-item'><a class='page-link'>...</a></li>";
-                                echo "<li class='page-item'><a class='page-link' href='?page_no=$second_last'>$second_last</a></li>";
-                                echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
-                            } else {
-                                echo "<li class='page-item'><a class='page-link' href='?page_no=1'>1</a></li>";
-                                echo "<li class='page-item'><a class='page-link' href='?page_no=2'>2</a></li>";
-                                echo "<li class='page-item'><a class='page-link'>...</a></li>";
-
-                                for ($counter = $total_no_of_pages - 6; $counter <= $total_no_of_pages; $counter++) {
-                                    if ($counter == $page_no) {
-                                        echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
-                                    } else {
-                                        echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
-                                    }
-                                }
-                            }
-                        }
-                        ?>
-
-                        <li class="page-item <?= $page_no >= $total_no_of_pages ? 'disabled' : '' ?>">
-                            <a class="page-link" <?php if ($page_no < $total_no_of_pages) {
-                                                        echo "href='?page_no=$next_page'";
-                                                    } ?>>Next</a>
-                        </li>
-                        <?php if ($page_no < $total_no_of_pages) {
-                            echo "<li class='page-item'><a class='page-link href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
-                        } ?>
-                    </ul>
-                </nav>
             </div>
         </div>
     </div>
 </main>
 <?php
-require('../inc/footer.php');
+require ('../inc/footer.php');
 ?>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('.product_check').click(function() {
+    $(document).ready(function () {
+
+        // AJAX call when checkboxes are clicked
+        $('.product_check').click(function () {
+            sendAJAXRequest(null); // No search term for checkbox clicks
+        });
+
+        // Event listener for Enter key press on search input 
+        $(document).on('keypress', '#search_text', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                // console.log($(this).val());
+                sendAJAXRequest($(this).val());
+            }
+        });
+
+        $('form[method="get"]').submit(function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Get min and max price values
+            var minPrice = $(this).find('input[name="min"]').val();
+            var maxPrice = $(this).find('input[name="max"]').val();
+
+            sendAJAXRequest(null, minPrice, maxPrice); // Send AJAX request 
+        });
+
+        // Function to perform AJAX request
+        function sendAJAXRequest(searchTerm, minPrice, maxPrice) {
             $('#loader').show();
             var action = 'data';
             var brand = get_filter_text('brand');
@@ -659,34 +738,59 @@ require('../inc/footer.php');
             var design = get_filter_text('design');
             var connectivity = get_filter_text('connectivity');
             var water_resistant = get_filter_text('water_resistant');
+
+            // Handle the search term:
+            var search = ""; // Initialize as an empty string
+            if (searchTerm !== undefined) {
+                search = searchTerm; // Use the provided term if it exists
+            } else {
+                search = $('#search_text').val(); // Get the value from the search box
+            }
+
+            // Only send 'search' if it's not empty
+            var data = {
+                action: action,
+                brand: brand,
+                type: type,
+                design: design,
+                connectivity: connectivity,
+                water_resistant: water_resistant
+            };
+
+            if (search !== "") {
+                data.search = search;
+            }
+            // Add price range only if values are provided
+            if (minPrice !== "" && maxPrice !== "") {
+                data.min_price = minPrice;
+                data.max_price = maxPrice;
+            }
+
             $.ajax({
                 url: "action.php",
                 method: "POST",
-                data: {
-                    action: action,
-                    brand: brand,
-                    type: type,
-                    design: design,
-                    connectivity: connectivity,
-                    water_resistant: water_resistant
-                },
-                success: function(response) {
+                data: data,
+                success: function (response) {
                     $('#result').html(response);
                     $('#loader').hide();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX Error:", textStatus, errorThrown);
+                    // Handle the error appropriately
                 }
             });
-        });
-
+        }
         function get_filter_text(text_id) {
             var filterData = [];
-            $('#' + text_id + ':checked').each(function() {
+            $('#' + text_id + ':checked').each(function () {
                 filterData.push($(this).val());
             });
             return filterData;
         }
+
+        function sort_product_drop() {
+            var sort_product = $('#sort_product').val();
+            window.location.href = "index.php?sort=" + sort_product;
+        }
     });
-    function sort_product_drop() {
-        var sort_product = $('#sort_product').val();
-        window.location.href = "index.php?sort=" + sort_product;
-    }
 </script>

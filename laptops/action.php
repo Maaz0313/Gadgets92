@@ -4,45 +4,77 @@ require '../inc/functions.inc.php';
 $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 $base_url = $protocol . $_SERVER['HTTP_HOST'];
 if (isset($_POST['action'])) {
-    $sql = "SELECT * FROM products 
-            INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id 
-            INNER JOIN brands ON products.brand_id = brands.brand_id 
-            WHERE products.status=1";
+    $whereClause = '';
+    if (isset($_POST['search']) && !empty($_POST['search'])) {
+        $searchTerm = $_POST['search'];
+        $searchTerm = htmlspecialchars($searchTerm); 
+        $whereClause .= " AND products.product_name LIKE '%{$searchTerm}%'";
+    }
+    if(isset($_POST['min_price']) && isset($_POST['max_price']) && !empty($_POST['min_price']) && !empty($_POST['max_price'])) {
+        $minPrice = htmlspecialchars($_POST['min_price']);
+        $maxPrice = htmlspecialchars($_POST['max_price']);
+        $whereClause .= " AND products.price BETWEEN $minPrice AND $maxPrice";
+    }
 
     if (isset($_POST['brand'])) {
         $brand = implode("','", $_POST['brand']);
-        $sql .= " AND brands.brand_name IN ('" . $brand . "')";
+        $whereClause .= " AND brands.brand_name IN ('" . $brand . "')";
     }
     if (isset($_POST['ram'])) {
         $ram = implode("','", $_POST['ram']);
-        $sql .= " AND laptop_specs.ram_memory IN ('" . $ram . "')";
+        $whereClause .= " AND laptop_specs.ram_memory IN ('" . $ram . "')";
     }
     if (isset($_POST['touch'])) {
         $touch = implode("','", $_POST['touch']);
-        $sql .= " AND laptop_specs.touch_screen IN ('" . $touch . "')";
+        $whereClause .= " AND laptop_specs.touch_screen IN ('" . $touch . "')";
     }
     if (isset($_POST['ssd_storage'])) {
         $ssd_storage = implode("','", $_POST['ssd_storage']);
-        $sql .= " AND laptop_specs.ssd_storage IN ('" . $ssd_storage . "')";
+        $whereClause .= " AND laptop_specs.ssd_storage IN ('" . $ssd_storage . "')";
     }
     if (isset($_POST['hdd_storage'])) {
         $hdd_storage = implode("','", $_POST['hdd_storage']);
-        $sql .= " AND laptop_specs.hdd_storage IN ('" . $hdd_storage . "')";
+        $whereClause .= " AND laptop_specs.hdd_storage IN ('" . $hdd_storage . "')";
     }
     if (isset($_POST['screen_size'])) {
         $screen_size = implode("','", $_POST['screen_size']);
-        $sql .= " AND laptop_specs.screen_size IN ('" . $screen_size . "')";
+        $whereClause .= " AND laptop_specs.screen_size IN ('" . $screen_size . "')";
     }
     if (isset($_POST['screen_resolution'])) {
         $screen_resolution = implode("','", $_POST['screen_resolution']);
-        $sql .= " AND laptop_specs.screen_resolution IN ('" . $screen_resolution . "')";
+        $whereClause .= " AND laptop_specs.screen_resolution IN ('" . $screen_resolution . "')";
     }
     if (isset($_POST['os'])) {
         $os = implode("','", $_POST['os']);
-        $sql .= " AND laptop_specs.os IN ('" . $os . "')";
+        $whereClause .= " AND laptop_specs.os IN ('" . $os . "')";
     }
+    if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
+        $page_no = $_GET['page_no'];
+    } else {
+        $page_no = 1;
+    }
+    $total_records_per_page = 10;
+    $offset = ($page_no - 1) * $total_records_per_page;
+    $previous_page = $page_no - 1;
+    $next_page = $page_no + 1;
+    $adjacents = "2";
+    $result_count = mysqli_query(
+        $con,
+        "SELECT COUNT(*) AS total_records FROM products
+            INNER JOIN brands ON products.brand_id = brands.brand_id 
+        INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id WHERE products.status = 1 " . $whereClause
+    );
+    $total_records = mysqli_fetch_array($result_count);
+    $total_records = $total_records['total_records'];
+    $total_no_of_pages = ceil($total_records / $total_records_per_page);
+    $second_last = $total_no_of_pages - 1;
+    $sql = "SELECT * FROM products 
+            INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id 
+            INNER JOIN brands ON products.brand_id = brands.brand_id 
+            WHERE products.status=1". $whereClause. "
+            LIMIT $offset, $total_records_per_page";
     $result = mysqli_query($con, $sql);
-    $output = '';
+    $output = $sql;
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
             $output .= '

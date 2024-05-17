@@ -190,9 +190,7 @@ if (isset($_SESSION['fail_msg'])) {
                             </h2>
                             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                                 <div class="accordion-body">
-                                    <form role="search" action="" method="get">
                                         <input type="search" name="search" class="form-control shadow-none" placeholder="Search Televisions" aria-label="Search">
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -363,9 +361,7 @@ if (isset($_SESSION['fail_msg'])) {
                         </h2>
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                             <div class="accordion-body">
-                                <form role="search" action="" method="get">
                                     <input type="search" name="search" class="form-control shadow-none" placeholder="Search Televisions" aria-label="Search">
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -568,12 +564,12 @@ if (isset($_SESSION['fail_msg'])) {
                                     }
                                 }
                                 echo "<li class='page-item'><a class='page-link'>...</a></li>";
-                                echo "<li class='page-item'><a class='page-link href='?page_no=$second_last'>$second_last</a></li>";
-                                echo "<li class='page-item'><a class='page-link href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
+                                echo "<li class='page-item'><a class='page-link' href='?page_no=$second_last'>$second_last</a></li>";
+                                echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
                             } elseif ($page_no > 4 && $page_no < $total_no_of_pages - 4) {
-                                echo "<li class='page-item'><a class='page-link href='?page_no=1'>1</a></li>";
-                                echo "<li class='page-item'><a class='page-link href='?page_no=2'>2</a></li>";
-                                echo "<li class='page-item'><a class='page-link>...</a></li>";
+                                echo "<li class='page-item'><a class='page-link' href='?page_no=1'>1</a></li>";
+                                echo "<li class='page-item'><a class='page-link' href='?page_no=2'>2</a></li>";
+                                echo "<li class='page-item'><a class='page-link'>...</a></li>";
                                 for ($counter = $page_no - $adjacents; $counter <= $page_no + $adjacents; $counter++) {
                                     if ($counter == $page_no) {
                                         echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
@@ -606,7 +602,7 @@ if (isset($_SESSION['fail_msg'])) {
                                                     } ?>>Next</a>
                         </li>
                         <?php if ($page_no < $total_no_of_pages) {
-                            echo "<li class='page-item'><a class='page-link href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
+                            echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
                         } ?>
                     </ul>
                 </nav>

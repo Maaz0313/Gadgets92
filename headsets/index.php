@@ -209,14 +209,14 @@ if (isset($_SESSION['fail_msg'])) {
                                 </button>
                             </h2>
                             <div id="price" class="accordion-collapse collapse">
-                                <form class="accordion-body p-0 p-2 d-table w-100" method="get">
+                                <form class="accordion-body p-0 p-2 d-table w-100 price-range-form">
                                     <div class="column">
                                         <div class="mini">Min</div>
-                                        <input type="number" class="inp" name="min" value="0">
+                                        <input type="number" class="inp" required name="min" value="0">
                                     </div>
                                     <div class="column">
                                         <div class="mini">Max</div>
-                                        <input type="number" class="inp" name="max" value="196900">
+                                        <input type="number" class="inp" required name="max" value="196900">
                                     </div>
                                     <div class="column">
                                         <button type="submit" class="go-btn">Go</button>
@@ -419,14 +419,14 @@ if (isset($_SESSION['fail_msg'])) {
                             </button>
                         </h2>
                         <div id="price" class="accordion-collapse collapse">
-                            <form class="accordion-body p-0 p-2 d-table w-100" method="get">
+                            <form class="accordion-body p-0 p-2 d-table w-100 price-range-form">
                                 <div class="column">
                                     <div class="mini">Min</div>
-                                    <input type="number" class="inp" name="min" value="0">
+                                    <input type="number" class="inp" required name="min" value="0">
                                 </div>
                                 <div class="column">
                                     <div class="mini">Max</div>
-                                    <input type="number" class="inp" name="max" value="196900">
+                                    <input type="number" class="inp" required name="max" value="196900">
                                 </div>
                                 <div class="column">
                                     <button type="submit" class="go-btn">Go</button>
@@ -650,12 +650,12 @@ if (isset($_SESSION['fail_msg'])) {
                                         }
                                     }
                                     echo "<li class='page-item'><a class='page-link'>...</a></li>";
-                                    echo "<li class='page-item'><a class='page-link href='?page_no=$second_last'>$second_last</a></li>";
-                                    echo "<li class='page-item'><a class='page-link href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
+                                    echo "<li class='page-item'><a class='page-link' href='?page_no=$second_last'>$second_last</a></li>";
+                                    echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
                                 } elseif ($page_no > 4 && $page_no < $total_no_of_pages - 4) {
-                                    echo "<li class='page-item'><a class='page-link href='?page_no=1'>1</a></li>";
-                                    echo "<li class='page-item'><a class='page-link href='?page_no=2'>2</a></li>";
-                                    echo "<li class='page-item'><a class='page-link>...</a></li>";
+                                    echo "<li class='page-item'><a class='page-link' href='?page_no=1'>1</a></li>";
+                                    echo "<li class='page-item'><a class='page-link' href='?page_no=2'>2</a></li>";
+                                    echo "<li class='page-item'><a class='page-link'>...</a></li>";
                                     for ($counter = $page_no - $adjacents; $counter <= $page_no + $adjacents; $counter++) {
                                         if ($counter == $page_no) {
                                             echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
@@ -688,7 +688,7 @@ if (isset($_SESSION['fail_msg'])) {
                                 } ?>>Next</a>
                             </li>
                             <?php if ($page_no < $total_no_of_pages) {
-                                echo "<li class='page-item'><a class='page-link href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
+                                echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
                             } ?>
                         </ul>
                     </nav>
@@ -719,14 +719,16 @@ require ('../inc/footer.php');
             }
         });
 
-        $('form[method="get"]').submit(function (e) {
-            e.preventDefault(); // Prevent default form submission
+        $('.price-range-form').each(function () { // Target forms with class "price-range-form"
+            $(this).submit(function (e) {
+                e.preventDefault(); // Prevent default form submission
 
-            // Get min and max price values
-            var minPrice = $(this).find('input[name="min"]').val();
-            var maxPrice = $(this).find('input[name="max"]').val();
+                // Get min and max price values from the current form (using $(this))
+                var minPrice = $(this).find('input[name="min"]').val();
+                var maxPrice = $(this).find('input[name="max"]').val();
 
-            sendAJAXRequest(null, minPrice, maxPrice); // Send AJAX request 
+                sendAJAXRequest(null, minPrice, maxPrice); // Send AJAX request 
+            });
         });
 
         // Function to perform AJAX request

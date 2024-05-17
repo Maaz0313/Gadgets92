@@ -56,14 +56,14 @@ if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
 } else {
     $page_no = 1;
 }
-$total_records_per_page = 3;
+$total_records_per_page = 5;
 $offset = ($page_no - 1) * $total_records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
 $adjacents = "2";
 $count_query = "SELECT COUNT(*) AS total_records FROM products
 INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id WHERE products.status = 1 ";
-$count_final_query = $count_query.$whereClause;
+$count_final_query = $count_query . $whereClause;
 $result_count = mysqli_query(
     $con,
     $count_final_query
@@ -216,10 +216,8 @@ if (isset($_SESSION['fail_msg'])) {
                             </h2>
                             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                                 <div class="accordion-body">
-                                    <form role="search" action="" method="get">
-                                        <input type="search" name="search" class="form-control shadow-none"
-                                            placeholder="Search Mobile" aria-label="Search">
-                                    </form>
+                                    <input type="search" name="search" class="form-control shadow-none"id="search_text"
+                                        placeholder="Search Mobile" aria-label="Search">
                                 </div>
                             </div>
                         </div>
@@ -550,10 +548,8 @@ if (isset($_SESSION['fail_msg'])) {
                         </h2>
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                             <div class="accordion-body">
-                                <form role="search" action="" method="get">
-                                    <input type="search" name="search" class="form-control shadow-none"
-                                        placeholder="Search Mobile" aria-label="Search">
-                                </form>
+                                <input type="search" name="search" class="form-control shadow-none"id="search_text"
+                                    placeholder="Search Mobile" aria-label="Search">
                             </div>
                         </div>
                     </div>
@@ -930,7 +926,7 @@ if (isset($_SESSION['fail_msg'])) {
                                 } elseif ($page_no > 4 && $page_no < $total_no_of_pages - 4) {
                                     echo "<li class='page-item'><a class='page-link' href='?page_no=1'>1</a></li>";
                                     echo "<li class='page-item'><a class='page-link' href='?page_no=2'>2</a></li>";
-                                    echo "<li class='page-item'><a class='page-link>...</a></li>";
+                                    echo "<li class='page-item'><a class='page-link'>...</a></li>";
                                     for ($counter = $page_no - $adjacents; $counter <= $page_no + $adjacents; $counter++) {
                                         if ($counter == $page_no) {
                                             echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
@@ -979,49 +975,95 @@ require ('../inc/footer.php');
 ?>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.product_check').click(function () {
-            $('#loader').show();
-            var action = 'data';
-            var brand = get_filter_text('brand');
-            var ram = get_filter_text('ram');
-            var internal_storage = get_filter_text('internal_storage');
-            var screen_size = get_filter_text('screen_size');
-            var screen_resolution = get_filter_text('screen_resolution');
-            var battery = get_filter_text('battery');
-            var os = get_filter_text('os');
-            var front_camera = get_filter_text('front_camera');
-            var rear_camera = get_filter_text('rear_camera');
-            $.ajax({
-                url: "action.php",
-                method: "POST",
-                data: {
-                    action: action,
-                    brand: brand,
-                    ram: ram,
-                    internal_storage: internal_storage,
-                    screen_size: screen_size,
-                    screen_resolution: screen_resolution,
-                    battery: battery,
-                    os: os,
-                    front_camera: front_camera,
-                    rear_camera: rear_camera
-                },
-                success: function (response) {
-                    $('#result').html(response);
-                    $('#loader').hide();
-                }
-            });
-        });
+    // Function to perform AJAX request
+    function sendAJAXRequest(searchTerm, minPrice, maxPrice) {
+        $('#loader').show();
+        
+        var action = 'data';
+        var brand = get_filter_text('brand');
+        var ram = get_filter_text('ram');
+        var internal_storage = get_filter_text('internal_storage');
+        var screen_size = get_filter_text('screen_size');
+        var screen_resolution = get_filter_text('screen_resolution');
+        var battery = get_filter_text('battery');
+        var os = get_filter_text('os');
+        var front_camera = get_filter_text('front_camera');
+        var rear_camera = get_filter_text('rear_camera');
 
-        function get_filter_text(text_id) {
-            var filterData = [];
-            $('#' + text_id + ':checked').each(function () {
-                filterData.push($(this).val());
-            });
-            return filterData;
+        var search = "";
+        if (searchTerm !== undefined) {
+            search = searchTerm;
+        } else {
+            search = $('#search_text').val();
+        }
+
+        var data = {
+            action: action,
+            brand: brand,
+            ram: ram,
+            internal_storage: internal_storage,
+            screen_size: screen_size,
+            screen_resolution: screen_resolution,
+            battery: battery,
+            os: os,
+            front_camera: front_camera,
+            rear_camera: rear_camera
+        };
+
+        if (search !== "") {
+            data.search = search; 
+        }
+
+        if (minPrice !== "" && maxPrice !== "") {
+            data.min_price = minPrice;
+            data.max_price = maxPrice;
+        }
+
+        $.ajax({
+            url: "action.php",
+            method: "POST",
+            data: data,
+            success: function (response) {
+                $('#result').html(response);
+                $('#loader').hide();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX Error:", textStatus, errorThrown);
+            } 
+        });
+    }
+
+    // AJAX call when checkboxes are clicked
+    $('.product_check').click(function() {
+        sendAJAXRequest(null); // No search term for checkbox clicks
+    });
+
+    // Event listener for Enter key press on search input
+    $(document).on('keypress', '#search_text', function (e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            sendAJAXRequest($(this).val()); 
         }
     });
 
+    // Price range form submit handler
+    $('form[class="accordion-body"][method="get"]').submit(function (e) {
+        e.preventDefault(); // Prevent default form submission
+        // Get min and max price values from the form
+        var minPrice = $(this).find('input[name="min"]').val();
+        var maxPrice = $(this).find('input[name="max"]').val();
+        sendAJAXRequest(null, minPrice, maxPrice); // Send AJAX request 
+    });
+
+    // Function to get filter values from checkboxes
+    function get_filter_text(text_id) {
+        var filterData = [];
+        $('#' + text_id + ':checked').each(function () {
+            filterData.push($(this).val());
+        });
+        return filterData;
+    }
+});
     function sort_product_drop() {
         var sort_product = $('#sort_product').val();
         window.location.href = "index.php?sort=" + sort_product;

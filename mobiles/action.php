@@ -5,6 +5,16 @@ $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERV
 $base_url = $protocol . $_SERVER['HTTP_HOST'];
 if (isset($_POST['action'])) {
     $whereClause = '';
+    if (isset($_POST['search']) && !empty($_POST['search'])) {
+        $searchTerm = $_POST['search'];
+        $searchTerm = htmlspecialchars($searchTerm); 
+        $whereClause .= " AND products.product_name LIKE '%{$searchTerm}%'";
+    }
+    if(isset($_POST['min_price']) && !empty($_POST['min_price']) && isset($_POST['max_price']) && !empty($_POST['max_price'])) {
+        $minPrice = htmlspecialchars($_POST['min_price']);
+        $maxPrice = htmlspecialchars($_POST['max_price']);
+        $whereClause .= " AND products.price BETWEEN $minPrice AND $maxPrice";
+    }
     if (isset($_POST['brand'])) {
         $brand = implode("','", $_POST['brand']);
         $whereClause .= " AND brands.brand_name IN ('" . $brand . "')";
@@ -47,7 +57,7 @@ if (isset($_POST['action'])) {
     } else {
         $page_no = 1;
     }
-    $total_records_per_page = 10;
+    $total_records_per_page = 5;
     $offset = ($page_no - 1) * $total_records_per_page;
     $previous_page = $page_no - 1;
     $next_page = $page_no + 1;

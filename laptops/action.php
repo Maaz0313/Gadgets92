@@ -7,12 +7,12 @@ if (isset($_POST['action'])) {
     $whereClause = '';
     if (isset($_POST['search']) && !empty($_POST['search'])) {
         $searchTerm = $_POST['search'];
-        $searchTerm = htmlspecialchars($searchTerm); 
+        $searchTerm = htmlspecialchars(mysqli_real_escape_string($con,$searchTerm)); 
         $whereClause .= " AND products.product_name LIKE '%{$searchTerm}%'";
     }
-    if(isset($_POST['min_price']) && isset($_POST['max_price']) && !empty($_POST['min_price']) && !empty($_POST['max_price'])) {
-        $minPrice = htmlspecialchars($_POST['min_price']);
-        $maxPrice = htmlspecialchars($_POST['max_price']);
+    if(isset($_POST['min_price']) && isset($_POST['max_price']) && (!empty($_POST['min_price']) || $_POST['min_price']==0) && !empty($_POST['max_price'])) {
+        $minPrice = htmlspecialchars(mysqli_real_escape_string($con,$_POST['min_price']));
+        $maxPrice = htmlspecialchars(mysqli_real_escape_string($con,$_POST['max_price']));
         $whereClause .= " AND products.price BETWEEN $minPrice AND $maxPrice";
     }
 
@@ -53,7 +53,7 @@ if (isset($_POST['action'])) {
     } else {
         $page_no = 1;
     }
-    $total_records_per_page = 10;
+    $total_records_per_page = 5;
     $offset = ($page_no - 1) * $total_records_per_page;
     $previous_page = $page_no - 1;
     $next_page = $page_no + 1;
@@ -74,7 +74,7 @@ if (isset($_POST['action'])) {
             WHERE products.status=1". $whereClause. "
             LIMIT $offset, $total_records_per_page";
     $result = mysqli_query($con, $sql);
-    $output = $sql;
+    $output = '';
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
             $output .= '
@@ -114,6 +114,71 @@ if (isset($_POST['action'])) {
             </div>
             ';
         }
+        $output .= '
+        <nav aria-label="...">
+            <ul class="pagination justify-content-center">
+    
+                <li class="page-item '. ($page_no <= 1 ? 'disabled' : '') .'">
+                    <a class="page-link" '. ($page_no > 1 ? "href='?page_no=$previous_page'" : '') .'>Previous</a>
+                </li>
+    
+                ';
+    
+                if ($total_no_of_pages <= 10) {
+                    for ($counter = 1; $counter <= $total_no_of_pages; $counter++) {
+                        if ($counter == $page_no) {
+                            $output .= "<li class='page-item active'><a class='page-link'>$counter</a></li>";
+                        } else {
+                            $output .= "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                        }
+                    }
+                } elseif ($total_no_of_pages > 10) {
+    
+                    if ($page_no <= 4) {
+                        for ($counter = 1; $counter < 8; $counter++) {
+                            if ($counter == $page_no) {
+                                $output .= "<li class='page-item active'><a class='page-link'>$counter</a></li>";
+                            } else {
+                                $output .= "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                            }
+                        }
+                        $output .= "<li class='page-item'><a class='page-link'>...</a></li>";
+                        $output .= "<li class='page-item'><a class='page-link' href='?page_no=$second_last'>$second_last</a></li>";
+                        $output .= "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
+                    } elseif ($page_no > 4 && $page_no < $total_no_of_pages - 4) {
+                        $output .= "<li class='page-item'><a class='page-link' href='?page_no=1'>1</a></li>";
+                        $output .= "<li class='page-item'><a class='page-link' href='?page_no=2'>2</a></li>";
+                        $output .= "<li class='page-item'><a class='page-link'>...</a></li>";
+                        for ($counter = $page_no - $adjacents; $counter <= $page_no + $adjacents; $counter++) {
+                            if ($counter == $page_no) {
+                                $output .= "<li class='page-item active'><a class='page-link'>$counter</a></li>";
+                            } else {
+                                $output .= "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                            }
+                        }
+                        $output .= "<li class='page-item'><a class='page-link'>...</a></li>";
+                        $output .= "<li class='page-item'><a class='page-link' href='?page_no=$second_last'>$second_last</a></li>";
+                        $output .= "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
+                    } else {
+                        $output .= "<li class='page-item'><a class='page-link' href='?page_no=1'>1</a></li>";
+                        $output .= "<li class='page-item'><a class='page-link' href='?page_no=2'>2</a></li>";
+                        $output .= "<li class='page-item'><a class='page-link'>...</a></li>";
+    
+                        for ($counter = $total_no_of_pages - 6; $counter <= $total_no_of_pages; $counter++) {
+                            if ($counter == $page_no) {
+                                $output .= "<li class='page-item active'><a class='page-link'>$counter</a></li>";
+                            } else {
+                                $output .= "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                            }
+                        }
+                    }
+                }
+    
+                $output .= '
+                <li class="page-item '. ($page_no >= $total_no_of_pages ? 'disabled' : '') .'">
+                    <a class="page-link" '. ($page_no < $total_no_of_pages ? "href='?page_no=$next_page'" : '') .'>Next</a>
+                </li>
+                '. ($page_no < $total_no_of_pages ? "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>" : '') ;
     } else {
         $output = '<h3>No Products Found!</h3>';
     }

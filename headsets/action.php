@@ -10,9 +10,9 @@ if (isset($_POST['action'])) {
         $searchTerm = htmlspecialchars(mysqli_real_escape_string($con, $searchTerm)); 
         $whereClause .= " AND products.product_name LIKE '%{$searchTerm}%'";
     }
-    if ( (isset($_POST['min_price']) && (!empty($_POST['min_price']))) || (isset($_POST['max_price']) && !empty($_POST['max_price'])) ) {
-        $minPrice = htmlspecialchars($_POST['min_price']);
-        $maxPrice = htmlspecialchars($_POST['max_price']);
+    if(isset($_POST['min_price']) && isset($_POST['max_price']) && (!empty($_POST['min_price']) || $_POST['min_price']==0) && !empty($_POST['max_price'])) {
+        $minPrice = htmlspecialchars(mysqli_real_escape_string($con,$_POST['min_price']));
+        $maxPrice = htmlspecialchars(mysqli_real_escape_string($con,$_POST['max_price']));
         $whereClause .= " AND products.price BETWEEN $minPrice AND $maxPrice";
     }
     if (isset($_POST['brand']) && !empty($_POST['brand'])) {
@@ -41,7 +41,7 @@ if (isset($_POST['action'])) {
     } else {
         $page_no = 1;
     }
-    $total_records_per_page = 10;
+    $total_records_per_page = 5;
     $offset = ($page_no - 1) * $total_records_per_page;
     $previous_page = $page_no - 1;
     $next_page = $page_no + 1;
@@ -104,6 +104,8 @@ if (isset($_POST['action'])) {
         }
         $output .= '
     <nav aria-label="...">
+                <strong>Showing Page '. $page_no." of ".$total_no_of_pages.'</strong>
+        
         <ul class="pagination justify-content-center">
 
             <li class="page-item '. ($page_no <= 1 ? 'disabled' : '') .'">
@@ -170,5 +172,5 @@ if (isset($_POST['action'])) {
     } else {
         $output = '<h3>No Products Found!</h3>';
     }
-    echo $sql.$output;
+    echo $output;
 }

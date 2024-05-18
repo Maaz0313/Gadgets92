@@ -7,12 +7,12 @@ if (isset($_POST['action'])) {
     $whereClause = '';
     if (isset($_POST['search']) && !empty($_POST['search'])) {
         $searchTerm = $_POST['search'];
-        $searchTerm = htmlspecialchars($searchTerm); 
+        $searchTerm = htmlspecialchars(mysqli_real_escape_string($con,$searchTerm)); 
         $whereClause .= " AND products.product_name LIKE '%{$searchTerm}%'";
     }
-    if(isset($_POST['min_price']) && !empty($_POST['min_price']) && isset($_POST['max_price']) && !empty($_POST['max_price'])) {
-        $minPrice = htmlspecialchars($_POST['min_price']);
-        $maxPrice = htmlspecialchars($_POST['max_price']);
+    if(isset($_POST['min_price']) && isset($_POST['max_price']) && (!empty($_POST['min_price']) || $_POST['min_price']==0) && !empty($_POST['max_price'])) {
+        $minPrice = htmlspecialchars(mysqli_real_escape_string($con,$_POST['min_price']));
+        $maxPrice = htmlspecialchars(mysqli_real_escape_string($con,$_POST['max_price']));
         $whereClause .= " AND products.price BETWEEN $minPrice AND $maxPrice";
     }
     if (isset($_POST['brand'])) {

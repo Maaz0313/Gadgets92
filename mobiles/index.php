@@ -216,7 +216,7 @@ if (isset($_SESSION['fail_msg'])) {
                             </h2>
                             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                                 <div class="accordion-body">
-                                    <input type="search" name="search" class="form-control shadow-none"id="search_text"
+                                    <input type="search" name="search" class="form-control shadow-none" id="search_text"
                                         placeholder="Search Mobile" aria-label="Search">
                                 </div>
                             </div>
@@ -230,14 +230,14 @@ if (isset($_SESSION['fail_msg'])) {
                                 </button>
                             </h2>
                             <div id="price" class="accordion-collapse collapse">
-                                <form class="accordion-body p-0 p-2 d-table w-100" method="get">
+                                <form class="accordion-body p-0 p-2 d-table w-100 price-range-form" method="get">
                                     <div class="column">
                                         <div class="mini">Min</div>
-                                        <input type="number" class="inp" name="min" value="0">
+                                        <input type="number" class="inp" required name="min" value="0">
                                     </div>
                                     <div class="column">
                                         <div class="mini">Max</div>
-                                        <input type="number" class="inp" name="max" value="196900">
+                                        <input type="number" class="inp" required name="max" value="196900">
                                     </div>
                                     <div class="column">
                                         <button type="submit" class="go-btn">Go</button>
@@ -548,7 +548,7 @@ if (isset($_SESSION['fail_msg'])) {
                         </h2>
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                             <div class="accordion-body">
-                                <input type="search" name="search" class="form-control shadow-none"id="search_text"
+                                <input type="search" name="search" class="form-control shadow-none" id="search_text"
                                     placeholder="Search Mobile" aria-label="Search">
                             </div>
                         </div>
@@ -562,14 +562,14 @@ if (isset($_SESSION['fail_msg'])) {
                             </button>
                         </h2>
                         <div id="price" class="accordion-collapse collapse">
-                            <form class="accordion-body p-0 p-2 d-table w-100" method="get">
+                            <form class="accordion-body p-0 p-2 d-table w-100 price-range-form" method="get">
                                 <div class="column">
                                     <div class="mini">Min</div>
-                                    <input type="number" class="inp" name="min" value="0">
+                                    <input type="number" class="inp" required name="min" value="0">
                                 </div>
                                 <div class="column">
                                     <div class="mini">Max</div>
-                                    <input type="number" class="inp" name="max" value="196900">
+                                    <input type="number" class="inp" required name="max" value="196900">
                                 </div>
                                 <div class="column">
                                     <button type="submit" class="go-btn">Go</button>
@@ -975,95 +975,97 @@ require ('../inc/footer.php');
 ?>
 <script type="text/javascript">
     $(document).ready(function () {
-    // Function to perform AJAX request
-    function sendAJAXRequest(searchTerm, minPrice, maxPrice) {
-        $('#loader').show();
-        
-        var action = 'data';
-        var brand = get_filter_text('brand');
-        var ram = get_filter_text('ram');
-        var internal_storage = get_filter_text('internal_storage');
-        var screen_size = get_filter_text('screen_size');
-        var screen_resolution = get_filter_text('screen_resolution');
-        var battery = get_filter_text('battery');
-        var os = get_filter_text('os');
-        var front_camera = get_filter_text('front_camera');
-        var rear_camera = get_filter_text('rear_camera');
+        // Function to perform AJAX request
+        function sendAJAXRequest(searchTerm, minPrice, maxPrice) {
+            $('#loader').show();
 
-        var search = "";
-        if (searchTerm !== undefined) {
-            search = searchTerm;
-        } else {
-            search = $('#search_text').val();
+            var action = 'data';
+            var brand = get_filter_text('brand');
+            var ram = get_filter_text('ram');
+            var internal_storage = get_filter_text('internal_storage');
+            var screen_size = get_filter_text('screen_size');
+            var screen_resolution = get_filter_text('screen_resolution');
+            var battery = get_filter_text('battery');
+            var os = get_filter_text('os');
+            var front_camera = get_filter_text('front_camera');
+            var rear_camera = get_filter_text('rear_camera');
+
+            var search = "";
+            if (searchTerm !== undefined) {
+                search = searchTerm;
+            } else {
+                search = $('#search_text').val();
+            }
+
+            var data = {
+                action: action,
+                brand: brand,
+                ram: ram,
+                internal_storage: internal_storage,
+                screen_size: screen_size,
+                screen_resolution: screen_resolution,
+                battery: battery,
+                os: os,
+                front_camera: front_camera,
+                rear_camera: rear_camera
+            };
+
+            if (search !== "") {
+                data.search = search;
+            }
+
+            if (minPrice !== "" && maxPrice !== "") {
+                data.min_price = minPrice;
+                data.max_price = maxPrice;
+            }
+
+            $.ajax({
+                url: "action.php",
+                method: "POST",
+                data: data,
+                success: function (response) {
+                    $('#result').html(response);
+                    $('#loader').hide();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX Error:", textStatus, errorThrown);
+                }
+            });
         }
 
-        var data = {
-            action: action,
-            brand: brand,
-            ram: ram,
-            internal_storage: internal_storage,
-            screen_size: screen_size,
-            screen_resolution: screen_resolution,
-            battery: battery,
-            os: os,
-            front_camera: front_camera,
-            rear_camera: rear_camera
-        };
-
-        if (search !== "") {
-            data.search = search; 
-        }
-
-        if (minPrice !== "" && maxPrice !== "") {
-            data.min_price = minPrice;
-            data.max_price = maxPrice;
-        }
-
-        $.ajax({
-            url: "action.php",
-            method: "POST",
-            data: data,
-            success: function (response) {
-                $('#result').html(response);
-                $('#loader').hide();
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error("AJAX Error:", textStatus, errorThrown);
-            } 
+        // AJAX call when checkboxes are clicked
+        $('.product_check').click(function () {
+            sendAJAXRequest(null); // No search term for checkbox clicks
         });
-    }
 
-    // AJAX call when checkboxes are clicked
-    $('.product_check').click(function() {
-        sendAJAXRequest(null); // No search term for checkbox clicks
-    });
+        // Event listener for Enter key press on search input
+        $(document).on('keypress', '#search_text', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                sendAJAXRequest($(this).val());
+            }
+        });
 
-    // Event listener for Enter key press on search input
-    $(document).on('keypress', '#search_text', function (e) {
-        if (e.which == 13) {
-            e.preventDefault();
-            sendAJAXRequest($(this).val()); 
+        // Price range form submit handler
+        $('.price-range-form').each(function () { // Target forms with class "price-range-form"
+            $(this).submit(function (e) {
+                e.preventDefault(); // Prevent default form submission
+                // Get min and max price values from the form
+                var minPrice = $(this).find('input[name="min"]').val();
+                var maxPrice = $(this).find('input[name="max"]').val();
+                sendAJAXRequest(null, minPrice, maxPrice); // Send AJAX request 
+            });
+        });
+
+        // Function to get filter values from checkboxes
+        function get_filter_text(text_id) {
+            var filterData = [];
+            $('#' + text_id + ':checked').each(function () {
+                filterData.push($(this).val());
+            });
+            return filterData;
         }
     });
-
-    // Price range form submit handler
-    $('form[class="accordion-body"][method="get"]').submit(function (e) {
-        e.preventDefault(); // Prevent default form submission
-        // Get min and max price values from the form
-        var minPrice = $(this).find('input[name="min"]').val();
-        var maxPrice = $(this).find('input[name="max"]').val();
-        sendAJAXRequest(null, minPrice, maxPrice); // Send AJAX request 
-    });
-
-    // Function to get filter values from checkboxes
-    function get_filter_text(text_id) {
-        var filterData = [];
-        $('#' + text_id + ':checked').each(function () {
-            filterData.push($(this).val());
-        });
-        return filterData;
-    }
-});
     function sort_product_drop() {
         var sort_product = $('#sort_product').val();
         window.location.href = "index.php?sort=" + sort_product;

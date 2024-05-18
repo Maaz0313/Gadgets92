@@ -39,7 +39,7 @@ if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
 } else {
     $page_no = 1;
 }
-$total_records_per_page = 3;
+$total_records_per_page = 5;
 $offset = ($page_no - 1) * $total_records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
@@ -208,14 +208,14 @@ if (isset($_SESSION['fail_msg'])) {
                                 </button>
                             </h2>
                             <div id="price" class="accordion-collapse collapse">
-                                <form class="accordion-body p-0 p-2 d-table w-100 price-range-form" method="get">
+                                <form class="accordion-body p-0 p-2 d-table w-100 price-range-form">
                                     <div class="column">
                                         <div class="mini">Min</div>
-                                        <input type="number" class="inp" name="min" value="0">
+                                        <input type="number" class="inp" required name="min" value="0">
                                     </div>
                                     <div class="column">
                                         <div class="mini">Max</div>
-                                        <input type="number" class="inp" name="max" value="196900">
+                                        <input type="number" class="inp" required name="max" value="196900">
                                     </div>
                                     <div class="column">
                                         <button type="submit" class="go-btn">Go</button>
@@ -510,14 +510,14 @@ if (isset($_SESSION['fail_msg'])) {
                             </button>
                         </h2>
                         <div id="price" class="accordion-collapse collapse">
-                            <form class="accordion-body p-0 p-2 d-table w-100 price-range-form" method="get">
+                            <form class="accordion-body p-0 p-2 d-table w-100 price-range-form">
                                 <div class="column">
                                     <div class="mini">Min</div>
-                                    <input type="number" class="inp" name="min" value="0">
+                                    <input type="number" class="inp" required name="min" value="0">
                                 </div>
                                 <div class="column">
                                     <div class="mini">Max</div>
-                                    <input type="number" class="inp" name="max" value="196900">
+                                    <input type="number" class="inp" required name="max" value="196900">
                                 </div>
                                 <div class="column">
                                     <button type="submit" class="go-btn">Go</button>
@@ -804,9 +804,9 @@ if (isset($_SESSION['fail_msg'])) {
                             </div>
                         </div>
                     <?php } ?>
-                </div>
-                <!-- Pagination -->
+                    <!-- Pagination -->
                 <nav aria-label="...">
+                <strong>Showing Page <?php echo $page_no." of ".$total_no_of_pages; ?></strong>
                     <ul class="pagination justify-content-center">
                         <?php // if($page_no > 1){ echo "<li><a href='?page_no=1'>First Page</a></li>"; } 
                         ?>
@@ -879,6 +879,8 @@ if (isset($_SESSION['fail_msg'])) {
                         } ?>
                     </ul>
                 </nav>
+                </div>
+                
             </div>
         </div>
     </div>

@@ -2,9 +2,9 @@
 $title = "Television Finder";
 $description = "Ditch the decision fatigue. Find a television that suits your needs using our comprehensive television finder tool.";
 
-require('../dbcon.php');
-require('../inc/header.php');
-require('../inc/functions.inc.php');
+require ('../dbcon.php');
+require ('../inc/header.php');
+require ('../inc/functions.inc.php');
 
 
 $searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
@@ -41,7 +41,7 @@ if (isset($_GET['page_no']) && $_GET['page_no'] != "") {
     $page_no = 1;
 }
 // page nos. logic
-$total_records_per_page = 10;
+$total_records_per_page = 5;
 $offset = ($page_no - 1) * $total_records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
@@ -49,7 +49,7 @@ $adjacents = "2";
 $result_count = mysqli_query(
     $con,
     "SELECT COUNT(*) AS total_records FROM products
-    INNER JOIN tv_specs ON products.product_id = tv_specs.product_id WHERE products.status = 1 ". $whereClause
+    INNER JOIN tv_specs ON products.product_id = tv_specs.product_id WHERE products.status = 1 " . $whereClause
 );
 $total_records = mysqli_fetch_array($result_count);
 $total_records = $total_records['total_records'];
@@ -65,11 +65,11 @@ $sql = "SELECT *
 $result = mysqli_query($con, $sql);
 if (!$result) {
     $_SESSION['fail_msg'] = mysqli_error($con);
-?>
+    ?>
     <script>
         window.location.href = "index.php";
     </script>
-<?php
+    <?php
 }
 ?>
 <style>
@@ -136,7 +136,7 @@ if (isset($_SESSION['success_msg'])) {
 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 ' . $_SESSION['success_msg'] . '</div>';
     unset($_SESSION['success_msg']);
-} 
+}
 
 if (isset($_SESSION['fail_msg'])) {
     echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -159,23 +159,27 @@ if (isset($_SESSION['fail_msg'])) {
             <h4 class="fw-bold">TV Finder - Find Your Desired TV</h4>
         </div>
         <div class="row">
-            <p>Ditch the decision fatigue. Find a TV that suits your needs using our comprehensive mobile finder tool.</p>
+            <p>Ditch the decision fatigue. Find a TV that suits your needs using our comprehensive mobile finder tool.
+            </p>
         </div>
     </div>
     <!-- filters shown on mobile screens only -->
     <div class="container-lg bg-white mb-1 d-md-none d-lg-none d-xl-none">
         <div class="row">
-            <div class="col py-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+            <div class="col py-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight">
                 <span class="d-flex-center d-flex-justify-center">
                     <span class="d-flex-center pe-1">
-                        <svg fill="#111" width="15px" height="15px" viewBox="0 -2.5 29 29" xmlns="http://www.w3.org/2000/svg">
+                        <svg fill="#111" width="15px" height="15px" viewBox="0 -2.5 29 29"
+                            xmlns="http://www.w3.org/2000/svg">
                             <path d="m11.2 24 6.4-4v-6.4l11.2-13.6h-28.8l11.2 13.6z"></path>
                         </svg>
                     </span>
                     Filters</span>
             </div>
             <!-- offcanvas starts -->
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasRightLabel">Filters</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -184,61 +188,70 @@ if (isset($_SESSION['fail_msg'])) {
                     <div class="accordion" id="accordionPanelsStayOpenExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                    aria-controls="panelsStayOpen-collapseOne">
                                     Search
                                 </button>
                             </h2>
                             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                                 <div class="accordion-body">
-                                        <input type="search" name="search" class="form-control shadow-none" placeholder="Search Televisions" aria-label="Search">
+                                    <input type="search" name="search" class="form-control shadow-none"
+                                        id="search_text" placeholder="Search Televisions" aria-label="Search">
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                <button class="accordion-button shadow-none collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseTwo">
                                     Price
                                 </button>
                             </h2>
-                            <div id="price" class="accordion-collapse collapse">
-                                <div class="accordion-body p-0 p-2 d-table w-100">
+                            <form id="price" class="accordion-collapse collapse price-range-form">
+                                <form class="accordion-body p-0 p-2 d-table w-100">
                                     <div class="column">
                                         <div class="mini">Min</div>
-                                        <input type="number" class="inp" value="0">
+                                        <input type="number" class="inp" name="min" required value="0">
                                     </div>
                                     <div class="column">
                                         <div class="mini">Max</div>
-                                        <input type="number" class="inp" value="196900">
+                                        <input type="number" class="inp" name="max" required value="196900">
                                     </div>
                                     <div class="column">
                                         <button class="go-btn">Go</button>
                                     </div>
-                                </div>
-                            </div>
+                                </form>
+                            </form>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button shadow-none collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseThree">
                                     Brands
                                 </button>
                             </h2>
 
                             <div id="brands" class="accordion-collapse collapse">
                                 <form class="accordion-body" method="get" id="brand-filter-form">
-                                    <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
+                                    <input class="form-control shadow-none mb-3" type="search" name="" id=""
+                                        placeholder="Search brands">
                                     <?php
                                     $brand_sql = "SELECT DISTINCT * FROM brands WHERE cat_id = 5 ORDER BY brand_name";
                                     $brand_result = mysqli_query($con, $brand_sql);
                                     $brands = [];
                                     while ($brand_row = mysqli_fetch_assoc($brand_result)) {
-                                    ?>
+                                        ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                    name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
                                                 <?= $brand_row['brand_name'] ?>
                                             </label>
                                         </div>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </form>
@@ -246,7 +259,9 @@ if (isset($_SESSION['fail_msg'])) {
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#disp" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button shadow-none collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#disp" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseThree">
                                     Display Size
                                 </button>
                             </h2>
@@ -256,14 +271,15 @@ if (isset($_SESSION['fail_msg'])) {
                                     $disp_sql = "SELECT DISTINCT screen_size FROM tv_specs ORDER BY screen_size";
                                     $disp_result = mysqli_query($con, $disp_sql);
                                     while ($disp_row = mysqli_fetch_assoc($disp_result)) {
-                                    ?>
+                                        ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $disp_row['screen_size'] ?>" id="display">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                    value="<?= $disp_row['screen_size'] ?>" id="display">
                                                 <?= $disp_row['screen_size'] ?>
                                             </label>
                                         </div>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </div>
@@ -271,7 +287,9 @@ if (isset($_SESSION['fail_msg'])) {
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#res" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button shadow-none collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#res" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseThree">
                                     Resolution
                                 </button>
                             </h2>
@@ -281,14 +299,15 @@ if (isset($_SESSION['fail_msg'])) {
                                     $res_sql = "SELECT DISTINCT screen_resolution FROM tv_specs ORDER BY screen_resolution";
                                     $res_result = mysqli_query($con, $res_sql);
                                     while ($res_row = mysqli_fetch_assoc($res_result)) {
-                                    ?>
+                                        ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $res_row['screen_resolution'] ?>" id="resolution">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                    value="<?= $res_row['screen_resolution'] ?>" id="resolution">
                                                 <?= $res_row['screen_resolution'] ?>
                                             </label>
                                         </div>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </div>
@@ -296,7 +315,9 @@ if (isset($_SESSION['fail_msg'])) {
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#disp_tech" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button shadow-none collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#disp_tech" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseThree">
                                     Display Technology
                                 </button>
                             </h2>
@@ -306,14 +327,15 @@ if (isset($_SESSION['fail_msg'])) {
                                     $disp_tech_sql = "SELECT DISTINCT display_tech FROM tv_specs ORDER BY display_tech";
                                     $disp_tech_result = mysqli_query($con, $disp_tech_sql);
                                     while ($disp_tech_row = mysqli_fetch_assoc($disp_tech_result)) {
-                                    ?>
+                                        ?>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $disp_tech_row['display_tech'] ?>" id="display_tech">
+                                                <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                    value="<?= $disp_tech_row['display_tech'] ?>" id="display_tech">
                                                 <?= $disp_tech_row['display_tech'] ?>
                                             </label>
                                         </div>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </div>
@@ -326,13 +348,15 @@ if (isset($_SESSION['fail_msg'])) {
             <div class="col py-2">
                 <span class="d-flex-center d-flex-justify-center position-relative">
                     <span class="d-flex-center pe-1">
-                        <svg width="15px" height="15px" viewBox="0.1 0.07 0.2 0.26" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <svg width="15px" height="15px" viewBox="0.1 0.07 0.2 0.26" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink">
                             <path fill="#111" d="M0.275 0.175h-0.15l0.075 -0.1z"></path>
                             <path fill="#111" d="M0.125 0.225h0.15l-0.075 0.1z"></path>
                         </svg>
                     </span>
                     Sort By
-                    <select class="position-absolute top-0 d-block opacity-0" onchange="sort_product_drop()" id="sort_product">
+                    <select class="position-absolute top-0 d-block opacity-0" onchange="sort_product_drop()"
+                        id="sort_product">
                         <option value="latest" <?= isset($latest_selected) ? $latest_selected : '' ?>>
                             Latest
                         </option>
@@ -355,61 +379,70 @@ if (isset($_SESSION['fail_msg'])) {
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseOne">
                                 Search
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                             <div class="accordion-body">
-                                    <input type="search" name="search" class="form-control shadow-none" placeholder="Search Televisions" aria-label="Search">
+                                <input type="search" name="search" class="form-control shadow-none"
+                                    id="search_text" placeholder="Search Televisions" aria-label="Search">
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                            <button class="accordion-button shadow-none collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseTwo">
                                 Price
                             </button>
                         </h2>
-                        <div id="price" class="accordion-collapse collapse">
+                        <form id="price" class="accordion-collapse collapse price-range-form">
                             <div class="accordion-body p-0 p-2 d-table w-100">
                                 <div class="column">
                                     <div class="mini">Min</div>
-                                    <input type="number" class="inp" value="0">
+                                    <input type="number" class="inp" name="min" required value="0">
                                 </div>
                                 <div class="column">
                                     <div class="mini">Max</div>
-                                    <input type="number" class="inp" value="196900">
+                                    <input type="number" class="inp" name="max" required value="196900">
                                 </div>
                                 <div class="column">
                                     <button class="go-btn">Go</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#brands" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
                                 Brands
                             </button>
                         </h2>
 
                         <div id="brands" class="accordion-collapse collapse">
                             <form class="accordion-body" method="get" id="brand-filter-form">
-                                <input class="form-control shadow-none mb-3" type="search" name="" id="" placeholder="Search brands">
+                                <input class="form-control shadow-none mb-3" type="search" name="" id=""
+                                    placeholder="Search brands">
                                 <?php
                                 $brand_sql = "SELECT DISTINCT * FROM brands WHERE cat_id = 5 ORDER BY brand_name";
                                 $brand_result = mysqli_query($con, $brand_sql);
                                 $brands = [];
                                 while ($brand_row = mysqli_fetch_assoc($brand_result)) {
-                                ?>
+                                    ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                name="brands[]" value="<?= $brand_row['brand_name'] ?>" id="brand">
                                             <?= $brand_row['brand_name'] ?>
                                         </label>
                                     </div>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                             </form>
@@ -417,7 +450,9 @@ if (isset($_SESSION['fail_msg'])) {
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#disp" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#disp" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
                                 Display Size
                             </button>
                         </h2>
@@ -427,14 +462,15 @@ if (isset($_SESSION['fail_msg'])) {
                                 $disp_sql = "SELECT DISTINCT screen_size FROM tv_specs ORDER BY screen_size";
                                 $disp_result = mysqli_query($con, $disp_sql);
                                 while ($disp_row = mysqli_fetch_assoc($disp_result)) {
-                                ?>
+                                    ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $disp_row['screen_size'] ?>" id="display">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                value="<?= $disp_row['screen_size'] ?>" id="display">
                                             <?= $disp_row['screen_size'] ?>
                                         </label>
                                     </div>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                             </div>
@@ -442,7 +478,9 @@ if (isset($_SESSION['fail_msg'])) {
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#res" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#res" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
                                 Resolution
                             </button>
                         </h2>
@@ -452,14 +490,15 @@ if (isset($_SESSION['fail_msg'])) {
                                 $res_sql = "SELECT DISTINCT screen_resolution FROM tv_specs ORDER BY screen_resolution";
                                 $res_result = mysqli_query($con, $res_sql);
                                 while ($res_row = mysqli_fetch_assoc($res_result)) {
-                                ?>
+                                    ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $res_row['screen_resolution'] ?>" id="resolution">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                value="<?= $res_row['screen_resolution'] ?>" id="resolution">
                                             <?= $res_row['screen_resolution'] ?>
                                         </label>
                                     </div>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                             </div>
@@ -467,7 +506,9 @@ if (isset($_SESSION['fail_msg'])) {
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#disp_tech" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button shadow-none collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#disp_tech" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
                                 Display Technology
                             </button>
                         </h2>
@@ -477,14 +518,15 @@ if (isset($_SESSION['fail_msg'])) {
                                 $disp_tech_sql = "SELECT DISTINCT display_tech FROM tv_specs ORDER BY display_tech";
                                 $disp_tech_result = mysqli_query($con, $disp_tech_sql);
                                 while ($disp_tech_row = mysqli_fetch_assoc($disp_tech_result)) {
-                                ?>
+                                    ?>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input shadow-none product_check" type="checkbox" value="<?= $disp_tech_row['display_tech'] ?>" id="display_tech">
+                                            <input class="form-check-input shadow-none product_check" type="checkbox"
+                                                value="<?= $disp_tech_row['display_tech'] ?>" id="display_tech">
                                             <?= $disp_tech_row['display_tech'] ?>
                                         </label>
                                     </div>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                             </div>
@@ -501,16 +543,24 @@ if (isset($_SESSION['fail_msg'])) {
                         <div class="card mb-3 p-3">
                             <div class="row g-0">
                                 <div class="col-3 text-center">
-                                    <a href="<?= $base_url . '/televisions/' . $row['product_slug'] ?>"><img class="bd-placeholder-img img-fluid rounded-start" alt="<?= $row['product_name'] ?>" src="../admin/images/products/<?= $row['product_image'] ?>" style="width: auto; height:150px"></a>
-                                    <div class="row d-flex justify-content-center mt-3 fw-bold cmpr" style="font-size: 13px;cursor: pointer;">+ Compare</div>
+                                    <a href="<?= $base_url . '/televisions/' . $row['product_slug'] ?>"><img
+                                            class="bd-placeholder-img img-fluid rounded-start"
+                                            alt="<?= $row['product_name'] ?>"
+                                            src="../admin/images/products/<?= $row['product_image'] ?>"
+                                            style="width: auto; height:150px"></a>
+                                    <div class="row d-flex justify-content-center mt-3 fw-bold cmpr"
+                                        style="font-size: 13px;cursor: pointer;">+ Compare</div>
                                 </div>
                                 <div class="col-9">
-                                    <a class="text-decoration-none text-black" href="<?= $base_url . '/televisions/' . $row['product_slug'] ?>">
+                                    <a class="text-decoration-none text-black"
+                                        href="<?= $base_url . '/televisions/' . $row['product_slug'] ?>">
                                         <div class="card-body p-0">
-                                            <h5 class="card-title fw-bold d-flex align-items-center justify-content-between">
+                                            <h5
+                                                class="card-title fw-bold d-flex align-items-center justify-content-between">
                                                 <div class="text-start ms-2"><?= $row['product_name'] ?></div>
 
-                                                <div class="text-end " style="font-size: 17px;">Rs. <?= formatPrice($row['price']) ?></div>
+                                                <div class="text-end " style="font-size: 17px;">Rs.
+                                                    <?= formatPrice($row['price']) ?></div>
                                             </h5>
                                             <p class="card-text">
 
@@ -533,15 +583,14 @@ if (isset($_SESSION['fail_msg'])) {
                             </div>
                         </div>
                     <?php } ?>
-                </div>
                 <!-- Pagination -->
                 <nav aria-label="...">
                     <ul class="pagination justify-content-center">
 
                         <li class="page-item <?= $page_no <= 1 ? 'disabled' : '' ?>">
                             <a class="page-link" <?php if ($page_no > 1) {
-                                                        echo "href='?page_no=$previous_page'";
-                                                    } ?>>Previous</a>
+                                echo "href='?page_no=$previous_page'";
+                            } ?>>Previous</a>
                         </li>
 
                         <?php
@@ -598,55 +647,110 @@ if (isset($_SESSION['fail_msg'])) {
 
                         <li class="page-item <?= $page_no >= $total_no_of_pages ? 'disabled' : '' ?>">
                             <a class="page-link" <?php if ($page_no < $total_no_of_pages) {
-                                                        echo "href='?page_no=$next_page'";
-                                                    } ?>>Next</a>
+                                echo "href='?page_no=$next_page'";
+                            } ?>>Next</a>
                         </li>
                         <?php if ($page_no < $total_no_of_pages) {
                             echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
                         } ?>
                     </ul>
                 </nav>
+                </div>
             </div>
         </div>
     </div>
 </main>
 <?php
-require('../inc/footer.php');
+require ('../inc/footer.php');
 ?>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('.product_check').click(function() {
+    $(document).ready(function () {
+        // Function to perform AJAX request
+        function sendAJAXRequest(searchTerm, minPrice, maxPrice) {
             $('#loader').show();
+
             var action = 'data';
             var display = get_filter_text('display_tech');
             var brand = get_filter_text('brand');
             var screen_size = get_filter_text('display');
             var screen_resolution = get_filter_text('resolution');
+
+            // Handle search term
+            var search = "";
+            if (searchTerm !== undefined) {
+                search = searchTerm;
+            } else {
+                search = $('#search_text').val();
+            }
+
+            // Create data object
+            var data = {
+                action: action,
+                brand: brand,
+                display: display,
+                screen_size: screen_size,
+                screen_resolution: screen_resolution
+            };
+
+            // Add search term if it's not empty
+            if (search !== "") {
+                data.search = search;
+            }
+
+            // Add price range only if values are provided
+            if (minPrice !== "" && maxPrice !== "") {
+                data.min_price = minPrice;
+                data.max_price = maxPrice;
+            }
+
             $.ajax({
                 url: "action.php",
                 method: "POST",
-                data: {
-                    action: action,
-                    brand: brand,
-                    display: display,
-                    screen_size: screen_size,
-                    screen_resolution: screen_resolution
-                },
-                success: function(response) {
-                    $('#loader').hide();
+                data: data,
+                success: function (response) {
                     $('#result').html(response);
+                    $('#loader').hide();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX Error:", textStatus, errorThrown);
                 }
+            });
+        }
+
+        // AJAX call when checkboxes are clicked
+        $('.product_check').click(function () {
+            sendAJAXRequest(null); // No search term for checkbox clicks
+        });
+
+        // Event listener for Enter key press on search input
+        $(document).on('keypress', '#search_text', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                sendAJAXRequest($(this).val());
+            }
+        });
+
+        // Price range form submit handler
+        $('.price-range-form').each(function () {
+            $(this).submit(function (e) {
+                e.preventDefault();
+                var minPrice = $(this).find('input[name="min"]').val();
+                var maxPrice = $(this).find('input[name="max"]').val();
+                sendAJAXRequest(null, minPrice, maxPrice);
             });
         });
 
+        // Function to get filter values from checkboxes
         function get_filter_text(text_id) {
             var filterData = [];
-            $('#' + text_id + ':checked').each(function() {
+            $('#' + text_id + ':checked').each(function () {
                 filterData.push($(this).val());
             });
             return filterData;
         }
     });
+
+    // Function for sort dropdown
     function sort_product_drop() {
         var sort_product = $('#sort_product').val();
         window.location.href = "index.php?sort=" + sort_product;

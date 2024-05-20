@@ -6,56 +6,61 @@ require '../../inc/header.php';
 
 require '../../functions/logic.php';
 
-$productId = isset($_GET['product_id']) ? sanitize_data($_GET['product_id']) : 0;
+(int)$productId = isset($_GET['product_id']) ? sanitize_data(mysqli_real_escape_string($con, $_GET['product_id'])) : null;
 
 
 if(isset($_POST['submit'])) {
     
 // Sanitize input data
-$deviceType = sanitize_data($_POST['device_type']);
-$sim = sanitize_data($_POST['sim']);
-$os = sanitize_data($_POST['os']);
-$dimensions = sanitize_data($_POST['dimensions']);
-$weight = sanitize_data($_POST['weight']);
-$waterproof = sanitize_data($_POST['waterproof']);
-$buildMaterial = sanitize_data($_POST['build_material']);
-$colors = sanitize_data($_POST['colors']);
-$touchScreen = sanitize_data($_POST['touch_screen']);
-$display = sanitize_data($_POST['display']);
-$screenSize = sanitize_data($_POST['screen_size']);
-$screenResolution = sanitize_data($_POST['screen_resolution']);
-$bezelLessDisplay = sanitize_data($_POST['bezel_less_display']);
-$screenProtection = sanitize_data($_POST['screen_protection']);
-$rearCamera = sanitize_data($_POST['rear_camera']);
-$sensor = sanitize_data($_POST['sensor']);
-$flash = sanitize_data($_POST['flash']);
-$rearVideoRecording = sanitize_data($_POST['rear_video_recording']);
-$rearFeatures = sanitize_data($_POST['rear_features']);
-$frontCamera = sanitize_data($_POST['front_camera']);
-$ram = sanitize_data($_POST['ram']);
-$chipset = sanitize_data($_POST['chipset']);
-$gpu = sanitize_data($_POST['gpu']);
-$cpuCores = sanitize_data($_POST['cpu_cores']);
-$internalStorage = sanitize_data($_POST['internal_storage']);
-$sdCardSlot = sanitize_data($_POST['sd_card_slot']);
-$battery_capacity = sanitize_data($_POST['battery_capacity']);
-$battery_features = sanitize_data($_POST['battery_features']);
-$fastCharging = sanitize_data($_POST['fast_charging']);
-$networkSupport = sanitize_data($_POST['network_support']);
-$bluetooth = sanitize_data($_POST['bluetooth']);
-$wifi = sanitize_data($_POST['wifi']);
-$usb = sanitize_data($_POST['usb']);
-$gps = sanitize_data($_POST['gps']);
-$nfc = sanitize_data($_POST['nfc']);
-$audioJack = sanitize_data($_POST['audio_jack']);
-$fmRadio = sanitize_data($_POST['fm_radio']);
-$loudSpeaker = sanitize_data($_POST['loud_speaker']);
-$fingerprintSensor = sanitize_data($_POST['fingerprint_sensor']);
-$otherSensors = sanitize_data($_POST['other_sensors']);
-    // Insert query
-    $insertQuery = "INSERT INTO `mobile_specs` (`product_id`, `device_type`, `sim`, `os`, `dimensions`, `weight`, `waterproof`, `build_material`, `colors`, `touch_screen`, `display`, `screen_size`, `screen_resolution`, `bezel_less_display`, `screen_protection`, `rear_camera`, `sensor`, `flash`, `rear_video_recording`, `rear_features`, `front_camera`, `ram`, `chipset`, `gpu`, `cpu_cores`, `internal_storage`, `sd_card_slot`, `battery_capacity`, `battery_features`, `fast_charging`, `network_support`, `bluetooth`, `wifi`, `usb`, `gps`, `nfc`, `audio_jack`, `fm_radio`, `loud_speaker`, `fingerprint_sensor`, `other_sensors`) 
-    VALUES ('$productId', '$deviceType', '$sim', '$os', '$dimensions', '$weight', '$waterproof', '$buildMaterial', '$colors', '$touchScreen', '$display', '$screenSize', '$screenResolution', '$bezelLessDisplay', '$screenProtection', '$rearCamera', '$sensor', '$flash', '$rearVideoRecording', '$rearFeatures', '$frontCamera', '$ram', '$chipset', '$gpu', '$cpuCores', '$internalStorage', '$sdCardSlot', '$battery_capacity', '$battery_features', '$fastCharging', '$networkSupport', '$bluetooth', '$wifi', '$usb', '$gps', '$nfc', '$audioJack', '$fmRadio', '$loudSpeaker', '$fingerprintSensor', '$otherSensors')";
-    if ($con->query($insertQuery) === TRUE) {
+$deviceType = sanitize_data(mysqli_real_escape_string($con, $_POST['device_type']));
+$sim = sanitize_data(mysqli_real_escape_string($con, $_POST['sim']));
+$os = sanitize_data(mysqli_real_escape_string($con, $_POST['os']));
+$dimensions = sanitize_data(mysqli_real_escape_string($con, $_POST['dimensions']));
+$weight = sanitize_data(mysqli_real_escape_string($con, $_POST['weight']));
+$waterproof = sanitize_data(mysqli_real_escape_string($con, $_POST['waterproof']));
+$buildMaterial = sanitize_data(mysqli_real_escape_string($con, $_POST['build_material']));
+$colors = sanitize_data(mysqli_real_escape_string($con, $_POST['colors']));
+$touchScreen = sanitize_data(mysqli_real_escape_string($con, $_POST['touch_screen']));
+$display = sanitize_data(mysqli_real_escape_string($con, $_POST['display']));
+$screenSize = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_size']));
+$screenResolution = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_resolution']));
+$bezelLessDisplay = sanitize_data(mysqli_real_escape_string($con, $_POST['bezel_less_display']));
+$screenProtection = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_protection']));
+$rearCamera = sanitize_data(mysqli_real_escape_string($con, $_POST['rear_camera']));
+$sensor = sanitize_data(mysqli_real_escape_string($con, $_POST['sensor']));
+$flash = sanitize_data(mysqli_real_escape_string($con, $_POST['flash']));
+$rearVideoRecording = sanitize_data(mysqli_real_escape_string($con, $_POST['rear_video_recording']));
+$rearFeatures = sanitize_data(mysqli_real_escape_string($con, $_POST['rear_features']));
+$frontCamera = sanitize_data(mysqli_real_escape_string($con, $_POST['front_camera']));
+$ram = sanitize_data(mysqli_real_escape_string($con, $_POST['ram']));
+$chipset = sanitize_data(mysqli_real_escape_string($con, $_POST['chipset']));
+$gpu = sanitize_data(mysqli_real_escape_string($con, $_POST['gpu']));
+$cpuCores = sanitize_data(mysqli_real_escape_string($con, $_POST['cpu_cores']));
+$internalStorage = sanitize_data(mysqli_real_escape_string($con, $_POST['internal_storage']));
+$sdCardSlot = sanitize_data(mysqli_real_escape_string($con, $_POST['sd_card_slot']));
+$battery_capacity = sanitize_data(mysqli_real_escape_string($con, $_POST['battery_capacity']));
+$battery_features = sanitize_data(mysqli_real_escape_string($con, $_POST['battery_features']));
+$fastCharging = sanitize_data(mysqli_real_escape_string($con, $_POST['fast_charging']));
+$networkSupport = sanitize_data(mysqli_real_escape_string($con, $_POST['network_support']));
+$bluetooth = sanitize_data(mysqli_real_escape_string($con, $_POST['bluetooth']));
+$wifi = sanitize_data(mysqli_real_escape_string($con, $_POST['wifi']));
+$usb = sanitize_data(mysqli_real_escape_string($con, $_POST['usb']));
+$gps = sanitize_data(mysqli_real_escape_string($con, $_POST['gps']));
+$nfc = sanitize_data(mysqli_real_escape_string($con, $_POST['nfc']));
+$audioJack = sanitize_data(mysqli_real_escape_string($con, $_POST['audio_jack']));
+$fmRadio = sanitize_data(mysqli_real_escape_string($con, $_POST['fm_radio']));
+$loudSpeaker = sanitize_data(mysqli_real_escape_string($con, $_POST['loud_speaker']));
+$fingerprintSensor = sanitize_data(mysqli_real_escape_string($con, $_POST['fingerprint_sensor']));
+$otherSensors = sanitize_data(mysqli_real_escape_string($con, $_POST['other_sensors']));
+
+// Insert query
+$insertQuery = "INSERT INTO `mobile_specs` (`product_id`, `device_type`, `sim`, `os`, `dimensions`, `weight`, `waterproof`, `build_material`, `colors`, `touch_screen`, `display`, `screen_size`, `screen_resolution`, `bezel_less_display`, `screen_protection`, `rear_camera`, `sensor`, `flash`, `rear_video_recording`, `rear_features`, `front_camera`, `ram`, `chipset`, `gpu`, `cpu_cores`, `internal_storage`, `sd_card_slot`, `battery_capacity`, `battery_features`, `fast_charging`, `network_support`, `bluetooth`, `wifi`, `usb`, `gps`, `nfc`, `audio_jack`, `fm_radio`, `loud_speaker`, `fingerprint_sensor`, `other_sensors`) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+$params = [$productId, $deviceType, $sim, $os, $dimensions, $weight, $waterproof, $buildMaterial, $colors, $touchScreen, $display, $screenSize, $screenResolution, $bezelLessDisplay, $screenProtection, $rearCamera, $sensor, $flash, $rearVideoRecording, $rearFeatures, $frontCamera, $ram, $chipset, $gpu, $cpuCores, $internalStorage, $sdCardSlot, $battery_capacity, $battery_features, $fastCharging, $networkSupport, $bluetooth, $wifi, $usb, $gps, $nfc, $audioJack, $fmRadio, $loudSpeaker, $fingerprintSensor, $otherSensors];
+
+$result = mysqli_execute_query($con, $insertQuery, $params); // Assuming you have a function called mysqli_execute_query 
+    if ($result === TRUE) {
         $_SESSION['success_msg'] = "Mobile specs added successfully.";
         ?><script>window.location.href = "../products/index.php";</script><?php
     }

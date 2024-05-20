@@ -8,42 +8,40 @@ require '../../functions/logic.php';
 
 if (isset($_POST['submit'])) {
     // Retrieve data from the form
-    $product_id = sanitize_data($_POST['product_id']);
+    $product_id = sanitize_data(mysqli_real_escape_string($con, $_POST['product_id']));
 
     // General Information
-    $model = sanitize_data($_POST['model']);
-    $type = sanitize_data($_POST['type']);
-    $design = sanitize_data($_POST['design']);
-    $connectivity = sanitize_data($_POST['connectivity']);
-    $wireless_range = sanitize_data($_POST['wireless_range']);
-    $in_the_box = sanitize_data($_POST['in_the_box']);
-
+    $model = sanitize_data(mysqli_real_escape_string($con, $_POST['model']));
+    $type = sanitize_data(mysqli_real_escape_string($con, $_POST['type']));
+    $design = sanitize_data(mysqli_real_escape_string($con, $_POST['design']));
+    $connectivity = sanitize_data(mysqli_real_escape_string($con, $_POST['connectivity']));
+    $wireless_range = sanitize_data(mysqli_real_escape_string($con, $_POST['wireless_range']));
+    $in_the_box = sanitize_data(mysqli_real_escape_string($con, $_POST['in_the_box']));
+    
     // Audio Information
-    $driver = sanitize_data($_POST['driver']);
-    $frequency_response = sanitize_data($_POST['frequency_response']);
-    $bluetooth = sanitize_data($_POST['bluetooth']);
-    $controls = sanitize_data($_POST['controls']);
-    $control_features = sanitize_data($_POST['control_features']);
-    $built_in_mic = sanitize_data($_POST['built_in_mic']);
-
+    $driver = sanitize_data(mysqli_real_escape_string($con, $_POST['driver']));
+    $frequency_response = sanitize_data(mysqli_real_escape_string($con, $_POST['frequency_response']));
+    $bluetooth = sanitize_data(mysqli_real_escape_string($con, $_POST['bluetooth']));
+    $controls = sanitize_data(mysqli_real_escape_string($con, $_POST['controls']));
+    $control_features = sanitize_data(mysqli_real_escape_string($con, $_POST['control_features']));
+    $built_in_mic = sanitize_data(mysqli_real_escape_string($con, $_POST['built_in_mic']));
+    
     // Additional Features
-    $water_resistant = sanitize_data($_POST['water_resistant']);
-    $additional_features = sanitize_data($_POST['additional_features']);
-
+    $water_resistant = sanitize_data(mysqli_real_escape_string($con, $_POST['water_resistant']));
+    $additional_features = sanitize_data(mysqli_real_escape_string($con, $_POST['additional_features']));
+    
     // Battery Information
-    $battery_life = sanitize_data($_POST['battery_life']);
-    $charging_port = sanitize_data($_POST['charging_port']);
-    $charging_time = sanitize_data($_POST['charging_time']);
+    $battery_life = sanitize_data(mysqli_real_escape_string($con, $_POST['battery_life']));
+    $charging_port = sanitize_data(mysqli_real_escape_string($con, $_POST['charging_port']));
+    $charging_time = sanitize_data(mysqli_real_escape_string($con, $_POST['charging_time']));
 
     // Insert data into headset_specs table
     $sql = "INSERT INTO headset_specs (product_id, model, `type`, design, connectivity, wireless_range, in_the_box, driver, 
             frequency_response, bluetooth, controls, control_features, `built-in_mic`, water_resistant, additional_features, 
             battery_life, charging_port, charging_time) 
-            VALUES ('$product_id', '$model', '$type', '$design', '$connectivity', '$wireless_range', '$in_the_box', '$driver', 
-            '$frequency_response', '$bluetooth', '$controls', '$control_features', '$built_in_mic', '$water_resistant', '$additional_features', 
-            '$battery_life', '$charging_port', '$charging_time')";
-
-    $result = mysqli_query($con, $sql);
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $params = [$product_id, $model, $type, $design, $connectivity, $wireless_range, $in_the_box, $driver, $frequency_response, $bluetooth, $controls, $control_features, $built_in_mic, $water_resistant, $additional_features, $battery_life, $charging_port, $charging_time];
+    $result = mysqli_execute_query($con, $sql, $params);
 
     if ($result) {
         $_SESSION['success_msg'] = "Record inserted successfully";

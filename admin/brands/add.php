@@ -9,10 +9,9 @@ if (!isset($_SESSION['ADMIN_LOGIN'])) {
     exit(0);
 }
 if (isset($_POST['submit'])) {
-    $brand_name = mysqli_real_escape_string($con, $_POST['brand_name']);
-    $cat_id = mysqli_real_escape_string($con, $_POST['cat_id']);
-    $sql = "INSERT INTO brands(brand_name, cat_id) VALUES('$brand_name', '$cat_id')";
-    $insert_brand = mysqli_query($con, $sql);
+    $brand_name = htmlspecialchars(mysqli_real_escape_string($con, $_POST['brand_name']));
+    $cat_id = htmlspecialchars(mysqli_real_escape_string($con, $_POST['cat_id']));
+    $insert_brand = mysqli_execute_query($con, 'INSERT INTO brands(brand_name, cat_id) VALUES(?, ?)', [$brand_name, $cat_id]);
     if ($insert_brand) {
         $_SESSION['succuss_msg'] = "Brand added successfully";
         ?>

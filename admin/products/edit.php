@@ -5,11 +5,11 @@ $title = "Update Product";
 require '../inc/header.php';
 require '../functions/logic.php';
 
-$productId = isset($_GET['id']) ? sanitize_data($_GET['id']) : 0;
+(int)$productId = isset($_GET['id']) ? sanitize_data(mysqli_real_escape_string($con, $_GET['id'])) : 0;
 
 // Fetch product details for the given product ID
-$fetchProductQuery = "SELECT * FROM products WHERE product_id = '$productId'";
-$productResult = mysqli_query($con, $fetchProductQuery);
+$fetchProductQuery = "SELECT * FROM products WHERE product_id = ?";
+$productResult = mysqli_execute_query($con, $fetchProductQuery, [$productId]);
 $product = mysqli_fetch_assoc($productResult);
 
 $fetchCategoriesQuery = "SELECT * FROM categories";
@@ -34,8 +34,11 @@ if (isset($_POST['update'])) {
 
 
     // Update product details in the database
-    $updateQuery = "UPDATE products SET category_id = '$categoryId', brand_id = '$brandId', product_name = '$productName', product_slug = '$slug',  price = '$price', release_date = '$releaseDate' WHERE product_id = '$productId'";
-    $updateResult = mysqli_query($con, $updateQuery);
+    $update_query = "UPDATE products SET category_id = ?, brand_id = ?, product_name = ?, product_slug = ?, product_description = ?, price = ?, release_date = ?, product_image = ? WHERE product_id = ?";
+    $update_params = [
+        $categoryId, $brandId, $productName, $slug, $productDesc, $price, $releaseDate, $fileName, $productId
+    ];
+    $updateResult = mysqli_execute_query($con, $updateQuery, $update_params);
 
 
     if (empty($_FILES['product_image']['name']) && $updateResult) {
@@ -94,14 +97,18 @@ if (isset($_POST['update'])) {
 
             if (isset($_SESSION['success_msg'])) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
         ' . $_SESSION['success_msg'] . '</div>';
                 unset($_SESSION['success_msg']);
             } 
 
             if (isset($_SESSION['fail_msg'])) {
                 echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
         ' . $_SESSION['fail_msg'] . '</div>';
                 unset($_SESSION['fail_msg']);
             }

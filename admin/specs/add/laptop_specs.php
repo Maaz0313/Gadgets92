@@ -9,57 +9,56 @@ require '../../functions/logic.php';
 $productId = isset($_GET['product_id']) ? sanitize_data($_GET['product_id']) : 0;
 
 if (isset($_POST['submit'])) {
-    // Retrieve data from the form
-    $product_id = mysqli_real_escape_string($con, $_POST['product_id']);
-    $model = mysqli_real_escape_string($con, $_POST['model']);
-    $os = mysqli_real_escape_string($con, $_POST['os']);
-    $dimensions = mysqli_real_escape_string($con, $_POST['dimensions']);
-    $weight = mysqli_real_escape_string($con, $_POST['weight']);
-    $colors = mysqli_real_escape_string($con, $_POST['colors']);
+    $product_id = sanitize_data(mysqli_real_escape_string($con, $_POST['product_id']));
+    $model = sanitize_data(mysqli_real_escape_string($con, $_POST['model']));
+    $os = sanitize_data(mysqli_real_escape_string($con, $_POST['os']));
+    $dimensions = sanitize_data(mysqli_real_escape_string($con, $_POST['dimensions']));
+    $weight = sanitize_data(mysqli_real_escape_string($con, $_POST['weight']));
+    $colors = sanitize_data(mysqli_real_escape_string($con, $_POST['colors']));
     $touch_screen = isset($_POST['touch_screen']) ? 1 : 0;
 
     // Display Information
-    $screen_size = mysqli_real_escape_string($con, $_POST['screen_size']);
-    $screen_resolution = mysqli_real_escape_string($con, $_POST['screen_resolution']);
-    $display = mysqli_real_escape_string($con, $_POST['display']);
-    $display_features = mysqli_real_escape_string($con, $_POST['display_features']);
+    $screen_size = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_size']));
+    $screen_resolution = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_resolution']));
+    $display = sanitize_data(mysqli_real_escape_string($con, $_POST['display']));
+    $display_features = sanitize_data(mysqli_real_escape_string($con, $_POST['display_features']));
 
     // Processor Information
-    $processor = mysqli_real_escape_string($con, $_POST['processor']);
-    $processor_variant = mysqli_real_escape_string($con, $_POST['processor_variant']);
-    $graphics = mysqli_real_escape_string($con, $_POST['graphics']);
-    $clock_speed = mysqli_real_escape_string($con, $_POST['clock_speed']);
-    $cores = mysqli_real_escape_string($con, $_POST['cores']);
-    $cache = mysqli_real_escape_string($con, $_POST['cache']);
-    $sys_arch = mysqli_real_escape_string($con, $_POST['sys_arch']);
+    $processor = sanitize_data(mysqli_real_escape_string($con, $_POST['processor']));
+    $processor_variant = sanitize_data(mysqli_real_escape_string($con, $_POST['processor_variant']));
+    $graphics = sanitize_data(mysqli_real_escape_string($con, $_POST['graphics']));
+    $clock_speed = sanitize_data(mysqli_real_escape_string($con, $_POST['clock_speed']));
+    $cores = sanitize_data(mysqli_real_escape_string($con, $_POST['cores']));
+    $cache = sanitize_data(mysqli_real_escape_string($con, $_POST['cache']));
+    $sys_arch = sanitize_data(mysqli_real_escape_string($con, $_POST['sys_arch']));
 
     // Memory and Storage
-    $ram_memory = mysqli_real_escape_string($con, $_POST['ram_memory']);
-    $ram_type = mysqli_real_escape_string($con, $_POST['ram_type']);
-    $ram_frequency = mysqli_real_escape_string($con, $_POST['ram_frequency']);
-    $ssd_storage = mysqli_real_escape_string($con, $_POST['ssd_storage']);
-    $hdd_storage = mysqli_real_escape_string($con, $_POST['hdd_storage']);
+    $ram_memory = sanitize_data(mysqli_real_escape_string($con, $_POST['ram_memory']));
+    $ram_type = sanitize_data(mysqli_real_escape_string($con, $_POST['ram_type']));
+    $ram_frequency = sanitize_data(mysqli_real_escape_string($con, $_POST['ram_frequency']));
+    $ssd_storage = sanitize_data(mysqli_real_escape_string($con, $_POST['ssd_storage']));
+    $hdd_storage = sanitize_data(mysqli_real_escape_string($con, $_POST['hdd_storage']));
 
     // Battery Information
-    $battery = mysqli_real_escape_string($con, $_POST['battery']);
-    $power_supply = mysqli_real_escape_string($con, $_POST['power_supply']);
+    $battery = sanitize_data(mysqli_real_escape_string($con, $_POST['battery']));
+    $power_supply = sanitize_data(mysqli_real_escape_string($con, $_POST['power_supply']));
 
     // Connectivity
-    $bluetooth = mysqli_real_escape_string($con, $_POST['bluetooth']);
-    $wifi = mysqli_real_escape_string($con, $_POST['wifi']);
-    $ethernet_port = mysqli_real_escape_string($con, $_POST['ethernet_port']);
+    $bluetooth = sanitize_data(mysqli_real_escape_string($con, $_POST['bluetooth']));
+    $wifi = sanitize_data(mysqli_real_escape_string($con, $_POST['wifi']));
+    $ethernet_port = sanitize_data(mysqli_real_escape_string($con, $_POST['ethernet_port']));
 
     // Ports and Other Features
-    $usb_port = mysqli_real_escape_string($con, $_POST['usb_port']);
-    $hdmi_port = mysqli_real_escape_string($con, $_POST['hdmi_port']);
-    $multi_card_slot = mysqli_real_escape_string($con, $_POST['multi_card_slot']);
+    $usb_port = sanitize_data(mysqli_real_escape_string($con, $_POST['usb_port']));
+    $hdmi_port = sanitize_data(mysqli_real_escape_string($con, $_POST['hdmi_port']));
+    $multi_card_slot = sanitize_data(mysqli_real_escape_string($con, $_POST['multi_card_slot']));
     $headset_jack = isset($_POST['headset_jack']) ? 1 : 0;
     $webcam = isset($_POST['webcam']) ? 1 : 0;
     $mic = isset($_POST['mic']) ? 1 : 0;
-    $speakers = mysqli_real_escape_string($con, $_POST['speakers']);
+    $speakers = sanitize_data(mysqli_real_escape_string($con, $_POST['speakers']));
 
     // Keyboard Information
-    $keyboard = mysqli_real_escape_string($con, $_POST['keyboard']);
+    $keyboard = sanitize_data(mysqli_real_escape_string($con, $_POST['keyboard']));
     $backlit_keyboard = isset($_POST['backlit_keyboard']) ? 1 : 0;
     $disk_drive = isset($_POST['disk_drive']) ? 1 : 0;
 
@@ -67,28 +66,27 @@ if (isset($_POST['submit'])) {
     $sql = "INSERT INTO laptop_specs (product_id, model, os, dimensions, `weight`, colors, touch_screen, screen_size, screen_resolution, display, display_features, 
             processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram_memory, ram_type, ram_frequency, ssd_storage, hdd_storage, battery, power_supply, 
             bluetooth, wifi, ethernet_port, usb_port, hdmi_port, multi_card_slot, headset_jack, webcam, mic, speakers, disk_drive, keyboard, backlit_keyboard) 
-            VALUES ('$product_id', '$model', '$os', '$dimensions', '$weight', '$colors', '$touch_screen', '$screen_size', '$screen_resolution', '$display', '$display_features', 
-            '$processor', '$processor_variant', '$graphics', '$clock_speed', '$cores', '$cache', '$sys_arch', '$ram_memory', '$ram_type', '$ram_frequency', '$ssd_storage', '$hdd_storage',
-            '$battery', '$power_supply', '$bluetooth', '$wifi', '$ethernet_port', '$usb_port', '$hdmi_port', '$multi_card_slot', '$headset_jack', '$webcam', '$mic', 
-            '$speakers', '$disk_drive','$keyboard', '$backlit_keyboard')";
-
-    $result = mysqli_query($con, $sql);
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $params = [$product_id, $model, $os, $dimensions, $weight, $colors, $touch_screen, $screen_size, $screen_resolution, $display, $display_features, $processor, $processor_variant, $graphics, $clock_speed, $cores, $cache, $sys_arch, $ram_memory, $ram_type, $ram_frequency, $ssd_storage, $hdd_storage, $battery, $power_supply, $bluetooth, $wifi, $ethernet_port, $usb_port, $hdmi_port, $multi_card_slot, $headset_jack, $webcam, $mic, $speakers, $disk_drive, $keyboard, $backlit_keyboard];
+    $result = mysqli_execute_query($con, $sql, $params);
 
     if ($result) {
         $_SESSION['success_msg'] = "Record inserted successfully";
-?><script>
+        ?>
+        <script>
             window.location.href = "../products/index.php"
         </script><?php
-                    exit();
-                } else {
-                    $_SESSION['fail_msg'] = "Error inserting record: " . mysqli_error($con);
-                    ?><script>
+        exit();
+    } else {
+        $_SESSION['fail_msg'] = "Error inserting record: " . mysqli_error($con);
+        ?>
+        <script>
             window.location.href = "../products/index.php"
         </script><?php
-                    exit();
-                }
-            }
-                    ?>
+        exit();
+    }
+}
+?>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
@@ -124,7 +122,8 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="card-body">
                         <form method="POST">
-                            <input type="hidden" name="product_id" value="<?php echo isset($_GET['product_id']) ? $_GET['product_id'] : ''; ?>">
+                            <input type="hidden" name="product_id"
+                                value="<?php echo isset($_GET['product_id']) ? $_GET['product_id'] : ''; ?>">
 
                             <!-- General Information -->
                             <h3 class="my-3">General Information</h3>
@@ -321,7 +320,8 @@ if (isset($_POST['submit'])) {
                             </div>
 
                             <div class="form-check">
-                                <input type="checkbox" id="backlit_keyboard" class="form-check-input" name="backlit_keyboard">
+                                <input type="checkbox" id="backlit_keyboard" class="form-check-input"
+                                    name="backlit_keyboard">
                                 <label for="backlit_keyboard" class="form-check-label">Backlit Keyboard</label>
                             </div>
 

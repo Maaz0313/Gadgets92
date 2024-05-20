@@ -7,9 +7,8 @@ require '../inc/header.php';
 require '../functions/logic.php';
 
 if (isset($_GET['id'])) {
-    $id = sanitize_data($_GET['id']);
-    $query = "SELECT * FROM categories WHERE cat_id = '$id'";
-    $result = mysqli_query($con, $query);
+    (int)$id = sanitize_data(mysqli_real_escape_string($con, $_GET['id']));
+    $result = mysqli_execute_query($con, "SELECT * FROM categories WHERE cat_id = ?", [$id]);
     $row = mysqli_fetch_assoc($result);
 } else {
     ?><script>window.location.href = 'index.php';</script><?php
@@ -18,9 +17,8 @@ if (isset($_GET['id'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $name = sanitize_data($_POST['cat_name']);
-    $sql = "UPDATE categories SET cat_name = '$name' WHERE cat_id = '$id'";
-    $result = mysqli_query($con, $sql);
+    $name = sanitize_data(mysqli_real_escape_string($con, $_POST['cat_name']));
+    $result = mysqli_execute_query($con, "UPDATE categories SET cat_name = ? WHERE cat_id = ?", [$name, $id]);
     if ($result) {
         ?><script>window.location.href = 'index.php';</script><?php
         $_SESSION['success_msg'] = "Category updated successfully";

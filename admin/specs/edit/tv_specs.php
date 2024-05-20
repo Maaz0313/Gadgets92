@@ -13,53 +13,57 @@ $result = mysqli_query($con, $selectQuery);
 $row = mysqli_fetch_assoc($result);
 
 if (isset($_POST['submit'])) {
-    $product_id = sanitize_data($_POST['product_id']);
+    $product_id = sanitize_data(mysqli_real_escape_string($con, $_POST['product_id']));
 
     // TV Information
-    $model = sanitize_data($_POST['model']);
-    $launch_year = sanitize_data($_POST['launch_year']);
-    $in_the_box = sanitize_data($_POST['in_the_box']);
-    $weight_with_stand = sanitize_data($_POST['weight_with_stand']);
-    $weight_without_stand = sanitize_data($_POST['weight_without_stand']);
+    $model = sanitize_data(mysqli_real_escape_string($con, $_POST['model']));
+    $launch_year = sanitize_data(mysqli_real_escape_string($con, $_POST['launch_year']));
+    $in_the_box = sanitize_data(mysqli_real_escape_string($con, $_POST['in_the_box']));
+    $weight_with_stand = sanitize_data(mysqli_real_escape_string($con, $_POST['weight_with_stand']));
+    $weight_without_stand = sanitize_data(mysqli_real_escape_string($con, $_POST['weight_without_stand']));
 
     // Display Features
-    $display = sanitize_data($_POST['display']);
-    $screen_size = sanitize_data($_POST['screen_size']);
-    $screen_resolution = sanitize_data($_POST['screen_resolution']);
-    $display_features = sanitize_data($_POST['display_features']);
-    $video_formats = sanitize_data($_POST['video_formats']);
+    $display = sanitize_data(mysqli_real_escape_string($con, $_POST['display']));
+    $screen_size = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_size']));
+    $screen_resolution = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_resolution']));
+    $display_features = sanitize_data(mysqli_real_escape_string($con, $_POST['display_features']));
+    $video_formats = sanitize_data(mysqli_real_escape_string($con, $_POST['video_formats']));
 
     // Audio Formats and Other Fields
-    $audio_formats = sanitize_data($_POST['audio_formats']);
-    $no_of_speakers = sanitize_data($_POST['no_of_speakers']);
-    $output_per_speaker = sanitize_data($_POST['output_per_speaker']);
-    $total_speaker_output = sanitize_data($_POST['total_speaker_output']);
-    $sound_tech = sanitize_data($_POST['sound_tech']);
-    $smart_tv = sanitize_data($_POST['smart_tv']);
-    $os = sanitize_data($_POST['os']);
-    $internet_connectivity = sanitize_data($_POST['internet_connectivity']);
-    $bluetooth = sanitize_data($_POST['bluetooth']);
-    $screen_mirroring = sanitize_data($_POST['screen_mirroring']);
-    $preloaded_apps = sanitize_data($_POST['preloaded_apps']);
-    $voice_assistant = sanitize_data($_POST['voice_assistant']);
-    $more_features = sanitize_data($_POST['more_features']);
-    $usb = sanitize_data($_POST['usb']);
-    $hdmi = sanitize_data($_POST['hdmi']);
-    $ethernet = sanitize_data($_POST['ethernet']);
-    $power_requirement = sanitize_data($_POST['power_requirement']);
-    $power_consumption = sanitize_data($_POST['power_consumption']);
+    $audio_formats = sanitize_data(mysqli_real_escape_string($con, $_POST['audio_formats']));
+    $no_of_speakers = sanitize_data(mysqli_real_escape_string($con, $_POST['no_of_speakers']));
+    $output_per_speaker = sanitize_data(mysqli_real_escape_string($con, $_POST['output_per_speaker']));
+    $total_speaker_output = sanitize_data(mysqli_real_escape_string($con, $_POST['total_speaker_output']));
+    $sound_tech = sanitize_data(mysqli_real_escape_string($con, $_POST['sound_tech']));
+    $smart_tv = sanitize_data(mysqli_real_escape_string($con, $_POST['smart_tv']));
+    $os = sanitize_data(mysqli_real_escape_string($con, $_POST['os']));
+    $internet_connectivity = sanitize_data(mysqli_real_escape_string($con, $_POST['internet_connectivity']));
+    $bluetooth = sanitize_data(mysqli_real_escape_string($con, $_POST['bluetooth']));
+    $screen_mirroring = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_mirroring']));
+    $preloaded_apps = sanitize_data(mysqli_real_escape_string($con, $_POST['preloaded_apps']));
+    $voice_assistant = sanitize_data(mysqli_real_escape_string($con, $_POST['voice_assistant']));
+    $more_features = sanitize_data(mysqli_real_escape_string($con, $_POST['more_features']));
+    $usb = sanitize_data(mysqli_real_escape_string($con, $_POST['usb']));
+    $hdmi = sanitize_data(mysqli_real_escape_string($con, $_POST['hdmi']));
+    $ethernet = sanitize_data(mysqli_real_escape_string($con, $_POST['ethernet']));
+    $power_requirement = sanitize_data(mysqli_real_escape_string($con, $_POST['power_requirement']));
+    $power_consumption = sanitize_data(mysqli_real_escape_string($con, $_POST['power_consumption']));
+
 
     // Perform the database insertion
-    $sql = "UPDATE `tv_specs` SET `model`='$model', `launch_year`='$launch_year', `in_the_box`='$in_the_box', `weight_with_stand`='$weight_with_stand', `weight_without_stand`='$weight_without_stand', `display_tech`='$display', `screen_size`='$screen_size', `screen_resolution`='$screen_resolution', `display_features`='$display_features', `video_formats`='$video_formats', `audio_formats`='$audio_formats', `no_of_speakers`='$no_of_speakers', `output_per_speaker`='$output_per_speaker', `total_speaker_output`='$total_speaker_output', `sound_tech`='$sound_tech', `smart_tv`='$smart_tv', `os`='$os', `internet_connectivity`='$internet_connectivity', `bluetooth`='$bluetooth', `screen_mirroring`='$screen_mirroring', `preloaded_apps`='$preloaded_apps', `voice_assistant`='$voice_assistant', `more_features`='$more_features', `usb`='$usb', `hdmi`='$hdmi', `ethernet`='$ethernet', `power_requirement`='$power_requirement', `power_consumption`='$power_consumption' WHERE `product_id`='$product_id'";
-
-    $result = mysqli_query($con, $sql);
+    $sql = "UPDATE `tv_specs` SET `model`=?, `launch_year`=?, `in_the_box`=?, `weight_with_stand`=?, `weight_without_stand`=?, `display_tech`=?, `screen_size`=?, `screen_resolution`=?, `display_features`=?, `video_formats`=?, `audio_formats`=?, `no_of_speakers`=?, `output_per_speaker`=?, `total_speaker_output`=?, `sound_tech`=?, `smart_tv`=?, `os`=?, `internet_connectivity`=?, `bluetooth`=?, `screen_mirroring`=?, `preloaded_apps`=?, `voice_assistant`=?, `more_features`=?, `usb`=?, `hdmi`=?, `ethernet`=?, `power_requirement`=?, `power_consumption`=? WHERE `product_id`=?";
+    $params = [$model, $launch_year, $in_the_box, $weight_with_stand, $weight_without_stand, $display, $screen_size, $screen_resolution, $display_features, $video_formats, $audio_formats, $no_of_speakers, $output_per_speaker, $total_speaker_output, $sound_tech, $smart_tv, $os, $internet_connectivity, $bluetooth, $screen_mirroring, $preloaded_apps, $voice_assistant, $more_features, $usb, $hdmi, $ethernet, $power_requirement, $power_consumption, $product_id];
+    $result = mysqli_execute_query($con, $sql, $params);
 
     if ($result) {
         $_SESSION['success_msg'] = "TV specs updated successfully!";
-        ?><script>window.location.href = "../../products/index.php"</script><?php
+        ?>
+        <script>window.location.href = "../../products/index.php"</script><?php
     } else {
         $_SESSION['fail_msg'] = "Error: " . mysqli_error($con);
-        ?><script>window.location.href = "../../products/index.php"</script><?php
+        ?>
+        <script>window.location.href = "../../products/index.php"</script>
+        <?php
     }
 }
 ?>
@@ -96,71 +100,87 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="card-body">
                         <form method="post">
-                            <input type="hidden" name="product_id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
+                            <input type="hidden" name="product_id"
+                                value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
                             <!-- TV Information -->
                             <div class="form-group">
                                 <label for="model">Model</label>
-                                <input type="text" id="model" name="model" class="form-control" value="<?= $row['model'] ?>" required>
+                                <input type="text" id="model" name="model" class="form-control"
+                                    value="<?= $row['model'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="launch_year">Launch Year</label>
-                                <input type="text" id="launch_year" name="launch_year" class="form-control" value="<?= $row['launch_year'] ?>" required>
+                                <input type="text" id="launch_year" name="launch_year" class="form-control"
+                                    value="<?= $row['launch_year'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="in_the_box">In The Box</label>
-                                <textarea id="in_the_box" name="in_the_box" class="form-control" required><?= $row['in_the_box'] ?></textarea>
+                                <textarea id="in_the_box" name="in_the_box" class="form-control"
+                                    required><?= $row['in_the_box'] ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="weight_with_stand">Weight with Stand</label>
-                                <input type="text" id="weight_with_stand" name="weight_with_stand" class="form-control" value="<?= $row['weight_with_stand'] ?>" required>
+                                <input type="text" id="weight_with_stand" name="weight_with_stand" class="form-control"
+                                    value="<?= $row['weight_with_stand'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="weight_without_stand">Weight without Stand</label>
-                                <input type="text" id="weight_without_stand" name="weight_without_stand" class="form-control" value="<?= $row['weight_without_stand'] ?>" required>
+                                <input type="text" id="weight_without_stand" name="weight_without_stand"
+                                    class="form-control" value="<?= $row['weight_without_stand'] ?>" required>
                             </div>
 
                             <!-- Display Features -->
                             <div class="form-group">
                                 <label for="display">Display Technology</label>
-                                <input type="text" id="display" name="display" class="form-control" value="<?= $row['display_tech'] ?>" required>
+                                <input type="text" id="display" name="display" class="form-control"
+                                    value="<?= $row['display_tech'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="screen_size">Screen Size</label>
-                                <input type="text" id="screen_size" name="screen_size" class="form-control" value="<?= $row['screen_size'] ?>" required>
+                                <input type="text" id="screen_size" name="screen_size" class="form-control"
+                                    value="<?= $row['screen_size'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="screen_resolution">Screen Resolution</label>
-                                <input type="text" id="screen_resolution" name="screen_resolution" class="form-control" value="<?= $row['screen_resolution'] ?>" required>
+                                <input type="text" id="screen_resolution" name="screen_resolution" class="form-control"
+                                    value="<?= $row['screen_resolution'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="display_features">Display Features</label>
-                                <textarea id="display_features" name="display_features" class="form-control" required><?= $row['display_features'] ?></textarea>
+                                <textarea id="display_features" name="display_features" class="form-control"
+                                    required><?= $row['display_features'] ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="video_formats">Video Formats</label>
-                                <input type="text" id="video_formats" name="video_formats" class="form-control" value="<?= $row['video_formats'] ?>" required>
+                                <input type="text" id="video_formats" name="video_formats" class="form-control"
+                                    value="<?= $row['video_formats'] ?>" required>
                             </div>
 
                             <!-- Audio Formats and Other Fields -->
                             <div class="form-group">
                                 <label for="audio_formats">Audio Formats</label>
-                                <input type="text" id="audio_formats" name="audio_formats" class="form-control" value="<?= $row['audio_formats'] ?>" required>
+                                <input type="text" id="audio_formats" name="audio_formats" class="form-control"
+                                    value="<?= $row['audio_formats'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="no_of_speakers">Number of Speakers</label>
-                                <input type="number" id="no_of_speakers" name="no_of_speakers" class="form-control" value="<?= $row['no_of_speakers'] ?>" required>
+                                <input type="number" id="no_of_speakers" name="no_of_speakers" class="form-control"
+                                    value="<?= $row['no_of_speakers'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="output_per_speaker">Output per Speaker</label>
-                                <input type="text" id="output_per_speaker" name="output_per_speaker" class="form-control" value="<?= $row['output_per_speaker'] ?>" required>
+                                <input type="text" id="output_per_speaker" name="output_per_speaker"
+                                    class="form-control" value="<?= $row['output_per_speaker'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="total_speaker_output">Total Speaker Output</label>
-                                <input type="text" id="total_speaker_output" name="total_speaker_output" class="form-control" value="<?= $row['total_speaker_output'] ?>" required>
+                                <input type="text" id="total_speaker_output" name="total_speaker_output"
+                                    class="form-control" value="<?= $row['total_speaker_output'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="sound_tech">Sound Technology</label>
-                                <input type="text" id="sound_tech" name="sound_tech" class="form-control" value="<?= $row['sound_tech'] ?>" required>
+                                <input type="text" id="sound_tech" name="sound_tech" class="form-control"
+                                    value="<?= $row['sound_tech'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="smart_tv">Smart TV</label>
@@ -171,11 +191,13 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="form-group">
                                 <label for="os">Operating System</label>
-                                <input type="text" id="os" name="os" class="form-control" value="<?= $row['os'] ?>" required>
+                                <input type="text" id="os" name="os" class="form-control" value="<?= $row['os'] ?>"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="internet_connectivity">Internet Connectivity</label>
-                                <input type="text" id="internet_connectivity" name="internet_connectivity" class="form-control" value="<?= $row['internet_connectivity'] ?>" required>
+                                <input type="text" id="internet_connectivity" name="internet_connectivity"
+                                    class="form-control" value="<?= $row['internet_connectivity'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="bluetooth">Bluetooth</label>
@@ -193,23 +215,28 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="form-group">
                                 <label for="preloaded_apps">Preloaded Apps</label>
-                                <textarea id="preloaded_apps" name="preloaded_apps" class="form-control" required><?= $row['preloaded_apps'] ?></textarea>
+                                <textarea id="preloaded_apps" name="preloaded_apps" class="form-control"
+                                    required><?= $row['preloaded_apps'] ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="voice_assistant">Voice Assistant</label>
-                                <textarea id="voice_assistant" name="voice_assistant" class="form-control" required><?= $row['voice_assistant'] ?></textarea>
+                                <textarea id="voice_assistant" name="voice_assistant" class="form-control"
+                                    required><?= $row['voice_assistant'] ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="more_features">More Features</label>
-                                <textarea id="more_features" name="more_features" class="form-control" required><?= $row['more_features'] ?></textarea>
+                                <textarea id="more_features" name="more_features" class="form-control"
+                                    required><?= $row['more_features'] ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="usb">USB Ports</label>
-                                <input type="text" id="usb" name="usb" class="form-control" value="<?= $row['usb'] ?>" required>
+                                <input type="text" id="usb" name="usb" class="form-control" value="<?= $row['usb'] ?>"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="hdmi">HDMI Ports</label>
-                                <input type="text" id="hdmi" name="hdmi" class="form-control" value="<?= $row['hdmi'] ?>" required>
+                                <input type="text" id="hdmi" name="hdmi" class="form-control"
+                                    value="<?= $row['hdmi'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="ethernet">Ethernet Port</label>
@@ -220,11 +247,13 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="form-group">
                                 <label for="power_requirement">Power Requirement</label>
-                                <input type="text" id="power_requirement" name="power_requirement" class="form-control" value="<?= $row['power_requirement'] ?>" required>
+                                <input type="text" id="power_requirement" name="power_requirement" class="form-control"
+                                    value="<?= $row['power_requirement'] ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="power_consumption">Power Consumption</label>
-                                <input type="text" id="power_consumption" name="power_consumption" class="form-control" value="<?= $row['power_consumption'] ?>" required>
+                                <input type="text" id="power_consumption" name="power_consumption" class="form-control"
+                                    value="<?= $row['power_consumption'] ?>" required>
                             </div>
 
                             <!-- Submit Button -->

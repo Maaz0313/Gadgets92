@@ -6,9 +6,8 @@ require '../inc/header.php';
 require '../functions/logic.php';
 
 if (isset($_POST['submit'])) {
-    $name = sanitize_data($_POST['cat_name']);
-    $sql = "INSERT INTO categories(cat_name) VALUES('$name')";
-    $insert_cat = mysqli_query($con, $sql);
+    $name = sanitize_data(mysqli_real_escape_string($con, $_POST['cat_name']));
+    $insert_cat = mysqli_execute_query($con, "INSERT INTO categories (`name`) VALUES (?)", [$name]);
     if ($insert_cat) {
         $_SESSION['success_msg'] = "Category added successfully";
         ?>

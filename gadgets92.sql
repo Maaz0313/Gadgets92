@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 12, 2024 at 09:41 AM
+-- Generation Time: May 19, 2024 at 06:29 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -33,7 +33,7 @@ CREATE TABLE `admin_users` (
   `password` varchar(100) NOT NULL,
   `role` varchar(25) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `admin_users`
@@ -52,7 +52,7 @@ CREATE TABLE `brands` (
   `brand_id` int NOT NULL,
   `brand_name` varchar(150) NOT NULL,
   `cat_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `brands`
@@ -101,7 +101,7 @@ INSERT INTO `brands` (`brand_id`, `brand_name`, `cat_id`) VALUES
 CREATE TABLE `categories` (
   `cat_id` int NOT NULL,
   `cat_name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `categories`
@@ -125,8 +125,8 @@ CREATE TABLE `contact` (
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `subject` varchar(255) DEFAULT NULL,
-  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `contact`
@@ -158,19 +158,19 @@ CREATE TABLE `headset_specs` (
   `design` varchar(100) NOT NULL,
   `connectivity` varchar(100) NOT NULL,
   `wireless_range` varchar(50) NOT NULL,
-  `in_the_box` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `in_the_box` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `driver` varchar(50) NOT NULL,
   `frequency_response` varchar(50) NOT NULL,
   `bluetooth` varchar(50) NOT NULL,
   `controls` varchar(50) NOT NULL,
-  `control_features` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `control_features` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `built-in_mic` tinyint(1) NOT NULL,
   `water_resistant` tinyint(1) NOT NULL,
-  `additional_features` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `additional_features` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `battery_life` varchar(100) NOT NULL,
   `charging_port` varchar(100) NOT NULL,
   `charging_time` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `headset_specs`
@@ -202,20 +202,20 @@ CREATE TABLE `laptop_specs` (
   `display_features` varchar(100) NOT NULL,
   `processor` varchar(100) NOT NULL,
   `processor_variant` varchar(50) NOT NULL,
-  `graphics` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `graphics` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `clock_speed` varchar(150) NOT NULL,
   `cores` varchar(100) NOT NULL,
   `cache` varchar(6) NOT NULL,
   `sys_arch` varchar(50) NOT NULL,
-  `ram_memory` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ram_memory` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `ram_type` varchar(100) NOT NULL,
   `ram_frequency` varchar(50) NOT NULL,
   `ssd_storage` varchar(50) NOT NULL,
-  `hdd_storage` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'Not Present',
+  `hdd_storage` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Not Present',
   `battery` varchar(50) NOT NULL,
-  `power_supply` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `power_supply` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `bluetooth` varchar(50) NOT NULL,
-  `wifi` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `wifi` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `ethernet_port` varchar(50) NOT NULL,
   `usb_port` varchar(50) NOT NULL,
   `hdmi_port` varchar(50) NOT NULL,
@@ -225,9 +225,9 @@ CREATE TABLE `laptop_specs` (
   `mic` tinyint(1) NOT NULL,
   `speakers` varchar(200) NOT NULL,
   `disk_drive` tinyint(1) NOT NULL,
-  `keyboard` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `keyboard` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `backlit_keyboard` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `laptop_specs`
@@ -320,7 +320,7 @@ CREATE TABLE `products` (
   `product_image` varchar(150) NOT NULL,
   `release_date` date NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
@@ -370,9 +370,9 @@ CREATE TABLE `sm_watch_specs` (
   `os` varchar(50) NOT NULL,
   `compatible_os` varchar(100) NOT NULL,
   `fitness_features` varchar(255) NOT NULL,
-  `water_resistant` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `water_resistant` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `extra_features` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `sm_watch_specs`
@@ -396,12 +396,12 @@ CREATE TABLE `tv_specs` (
   `in_the_box` text NOT NULL,
   `weight_with_stand` varchar(10) NOT NULL,
   `weight_without_stand` varchar(10) NOT NULL,
-  `display_tech` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `display_tech` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `screen_size` varchar(50) NOT NULL,
   `screen_resolution` varchar(50) NOT NULL,
   `display_features` varchar(150) NOT NULL,
-  `video_formats` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `audio_formats` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `video_formats` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `audio_formats` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `no_of_speakers` tinyint(1) NOT NULL,
   `output_per_speaker` varchar(10) NOT NULL,
   `total_speaker_output` varchar(10) NOT NULL,
@@ -413,13 +413,13 @@ CREATE TABLE `tv_specs` (
   `screen_mirroring` tinyint(1) NOT NULL,
   `preloaded_apps` varchar(150) NOT NULL,
   `voice_assistant` varchar(150) NOT NULL,
-  `more_features` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `more_features` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `usb` varchar(100) NOT NULL,
   `hdmi` varchar(50) NOT NULL,
   `ethernet` tinyint(1) NOT NULL,
   `power_requirement` varchar(100) NOT NULL,
   `power_consumption` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tv_specs`
@@ -437,21 +437,21 @@ INSERT INTO `tv_specs` (`spec_id`, `product_id`, `model`, `launch_year`, `in_the
 
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `profile` varchar(255) NOT NULL,
   `email` varchar(150) NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `verify_token` varchar(191) NOT NULL,
   `verify_status` tinyint NOT NULL DEFAULT '0' COMMENT '0=no, 1=yes',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `profile`, `email`, `password`, `verify_token`, `verify_status`, `created_at`) VALUES
-(1, 'Maaz Tajammul', 'IMG-663a73b4258165.36266781.jpg', 'maaztajammul63@gmail.com', '$2y$10$ngTFlt6lWhuXjUi7DIrkb.Mctg/7Tr0hsWfKnYqXbJN0JhkNTO3vO', 'ecd45075479c8237086cbee8c3c33634', 1, '2024-05-07 18:32:20');
+(2, 'Maaz Tajammul', 'IMG-66423243bebd92.49467201.jpg', 'maaztajammul63@gmail.com', '$2y$10$ZOkt1UeFjHdieoUS64SUuetDW8cO4G3bGAzUy6aXLjerW9a0SlLBa', '18f89223da0d978a92920ab114184b09', 1, '2024-05-13 15:31:15');
 
 -- --------------------------------------------------------
 
@@ -467,22 +467,7 @@ CREATE TABLE `user_reviews` (
   `review_heading` varchar(50) NOT NULL,
   `review_summary` text NOT NULL,
   `created_at` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `user_reviews`
---
-
-INSERT INTO `user_reviews` (`id`, `product_id`, `user_id`, `rating`, `review_heading`, `review_summary`, `created_at`) VALUES
-(1, 19, 1, 3, 'Very expensive ', 'Very expensive ', '2024-05-07 18:43:41'),
-(2, 7, 1, 5, 'Amazing Vivo', 'Hiiiiiiiiiiiiiii', '2024-05-10 13:35:14'),
-(3, 7, 1, 3, 'Very expensive mobile ', 'Mobile is very expensive ', '2024-05-11 07:44:00'),
-(4, 7, 1, 5, 'Gorgeous mobile ', 'Very beautiful and gorgeous mobile ', '2024-05-11 08:00:51'),
-(5, 7, 1, 5, 'Example review ', 'Lorem ipsum ', '2024-05-11 08:02:48'),
-(6, 7, 1, 5, 'Hi Review', 'Example review ', '2024-05-11 08:05:19'),
-(7, 7, 1, 5, 'good mobile ', 'bla blah', '2024-05-11 08:38:11'),
-(8, 7, 1, 2, 'Very expensive ', 'expensive ', '2024-05-11 08:40:44'),
-(9, 3, 1, 5, 'Amazing Laptop for coders', 'This is an amazing Laptop for coders', '2024-05-11 11:42:58');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -639,7 +624,7 @@ ALTER TABLE `tv_specs`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_reviews`

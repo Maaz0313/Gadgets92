@@ -12,36 +12,36 @@ $result = mysqli_query($con, $selectQuery);
 $row = mysqli_fetch_assoc($result);
 
 if (isset($_POST['submit'])) {
-    $product_id = sanitize_data($_POST['product_id']);
+    $product_id = sanitize_data(mysqli_real_escape_string($con, $_POST['product_id']));
 
     // Display Information
-    $weight = sanitize_data($_POST['weight']);
-    $dial_shape = sanitize_data($_POST['dial_shape']);
-    $bluetooth = sanitize_data($_POST['bluetooth']);
-    $gps = sanitize_data($_POST['gps']);
-    $call_function = sanitize_data($_POST['call_function']);
-    $notification = sanitize_data($_POST['notification']);
-    $display = sanitize_data($_POST['display']);
-    $screen_size = sanitize_data($_POST['screen_size']);
-    $os = sanitize_data($_POST['os']);
-    $compatible_os = sanitize_data($_POST['compatible_os']);
+    $weight = sanitize_data(mysqli_real_escape_string($con, $_POST['weight']));
+    $dial_shape = sanitize_data(mysqli_real_escape_string($con, $_POST['dial_shape']));
+    $bluetooth = sanitize_data(mysqli_real_escape_string($con, $_POST['bluetooth']));
+    $gps = sanitize_data(mysqli_real_escape_string($con, $_POST['gps']));
+    $call_function = sanitize_data(mysqli_real_escape_string($con, $_POST['call_function']));
+    $notification = sanitize_data(mysqli_real_escape_string($con, $_POST['notification']));
+    $display = sanitize_data(mysqli_real_escape_string($con, $_POST['display']));
+    $screen_size = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_size']));
+    $os = sanitize_data(mysqli_real_escape_string($con, $_POST['os']));
+    $compatible_os = sanitize_data(mysqli_real_escape_string($con, $_POST['compatible_os']));
 
     // Battery and Display Features
-    $wifi = sanitize_data($_POST['wifi']);
-    $sensors = sanitize_data($_POST['sensors']);
-    $battery_type = sanitize_data($_POST['battery_type']);
-    $battery_life = sanitize_data($_POST['battery_life']);
+    $wifi = sanitize_data(mysqli_real_escape_string($con, $_POST['wifi']));
+    $sensors = sanitize_data(mysqli_real_escape_string($con, $_POST['sensors']));
+    $battery_type = sanitize_data(mysqli_real_escape_string($con, $_POST['battery_type']));
+    $battery_life = sanitize_data(mysqli_real_escape_string($con, $_POST['battery_life']));
 
     // Additional Features
-    $touchscreen = sanitize_data($_POST['touchscreen']);
-    $fitness_features = sanitize_data($_POST['fitness_features']);
-    $water_resistant = sanitize_data($_POST['water_resistant']);
-    $extra_features = sanitize_data($_POST['extra_features']);
+    $touchscreen = sanitize_data(mysqli_real_escape_string($con, $_POST['touchscreen']));
+    $fitness_features = sanitize_data(mysqli_real_escape_string($con, $_POST['fitness_features']));
+    $water_resistant = sanitize_data(mysqli_real_escape_string($con, $_POST['water_resistant']));
+    $extra_features = sanitize_data(mysqli_real_escape_string($con, $_POST['extra_features']));
 
-    // Perform the database insertion
-    $sql = "UPDATE `sm_watch_specs` SET `weight`='$weight', `dial_shape`='$dial_shape', `bluetooth`='$bluetooth', `gps`='$gps', `call_function`='$call_function', `notification`='$notification', `display`='$display', `screen_size`='$screen_size', `os`='$os', `compatible_os`='$compatible_os', `wifi`='$wifi', `sensors`='$sensors', `battery_type`='$battery_type', `battery_life`='$battery_life', `touchscreen`='$touchscreen', `fitness_features`='$fitness_features', `water_resistant`='$water_resistant', `extra_features`='$extra_features' WHERE `product_id`='$product_id'";
-
-    $result = mysqli_query($con, $sql);
+    // Perform the database updation
+    $sql = "UPDATE `sm_watch_specs` SET `weight`=?, `dial_shape`=?, `bluetooth`=?, `gps`=?, `call_function`=?, `notification`=?, `display`=?, `screen_size`=?, `os`=?, `compatible_os`=?, `wifi`=?, `sensors`=?, `battery_type`=?, `battery_life`=?, `touchscreen`=?, `fitness_features`=?, `water_resistant`=?, `extra_features`=? WHERE `product_id`=?";
+    $params = [$weight, $dial_shape, $bluetooth, $gps, $call_function, $notification, $display, $screen_size, $os, $compatible_os, $wifi, $sensors, $battery_type, $battery_life, $touchscreen, $fitness_features, $water_resistant, $extra_features, $product_id];
+    $result = mysqli_execute_query($con, $sql, $params); 
 
     if ($result) {
         $_SESSION['success_msg'] = "Smart Watch specs updated successfully!";

@@ -2,28 +2,32 @@
 session_start();
 require $_SERVER['DOCUMENT_ROOT'] . '/dbcon.php';
 require 'inc/header.php';
+require 'functions/logic.php';
 if (isset($_POST['submit'])) {
-    $username = mysqli_real_escape_string($con, $_POST['username']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
-    $role = mysqli_real_escape_string($con, $_POST['role']);
-    $sql = "INSERT INTO admin_users(username, password, role) VALUES('$username', '$password', '$role')";
-    $res = mysqli_query($con, $sql);
+    $username = sanitize_data(mysqli_real_escape_string($con, $_POST['username']));
+    $password = sanitize_data(mysqli_real_escape_string($con, $_POST['password']));
+    $role = sanitize_data(mysqli_real_escape_string($con, $_POST['role']));
+    $res = mysqli_execute_query($con, "INSERT INTO admin_users(username, `password`, `role`) VALUES(?, ?, ?)", [
+        $username,
+        $password,
+        $role
+    ]);
     if ($res) {
         $_SESSION['success_msg'] = "Admin user created successfully";
-?>
+        ?>
         <script>
             window.location.href = 'admin_users.php';
         </script>
-    <?php
+        <?php
         mysqli_close($con);
         exit(0);
     } else {
         $_SESSION['fail_msg'] = "Failed to create admin";
-    ?>
+        ?>
         <script>
             window.location.href = 'admin_users.php';
         </script>
-<?php
+        <?php
         mysqli_close($con);
         exit(0);
     }
@@ -31,14 +35,18 @@ if (isset($_POST['submit'])) {
 
 if (isset($_SESSION['success_msg'])) {
     echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 ' . $_SESSION['success_msg'] . '</div>';
     unset($_SESSION['success_msg']);
-} 
+}
 
 if (isset($_SESSION['fail_msg'])) {
     echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 ' . $_SESSION['fail_msg'] . '</div>';
     unset($_SESSION['fail_msg']);
 }
@@ -77,13 +85,15 @@ if (isset($_SESSION['fail_msg'])) {
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                    <input type="text" id="username" name="username" placeholder="Username" class="form-control">
+                                    <input type="text" id="username" name="username" placeholder="Username"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-key"></i></div>
-                                    <input type="password" id="password" name="password" placeholder="Password" class="form-control">
+                                    <input type="password" id="password" name="password" placeholder="Password"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -92,7 +102,8 @@ if (isset($_SESSION['fail_msg'])) {
                                     <input type="text" id="role" name="role" placeholder="Role" class="form-control">
                                 </div>
                             </div>
-                            <div class="form-actions form-group"><button type="submit" name="submit" class="btn btn-success btn-sm">Submit</button></div>
+                            <div class="form-actions form-group"><button type="submit" name="submit"
+                                    class="btn btn-success btn-sm">Submit</button></div>
                         </form>
                     </div>
                 </div>

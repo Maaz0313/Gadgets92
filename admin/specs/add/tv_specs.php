@@ -7,54 +7,58 @@ require '../../inc/header.php';
 require '../../functions/logic.php';
 
 if (isset($_POST['submit'])) {
-    $product_id = sanitize_data($_POST['product_id']);
+    $product_id = sanitize_data(mysqli_real_escape_string($con, $_POST['product_id']));
 
     // TV Information
-    $model = sanitize_data($_POST['model']);
-    $launch_year = sanitize_data($_POST['launch_year']);
-    $in_the_box = sanitize_data($_POST['in_the_box']);
-    $weight_with_stand = sanitize_data($_POST['weight_with_stand']);
-    $weight_without_stand = sanitize_data($_POST['weight_without_stand']);
+    $model = sanitize_data(mysqli_real_escape_string($con, $_POST['model']));
+    $launch_year = sanitize_data(mysqli_real_escape_string($con, $_POST['launch_year']));
+    $in_the_box = sanitize_data(mysqli_real_escape_string($con, $_POST['in_the_box']));
+    $weight_with_stand = sanitize_data(mysqli_real_escape_string($con, $_POST['weight_with_stand']));
+    $weight_without_stand = sanitize_data(mysqli_real_escape_string($con, $_POST['weight_without_stand']));
 
     // Display Features
-    $display = sanitize_data($_POST['display']);
-    $screen_size = sanitize_data($_POST['screen_size']);
-    $screen_resolution = sanitize_data($_POST['screen_resolution']);
-    $display_features = sanitize_data($_POST['display_features']);
-    $video_formats = sanitize_data($_POST['video_formats']);
+    $display = sanitize_data(mysqli_real_escape_string($con, $_POST['display']));
+    $screen_size = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_size']));
+    $screen_resolution = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_resolution']));
+    $display_features = sanitize_data(mysqli_real_escape_string($con, $_POST['display_features']));
+    $video_formats = sanitize_data(mysqli_real_escape_string($con, $_POST['video_formats']));
 
     // Audio Formats and Other Fields
-    $audio_formats = sanitize_data($_POST['audio_formats']);
-    $no_of_speakers = sanitize_data($_POST['no_of_speakers']);
-    $output_per_speaker = sanitize_data($_POST['output_per_speaker']);
-    $total_speaker_output = sanitize_data($_POST['total_speaker_output']);
-    $sound_tech = sanitize_data($_POST['sound_tech']);
-    $smart_tv = sanitize_data($_POST['smart_tv']);
-    $os = sanitize_data($_POST['os']);
-    $internet_connectivity = sanitize_data($_POST['internet_connectivity']);
-    $bluetooth = sanitize_data($_POST['bluetooth']);
-    $screen_mirroring = sanitize_data($_POST['screen_mirroring']);
-    $preloaded_apps = sanitize_data($_POST['preloaded_apps']);
-    $voice_assistant = sanitize_data($_POST['voice_assistant']);
-    $more_features = sanitize_data($_POST['more_features']);
-    $usb = sanitize_data($_POST['usb']);
-    $hdmi = sanitize_data($_POST['hdmi']);
-    $ethernet = sanitize_data($_POST['ethernet']);
-    $power_requirement = sanitize_data($_POST['power_requirement']);
-    $power_consumption = sanitize_data($_POST['power_consumption']);
+    $audio_formats = sanitize_data(mysqli_real_escape_string($con, $_POST['audio_formats']));
+    $no_of_speakers = sanitize_data(mysqli_real_escape_string($con, $_POST['no_of_speakers']));
+    $output_per_speaker = sanitize_data(mysqli_real_escape_string($con, $_POST['output_per_speaker']));
+    $total_speaker_output = sanitize_data(mysqli_real_escape_string($con, $_POST['total_speaker_output']));
+    $sound_tech = sanitize_data(mysqli_real_escape_string($con, $_POST['sound_tech']));
+    $smart_tv = sanitize_data(mysqli_real_escape_string($con, $_POST['smart_tv']));
+    $os = sanitize_data(mysqli_real_escape_string($con, $_POST['os']));
+    $internet_connectivity = sanitize_data(mysqli_real_escape_string($con, $_POST['internet_connectivity']));
+    $bluetooth = sanitize_data(mysqli_real_escape_string($con, $_POST['bluetooth']));
+    $screen_mirroring = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_mirroring']));
+    $preloaded_apps = sanitize_data(mysqli_real_escape_string($con, $_POST['preloaded_apps']));
+    $voice_assistant = sanitize_data(mysqli_real_escape_string($con, $_POST['voice_assistant']));
+    $more_features = sanitize_data(mysqli_real_escape_string($con, $_POST['more_features']));
+    $usb = sanitize_data(mysqli_real_escape_string($con, $_POST['usb']));
+    $hdmi = sanitize_data(mysqli_real_escape_string($con, $_POST['hdmi']));
+    $ethernet = sanitize_data(mysqli_real_escape_string($con, $_POST['ethernet']));
+    $power_requirement = sanitize_data(mysqli_real_escape_string($con, $_POST['power_requirement']));
+    $power_consumption = sanitize_data(mysqli_real_escape_string($con, $_POST['power_consumption']));
 
-    // Perform the database insertion
     $sql = "INSERT INTO tv_specs (product_id, model, launch_year, in_the_box, weight_with_stand, weight_without_stand, display_tech, screen_size, screen_resolution, display_features, video_formats, audio_formats, no_of_speakers, output_per_speaker, total_speaker_output, sound_tech, smart_tv, os, internet_connectivity, bluetooth, screen_mirroring, preloaded_apps, voice_assistant, more_features, usb, hdmi, ethernet, power_requirement, power_consumption) 
-            VALUES ('$product_id', '$model', '$launch_year', '$in_the_box', '$weight_with_stand', '$weight_without_stand', '$display', '$screen_size', '$screen_resolution', '$display_features', '$video_formats', '$audio_formats', '$no_of_speakers', '$output_per_speaker', '$total_speaker_output', '$sound_tech', '$smart_tv', '$os', '$internet_connectivity', '$bluetooth', '$screen_mirroring', '$preloaded_apps', '$voice_assistant', '$more_features', '$usb', '$hdmi', '$ethernet', '$power_requirement', '$power_consumption')";
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $result = mysqli_query($con, $sql);
+    $params = [$product_id, $model, $launch_year, $in_the_box, $weight_with_stand, $weight_without_stand, $display, $screen_size, $screen_resolution, $display_features, $video_formats, $audio_formats, $no_of_speakers, $output_per_speaker, $total_speaker_output, $sound_tech, $smart_tv, $os, $internet_connectivity, $bluetooth, $screen_mirroring, $preloaded_apps, $voice_assistant, $more_features, $usb, $hdmi, $ethernet, $power_requirement, $power_consumption];
+
+    $result = mysqli_execute_query($con, $sql, $params);
 
     if ($result) {
         $_SESSION['success_msg'] = "Record inserted successfully!";
-        ?><script>window.location.href = "../products/index.php"</script><?php
+        ?>
+        <script>window.location.href = "../products/index.php"</script><?php
     } else {
         $_SESSION['fail_msg'] = "Error: " . mysqli_error($con);
-        ?><script>window.location.href = "../products/index.php"</script><?php
+        ?>
+        <script>window.location.href = "../products/index.php"</script>
+        <?php
     }
 }
 ?>
@@ -91,7 +95,8 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="card-body">
                         <form method="post">
-                            <input type="hidden" name="product_id" value="<?php echo isset($_GET['product_id']) ? $_GET['product_id'] : ''; ?>">
+                            <input type="hidden" name="product_id"
+                                value="<?php echo isset($_GET['product_id']) ? $_GET['product_id'] : ''; ?>">
                             <!-- TV Information -->
                             <div class="form-group">
                                 <label for="model">Model</label>
@@ -111,7 +116,8 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="form-group">
                                 <label for="weight_without_stand">Weight without Stand</label>
-                                <input type="text" id="weight_without_stand" name="weight_without_stand" class="form-control">
+                                <input type="text" id="weight_without_stand" name="weight_without_stand"
+                                    class="form-control">
                             </div>
 
                             <!-- Display Features -->
@@ -147,11 +153,13 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="form-group">
                                 <label for="output_per_speaker">Output per Speaker</label>
-                                <input type="text" id="output_per_speaker" name="output_per_speaker" class="form-control">
+                                <input type="text" id="output_per_speaker" name="output_per_speaker"
+                                    class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="total_speaker_output">Total Speaker Output</label>
-                                <input type="text" id="total_speaker_output" name="total_speaker_output" class="form-control">
+                                <input type="text" id="total_speaker_output" name="total_speaker_output"
+                                    class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="sound_tech">Sound Technology</label>
@@ -170,7 +178,8 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="form-group">
                                 <label for="internet_connectivity">Internet Connectivity</label>
-                                <input type="text" id="internet_connectivity" name="internet_connectivity" class="form-control">
+                                <input type="text" id="internet_connectivity" name="internet_connectivity"
+                                    class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="bluetooth">Bluetooth</label>

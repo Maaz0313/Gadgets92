@@ -9,9 +9,8 @@ if (!isset($_SESSION['ADMIN_LOGIN'])) {
 $title = "Edit Brand";
 require '../inc/header.php';
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM brands WHERE brand_id = $id";
-    $result = mysqli_query($con, $sql);
+    $id = htmlspecialchars(mysqli_real_escape_string($con, $_GET['id']));
+    $result = mysqli_execute_query($con, "SELECT * FROM brands WHERE brand_id = ?", [$id]);
     $row = mysqli_fetch_assoc($result);
 } else {
     $_SESSION['fail_msg'] = "Brand not found";
@@ -23,9 +22,9 @@ if (isset($_GET['id'])) {
     exit(0);
 }
 if (isset($_POST['submit'])) {
-    $brand_name = mysqli_real_escape_string($con, $_POST['brand_name']);
-    $sql = "UPDATE brands SET brand_name = '$brand_name' WHERE brand_id = $id";
-    $update_brand = mysqli_query($con, $sql);
+    $brand_name = htmlspecialchars(mysqli_real_escape_string($con, $_POST['brand_name']));
+    $cat_id = htmlspecialchars(mysqli_real_escape_string($con, $_POST['cat_id']));
+    $update_brand = mysqli_execute_query($con, "UPDATE brands SET brand_name = ?, cat_id = ? WHERE brand_id = ?", [$brand_name, $cat_id, $id]);
     if ($update_brand) {
         $_SESSION['succuss_msg'] = "Brand updated successfully";
     ?>
@@ -49,13 +48,17 @@ if (isset($_POST['submit'])) {
 
 if (isset($_SESSION['success_msg'])) {
     echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 ' . $_SESSION['success_msg'] . '</div>';
     unset($_SESSION['success_msg']);
 } 
 if (isset($_SESSION['fail_msg'])) {
     echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 ' . $_SESSION['fail_msg'] . '</div>';
     unset($_SESSION['fail_msg']);
 }

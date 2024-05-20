@@ -3,9 +3,8 @@ session_start();
 require '../../dbcon.php';
 
 if(isset($_GET['id'])){
-    $id = $_GET['id'];
-    $sql = "DELETE FROM brands WHERE brand_id = $id";
-    $result = mysqli_query($con, $sql);
+    $id = htmlspecialchars(mysqli_real_escape_string($con, $_GET['id']));
+    $result = mysqli_execute_query($con, "DELETE FROM brands WHERE brand_id = ?", [$id]);
     if($result){
         $_SESSION['success_msg'] = "Brand deleted successfully";
         ?>

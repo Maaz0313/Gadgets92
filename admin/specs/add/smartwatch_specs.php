@@ -7,53 +7,56 @@ require '../../inc/header.php';
 require '../../functions/logic.php';
 
 if (isset($_POST['submit'])) {
-    $product_id = sanitize_data($_POST['product_id']);
+    $product_id = sanitize_data(mysqli_real_escape_string($con, $_POST['product_id']));
 
     // Display Information
-    $weight = sanitize_data($_POST['weight']);
-    $dial_shape = sanitize_data($_POST['dial_shape']);
-    $bluetooth = sanitize_data($_POST['bluetooth']);
-    $gps = sanitize_data($_POST['gps']);
-    $call_function = sanitize_data($_POST['call_function']);
-    $notification = sanitize_data($_POST['notification']);
-    $display = sanitize_data($_POST['display']);
-    $screen_size = sanitize_data($_POST['screen_size']);
-    $os = sanitize_data($_POST['os']);
-    $compatible_os = sanitize_data($_POST['compatible_os']);
+    $weight = sanitize_data(mysqli_real_escape_string($con, $_POST['weight']));
+    $dial_shape = sanitize_data(mysqli_real_escape_string($con, $_POST['dial_shape']));
+    $bluetooth = sanitize_data(mysqli_real_escape_string($con, $_POST['bluetooth']));
+    $gps = sanitize_data(mysqli_real_escape_string($con, $_POST['gps']));
+    $call_function = sanitize_data(mysqli_real_escape_string($con, $_POST['call_function']));
+    $notification = sanitize_data(mysqli_real_escape_string($con, $_POST['notification']));
+    $display = sanitize_data(mysqli_real_escape_string($con, $_POST['display']));
+    $screen_size = sanitize_data(mysqli_real_escape_string($con, $_POST['screen_size']));
+    $os = sanitize_data(mysqli_real_escape_string($con, $_POST['os']));
+    $compatible_os = sanitize_data(mysqli_real_escape_string($con, $_POST['compatible_os']));
 
     // Battery and Display Features
-    $wifi = sanitize_data($_POST['wifi']);
-    $sensors = sanitize_data($_POST['sensors']);
-    $battery_type = sanitize_data($_POST['battery_type']);
-    $battery_life = sanitize_data($_POST['battery_life']);
+    $wifi = sanitize_data(mysqli_real_escape_string($con, $_POST['wifi']));
+    $sensors = sanitize_data(mysqli_real_escape_string($con, $_POST['sensors']));
+    $battery_type = sanitize_data(mysqli_real_escape_string($con, $_POST['battery_type']));
+    $battery_life = sanitize_data(mysqli_real_escape_string($con, $_POST['battery_life']));
 
     // Additional Features
-    $touchscreen = sanitize_data($_POST['touchscreen']);
-    $fitness_features = sanitize_data($_POST['fitness_features']);
-    $water_resistant = sanitize_data($_POST['water_resistant']);
-    $extra_features = sanitize_data($_POST['extra_features']);
+    $touchscreen = sanitize_data(mysqli_real_escape_string($con, $_POST['touchscreen']));
+    $fitness_features = sanitize_data(mysqli_real_escape_string($con, $_POST['fitness_features']));
+    $water_resistant = sanitize_data(mysqli_real_escape_string($con, $_POST['water_resistant']));
+    $extra_features = sanitize_data(mysqli_real_escape_string($con, $_POST['extra_features']));
 
     // Perform the database insertion
     $sql = "INSERT INTO sm_watch_specs (product_id, `weight`, dial_shape, bluetooth, gps, call_function, `notification`, display, screen_size, os, compatible_os, wifi, sensors, battery_type, battery_life, touchscreen, fitness_features, water_resistant, extra_features) 
-            VALUES ('$product_id', '$weight', '$dial_shape', '$bluetooth', '$gps', '$call_function', '$notification', '$display', '$screen_size', '$os', '$compatible_os', '$wifi', '$sensors', '$battery_type', '$battery_life', '$touchscreen', '$fitness_features', '$water_resistant', '$extra_features')";
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $result = mysqli_query($con, $sql);
+    $params = [$product_id, $weight, $dial_shape, $bluetooth, $gps, $call_function, $notification, $display, $screen_size, $os, $compatible_os, $wifi, $sensors, $battery_type, $battery_life, $touchscreen, $fitness_features, $water_resistant, $extra_features];
 
+    $result = mysqli_execute_query($con, $sql, $params);
     if ($result) {
         $_SESSION['success_msg'] = "Record inserted successfully!";
-?><script>
+        ?>
+        <script>
             window.location.href = "../products/index.php";
         </script><?php
 
-                } else {
-                    $_SESSION['fail_msg'] = "Error: " . mysqli_error($con);
-                    ?><script>
+    } else {
+        $_SESSION['fail_msg'] = "Error: " . mysqli_error($con);
+        ?>
+        <script>
             window.location.href = "../products/index.php";
         </script><?php
 
-                }
-            }
-                    ?>
+    }
+}
+?>
 <div class="breadcrumbs">
     <div class="breadcrumb-inner">
         <div class="row m-0">
@@ -88,7 +91,8 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="card-body">
                         <form method="POST">
-                            <input type="hidden" name="product_id" value="<?php echo isset($_GET['product_id']) ? $_GET['product_id'] : ''; ?>">
+                            <input type="hidden" name="product_id"
+                                value="<?php echo isset($_GET['product_id']) ? $_GET['product_id'] : ''; ?>">
 
                             <!-- Display Information -->
                             <h3>Display Information</h3>
@@ -149,7 +153,8 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="form-group">
                                 <label for="compatible_os">Compatible Operating System:</label>
-                                <input type="text" name="compatible_os" id="compatible_os" class="form-control" required>
+                                <input type="text" name="compatible_os" id="compatible_os" class="form-control"
+                                    required>
                             </div>
                             <!-- Battery and Display Features -->
                             <h3>Battery and Display Features</h3>
@@ -185,17 +190,20 @@ if (isset($_POST['submit'])) {
 
                             <div class="form-group">
                                 <label for="fitness_features">Fitness Features:</label>
-                                <input type="text" name="fitness_features" id="fitness_features" class="form-control" required>
+                                <input type="text" name="fitness_features" id="fitness_features" class="form-control"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label for="water_resistant">Water Resistant:</label>
-                                <input type="text" name="water_resistant" id="water_resistant" class="form-control" required>
+                                <input type="text" name="water_resistant" id="water_resistant" class="form-control"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label for="extra_features">Extra Features:</label>
-                                <input type="text" name="extra_features" id="extra_features" class="form-control" required>
+                                <input type="text" name="extra_features" id="extra_features" class="form-control"
+                                    required>
                             </div>
 
                             <!-- Submit Button -->

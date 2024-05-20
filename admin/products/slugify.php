@@ -32,4 +32,3 @@ if(isset($_POST['productName'])) {
   $slug = slugify($productName);
   echo $slug;
 }
-?>

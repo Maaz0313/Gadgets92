@@ -2,6 +2,7 @@
 <html lang="en">
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . '/dbcon.php';
+require 'functions/logic.php';
 session_start();
 if (isset($_SESSION['ADMIN_LOGIN'])) {
     $_SESSION['fail_msg'] = "Already logged in";
@@ -9,18 +10,17 @@ if (isset($_SESSION['ADMIN_LOGIN'])) {
     exit(0);
 }
 if (isset($_POST['submit'])) {
-    $username = mysqli_real_escape_string($con, $_POST['username']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
-    $sql = "SELECT * FROM admin_users WHERE username='$username' AND password='$password'";
-    $res = mysqli_query($con, $sql);
-    $row = mysqli_fetch_assoc($res);
-    $count = mysqli_num_rows(($res));
+    $username = sanitize_data(mysqli_real_escape_string($con, $_POST['username']));
+    $password = sanitize_data(mysqli_real_escape_string($con, $_POST['password']));
+    $res = mysqli_execute_query($con, 'SELECT * FROM admin_users WHERE username=? AND password=?', [$username, $password]);
+    $row = $res->fetch_assoc();
+    $count = $res->num_rows;
     if ($count > 0) {
         $_SESSION['ADMIN_LOGIN'] = 'YES';
         $_SESSION['ADMIN_USERNAME'] = $username;
         $_SESSION['ROLE'] = $row['role'];
         $_SESSION['success_msg'] = "Login successful";
-        header('Location: dashboard.php');
+        header('Location: index.php');
         exit(0);
     } else {
         $_SESSION['fail_msg'] = "Please enter correct login details";

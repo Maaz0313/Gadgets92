@@ -13,13 +13,13 @@ $fetchBrandsQuery = "SELECT * FROM brands";
 $brandsResult = mysqli_query($con, $fetchBrandsQuery);
 
 if (isset($_POST['submit'])) {
-    $categoryId = sanitize_data($_POST['category_id']);
-    $brandId = sanitize_data($_POST['brand_id']);
-    $productName = sanitize_data($_POST['product_name']);
-    $slug = sanitize_data($_POST['product_slug']);
-    $productDesc = sanitize_data($_POST['product_description']);
-    $price = sanitize_data($_POST['price']);
-    $releaseDate = sanitize_data($_POST['release_date']);
+    $categoryId = sanitize_data(mysqli_real_escape_string($con, $_POST['category_id']));
+    $brandId = sanitize_data(mysqli_real_escape_string($con, $_POST['brand_id']));
+    $productName = sanitize_data(mysqli_real_escape_string($con, $_POST['product_name']));
+    $slug = sanitize_data(mysqli_real_escape_string($con, $_POST['product_slug']));
+    $productDesc = sanitize_data(mysqli_real_escape_string($con, $_POST['product_description']));
+    $price = sanitize_data(mysqli_real_escape_string($con, $_POST['price']));
+    $releaseDate = sanitize_data(mysqli_real_escape_string($con, $_POST['release_date']));
     $targetDir = '../images/products/';
     $fileName = $_FILES['product_image']['name'];
     $targetFile = $targetDir . basename($fileName);
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
                 } else {
                     $allowedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
                     if (!in_array($_FILES['product_image']['type'], $allowedImageTypes) || $_FILES['product_image']['size'] > 500000) {
-                        $_SESSION['fail_msg'] = "Sorry, only JPG, JPEG, PNG & GIF files under 500KB are allowed.";
+                        $_SESSION['fail_msg'] = "Sorry, only JPG, JPEG, PNG , WEBP and GIF files under 500KB are allowed.";
                     ?><script>
                 window.location.href = "add.php";
             </script><?php
@@ -42,8 +42,9 @@ if (isset($_POST['submit'])) {
                 }
 
                 if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
-                    $sql = "INSERT INTO products(category_id, brand_id, product_name, product_slug, product_description, price, release_date, product_image) VALUES('$categoryId', '$brandId', '$productName', '$slug', '$productDesc', '$price', '$releaseDate', '$fileName')";
-                    $insertProductResult = mysqli_query($con, $sql);
+                    $query = "INSERT INTO products(category_id, brand_id, product_name, product_slug, product_description, price, release_date, product_image) VALUES(?,?,?,?,?,?,?,?)";
+                    $params = [$categoryId, $brandId, $productName, $slug, $productDesc, $price, $releaseDate, $fileName];
+                    $insertProductResult = mysqli_execute_query($con, $query, $params);
                     if ($insertProductResult) {
                         $_SESSION['success_msg'] = "Product added successfully";
                         $lastInsertedId = mysqli_insert_id($con);
@@ -93,14 +94,18 @@ if (isset($_POST['submit'])) {
 
             if (isset($_SESSION['success_msg'])) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
         ' . $_SESSION['success_msg'] . '</div>';
                 unset($_SESSION['success_msg']);
             } 
 
             if (isset($_SESSION['fail_msg'])) {
                 echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
         ' . $_SESSION['fail_msg'] . '</div>';
                 unset($_SESSION['fail_msg']);
             }

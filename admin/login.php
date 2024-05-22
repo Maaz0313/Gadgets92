@@ -2,12 +2,18 @@
 <html lang="en">
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . '/dbcon.php';
-require 'functions/logic.php';
 session_start();
 if (isset($_SESSION['ADMIN_LOGIN'])) {
     $_SESSION['fail_msg'] = "Already logged in";
-    header('Location: dashboard.php');
+    echo '<script>location.href="index.php";</script>';
     exit(0);
+}
+function sanitize_data($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 if (isset($_POST['submit'])) {
     $username = sanitize_data(mysqli_real_escape_string($con, $_POST['username']));
@@ -20,11 +26,11 @@ if (isset($_POST['submit'])) {
         $_SESSION['ADMIN_USERNAME'] = $username;
         $_SESSION['ROLE'] = $row['role'];
         $_SESSION['success_msg'] = "Login successful";
-        header('Location: index.php');
+        echo '<script>location.href="index.php";</script>';
         exit(0);
     } else {
         $_SESSION['fail_msg'] = "Please enter correct login details";
-        header('Location: login.php');
+        echo '<script>location.href="login.php";</script>';
         exit(0);
     }
 }

@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) {
         if (isset($title)) {
             echo $title . " | Gadgets92";
         } else {
-            echo "Gadgets92 - your one-stop shop for viewing tech specs of electronic products";
+            echo "Gadgets92 - your one-stop destination for viewing tech specs of electronic products";
         }
         ?>
     </title>
@@ -67,7 +67,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <form class="d-flex mx-auto position-relative" id="form-search" autocomplete="off">
                         <input class="form-control me-2" onkeyup="fx_1(this.value)" name="search" type="search"
                             placeholder="Search" aria-label="Search" id="qu">
-                        <ul class="search-results position-absolute top-100 start-0 d-none list-group list-unstyled bg-white"
+                        <ul class="search-results position-absolute top-100 start-0 d-none list-group list-unstyled"
                             id="livesearch1"></ul>
                         <button class="btn btn-success float-start" type="submit">Search</button>
                     </form>

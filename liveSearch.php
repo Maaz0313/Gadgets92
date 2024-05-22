@@ -4,9 +4,9 @@ $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERV
 $base_url = $protocol . $_SERVER['HTTP_HOST'];
 
 include('inc/functions.inc.php');
-$s1 = $_REQUEST["n"];
-$select_query = "SELECT * FROM products where product_name LIKE '%" . $s1 . "%'";
-$sql = mysqli_query($con, $select_query) or die(mysqli_error($con));
+$s1 = sanitize_data(mysqli_real_escape_string($con, $_GET['n']));
+$select_query = "SELECT * FROM products where product_name LIKE CONCAT('%', ?, '%')";
+$sql = mysqli_execute_query($con, $select_query, [$s1]) or die(mysqli_error($con));
 
 $s = "";
 while ($row = mysqli_fetch_array($sql)) {
@@ -35,7 +35,7 @@ while ($row = mysqli_fetch_array($sql)) {
         <a class='link-p-colr' href='" . $base_url . $url."/" . $row['product_slug'] . "'>
             <div class='live-outer'>
                 <div class='live-im'>
-                    <img style='width: fit-content; height: 60px;' src='" . $base_url . "/admin/images/products/" . $row['product_image'] . "'/>
+                    <img class='flex-shrink-0' src='" . $base_url . "/admin/images/products/" . $row['product_image'] . "'/>
                 </div>
                 <div class='live-product-det ps-3'>
                     <div class='live-product-name'>

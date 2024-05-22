@@ -23,7 +23,7 @@ if (isset($_SESSION['fail_msg'])) {
         <div class="row">
             <h4 class="col-6">Upcoming Mobile Phones</h4>
             <div class="col-6 text-end">
-                <a href="mobiles/index.php?sort=upcoming" class="text-decoration-none text-black fw-medium">View All <i class="fa-solid fa-arrow-right-long fw-bolder"></i></a>
+                <a href="mobiles/index.php?sort=upcoming" class="text-decoration-none text-black fw-medium">View All <i class="fas fa-long-arrow-right fw-bolder"></i></a>
             </div>
         </div>
         <div class="product-cards">
@@ -59,7 +59,7 @@ if (isset($_SESSION['fail_msg'])) {
         <div class="row">
             <h4 class="col-6">Latest Mobile Phones</h4>
             <div class="col-6 text-end">
-                <a href="mobiles/index.php?sort=latest" class="text-decoration-none text-black fw-medium ">View All <i class="fa-solid fa-arrow-right-long fw-bolder"></i></a>
+                <a href="mobiles/index.php?sort=latest" class="text-decoration-none text-black fw-medium ">View All <i class="fas fa-long-arrow-right fw-bolder"></i></a>
             </div>
         </div>
 
@@ -94,7 +94,7 @@ if (isset($_SESSION['fail_msg'])) {
         <div class="row">
             <h4 class="col-6">Big Battery Mobile Phones</h4>
             <div class="col-6 text-end">
-                <a href="mobiles/index.php?sort=battery" class="text-decoration-none text-black fw-medium ">View All <i class="fa-solid fa-arrow-right-long fw-bolder"></i></a>
+                <a href="mobiles/index.php?sort=battery" class="text-decoration-none text-black fw-medium ">View All <i class="fas fa-long-arrow-right fw-bolder"></i></a>
             </div>
         </div>
 
@@ -129,7 +129,7 @@ if (isset($_SESSION['fail_msg'])) {
         <div class="row">
             <h4 class="col-6">Latest Laptops</h4>
             <div class="col-6 text-end">
-                <a href="laptops/index.php?sort=latest" class="text-decoration-none text-black fw-medium ">View All <i class="fa-solid fa-arrow-right-long fw-bolder"></i></a>
+                <a href="laptops/index.php?sort=latest" class="text-decoration-none text-black fw-medium ">View All <i class="fas fa-long-arrow-right fw-bolder"></i></a>
             </div>
         </div>
 

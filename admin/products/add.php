@@ -2,9 +2,9 @@
 session_start();
 require '../../dbcon.php';
 $title = "Add Product";
+require '../functions/logic.php';
 require '../inc/header.php';
 
-require '../functions/logic.php';
 
 $fetchCategoriesQuery = "SELECT * FROM categories";
 $categoriesResult = mysqli_query($con, $fetchCategoriesQuery);
@@ -21,34 +21,43 @@ if (isset($_POST['submit'])) {
     $price = sanitize_data(mysqli_real_escape_string($con, $_POST['price']));
     $releaseDate = sanitize_data(mysqli_real_escape_string($con, $_POST['release_date']));
     $targetDir = '../images/products/';
-    $fileName = $_FILES['product_image']['name'];
-    $targetFile = $targetDir . basename($fileName);
+    $fileName = basename($_FILES['product_image']['name']);
+    $targetFile = $targetDir . $fileName;
 
     if (file_exists($targetFile)) {
         $_SESSION['fail_msg'] = "File already exists. Please choose a different file.";
-?><script>
+        ?>
+        <script>
             window.location.href = "add.php";
         </script><?php
-                    exit(0);
-                } else {
-                    $allowedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
-                    if (!in_array($_FILES['product_image']['type'], $allowedImageTypes) || $_FILES['product_image']['size'] > 500000) {
-                        $_SESSION['fail_msg'] = "Sorry, only JPG, JPEG, PNG , WEBP and GIF files under 500KB are allowed.";
-                    ?><script>
+        exit(0);
+    } else {
+        $allowedImageTypes = ["image/png", "image/gif", "image/webp"];
+        if (!in_array($_FILES['product_image']['type'], $allowedImageTypes) || $_FILES['product_image']['size'] > 500000) {
+            $_SESSION['fail_msg'] = "Sorry, only PNG , WEBP and GIF files with 500KB and 100% transparency are allowed.";
+            ?>
+            <script>
                 window.location.href = "add.php";
             </script><?php
-                        exit(0);
-                    }
-                }
-
-                if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
-                    $query = "INSERT INTO products(category_id, brand_id, product_name, product_slug, product_description, price, release_date, product_image) VALUES(?,?,?,?,?,?,?,?)";
-                    $params = [$categoryId, $brandId, $productName, $slug, $productDesc, $price, $releaseDate, $fileName];
-                    $insertProductResult = mysqli_execute_query($con, $query, $params);
-                    if ($insertProductResult) {
-                        $_SESSION['success_msg'] = "Product added successfully";
-                        $lastInsertedId = mysqli_insert_id($con);
-                        ?>
+            exit(0);
+        }
+    }
+    if ($_POST['transparencyError'] != "" && $_POST['transparencyError'] == "Image likely doesn't have transparency") {
+        $_SESSION['fail_msg'] = $_POST['transparencyError'];
+        ?>
+        <script>
+            window.location.href = "add.php";
+        </script><?php
+        exit(0);
+    }
+    if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
+        $query = "INSERT INTO products(category_id, brand_id, product_name, product_slug, product_description, price, release_date, product_image) VALUES(?,?,?,?,?,?,?,?)";
+        $params = [$categoryId, $brandId, $productName, $slug, $productDesc, $price, $releaseDate, $fileName];
+        $insertProductResult = mysqli_execute_query($con, $query, $params);
+        if ($insertProductResult) {
+            $_SESSION['success_msg'] = "Product added successfully";
+            $lastInsertedId = mysqli_insert_id($con);
+            ?>
             <script>
                 var categoryId = <?= json_encode(sanitize_data($_POST['category_id'])) ?>;
                 var productId = <?= json_encode($lastInsertedId) ?>;
@@ -74,43 +83,46 @@ if (isset($_POST['submit'])) {
                         break;
                 }
             </script>
-        <?php
-                        exit(0);
-                    } else {
-                        $_SESSION['fail_msg'] = "Could not add product b/c " . mysqli_error($con);
-        ?><script>
+            <?php
+            exit(0);
+        } else {
+            $_SESSION['fail_msg'] = "Could not add product b/c " . mysqli_error($con);
+            ?>
+            <script>
                 window.location.href = "add.php";
             </script><?php
-                        exit(0);
-                    }
-                } else {
-                    $_SESSION['fail_msg'] = "Sorry, there was an error uploading your file.";
-                        ?><script>
+            exit(0);
+        }
+    } else {
+        $_SESSION['fail_msg'] = "Sorry, there was an error uploading your file.";
+        ?>
+        <script>
             window.location.href = "add.php";
-        </script><?php
-                    exit(0);
-                }
-            }
+        </script>
+        <?php
+        exit(0);
+    }
+}
 
-            if (isset($_SESSION['success_msg'])) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+if (isset($_SESSION['success_msg'])) {
+    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
         ' . $_SESSION['success_msg'] . '</div>';
-                unset($_SESSION['success_msg']);
-            } 
+    unset($_SESSION['success_msg']);
+}
 
-            if (isset($_SESSION['fail_msg'])) {
-                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+if (isset($_SESSION['fail_msg'])) {
+    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
         ' . $_SESSION['fail_msg'] . '</div>';
-                unset($_SESSION['fail_msg']);
-            }
+    unset($_SESSION['fail_msg']);
+}
 
-                    ?>
+?>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
@@ -150,9 +162,9 @@ if (isset($_POST['submit'])) {
                                     <option value="" selected disabled>Select Category</option>
                                     <?php
                                     while ($row = mysqli_fetch_assoc($categoriesResult)) {
-                                    ?>
+                                        ?>
                                         <option value="<?= $row['cat_id'] ?>"><?= $row['cat_name'] ?></option>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </select>
@@ -167,12 +179,15 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="form-group">
                                 <label for="product_name">Product Name</label>
-                                <input type="text" name="product_name" id="product_name" class="form-control is-valid" required>
-                                <input type="text" class="valid-feedback border-0" id="product_slug" name="product_slug" readonly>
+                                <input type="text" name="product_name" id="product_name" class="form-control is-valid"
+                                    required>
+                                <input type="text" class="valid-feedback border-0" id="product_slug" name="product_slug"
+                                    readonly>
                             </div>
                             <div class="form-group">
                                 <label for="product_description">Product Description</label>
-                                <textarea name="product_description" id="product_description" class="form-control" required></textarea>
+                                <textarea name="product_description" id="product_description" class="form-control"
+                                    required></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="price">Price</label>
@@ -184,7 +199,11 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="form-group">
                                 <label for="product_image">Product Image</label>
-                                <input type="file" name="product_image" id="product_image" class="form-control" required>
+                                <input type="file" name="product_image" id="product_image" class="form-control"
+                                    required><?php $msg = ''; ?>
+                                <input type="hidden" id="transparencyError" style="color: red;"
+                                    name="transparencyError"><?= $msg ?></input>
+                                <span id="transparencyError"></span>
                             </div>
                             <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -198,18 +217,18 @@ if (isset($_POST['submit'])) {
 require "../inc/footer.php";
 ?>
 <script>
-    $('#category_id').on('change', function() {
+    $('#category_id').on('change', function () {
         var mainselection = this.value; // get the selection value
         $.ajax({
             type: "POST", // method of sending data
             url: "getBrands.php", // name of PHP script
             data: 'selection=' + mainselection, // parameter name and value
-            success: function(result) { // deal with the results
+            success: function (result) { // deal with the results
                 $("#brand_id").html(result); // insert in div above
             }
         });
     });
-    $('#product_name').on('input', function() {
+    $('#product_name').on('input', function () {
         var productName = $(this).val();
         $.ajax({
             url: 'slugify.php', // Update with your PHP file path
@@ -217,9 +236,58 @@ require "../inc/footer.php";
             data: {
                 productName: productName
             },
-            success: function(data) {
+            success: function (data) {
                 $('#product_slug').val(data);
             }
         });
     });
+    function checkImageTransparency(imageFile) {
+        const reader = new FileReader();
+        const validationMessage = document.getElementById('transparencyError');
+        const spanMsg = $('span[id=transparencyError]');
+        reader.onload = function (event) {
+            const img = new Image();
+            img.onload = function () {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                ctx.drawImage(img, 0, 0);
+
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+
+                // Check for any pixel with alpha value less than 255 (fully opaque)
+                for (let i = 3; i < data.length; i += 4) {
+                    if (data[i] < 255) {
+                        // Transparent pixel found, image has transparency
+                        spanMsg.css("color", "green");
+                        spanMsg.html("Image has transparency");
+                        validationMessage.style.color = 'green';
+                        validationMessage.value = "Image has transparency";
+                        return true;
+                    }
+                }
+                spanMsg.css("color", "red");
+                spanMsg.html("Image likely doesn't have transparency");
+                // No transparent pixels found, image likely doesn't have transparency
+                validationMessage.value = "Image likely doesn't have transparency";
+                return false;
+            };
+
+            img.src = event.target.result;
+        };
+
+        reader.readAsDataURL(imageFile);
+    }
+
+    // Example usage:
+    const fileInput = document.getElementById("product_image");
+
+    fileInput.onchange = function () {
+        const uploadedFile = this.files[0];
+        checkImageTransparency(uploadedFile);
+    };
 </script>

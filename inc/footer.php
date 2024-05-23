@@ -14,11 +14,11 @@
                 <div class="col-6 col-md-auto mb-3">
                     <h5>Categories</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Mobiles</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Laptops</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Televisions</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Smart Watches</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white">Headsets</a></li>
+                        <li class="nav-item mb-2"><a href="<?= $base_url ?>/mobiles/" class="nav-link p-0 text-white">Mobiles</a></li>
+                        <li class="nav-item mb-2"><a href="<?= $base_url ?>/laptops/" class="nav-link p-0 text-white">Laptops</a></li>
+                        <li class="nav-item mb-2"><a href="<?= $base_url ?>/televisions/" class="nav-link p-0 text-white">Televisions</a></li>
+                        <li class="nav-item mb-2"><a href="<?= $base_url ?>/watches/" class="nav-link p-0 text-white">Smart Watches</a></li>
+                        <li class="nav-item mb-2"><a href="<?= $base_url ?>/headsets/" class="nav-link p-0 text-white">Headsets</a></li>
                     </ul>
                 </div>
 

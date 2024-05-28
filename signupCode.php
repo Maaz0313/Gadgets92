@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('dbcon.php');
-
+include('inc/functions.inc.php');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -39,10 +39,10 @@ function sendemail_verify($name, $email, $verify_token)
 }
 
 if (isset($_POST['register_btn'])) {
-    $name = htmlspecialchars($_POST['name']);
+    $name = sanitize_data(mysqli_real_escape_string($con, $_POST['name']));
     $profile = $_FILES['profile']['name'];
-    $email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['pwd']);
+    $email = sanitize_data(mysqli_real_escape_string($con, $_POST['email']));
+    $password = sanitize_data(mysqli_real_escape_string($con, $_POST['pwd']));
     // hash the password
     $password = password_hash($password, PASSWORD_DEFAULT);
     $verify_token = md5(rand());
@@ -71,7 +71,8 @@ if (isset($_POST['register_btn'])) {
             }
 
             // Insert user data
-            $insert_query = "INSERT INTO `users` (`name`, `profile`, `email`, `password`, `verify_token`) VALUES ('$name', '$new_img_name', '$email', '$password', '$verify_token')";
+            $insert_query = "INSERT INTO `users` (`name`, `profile`, `email`, `password`, `verify_token`) VALUES (?, ?, ?, ?, ?)";
+            $params = array($name, $new_img_name, $email, $password, $verify_token);
             $insert_query_run = mysqli_query($con, $insert_query);
 
             if ($insert_query_run) {

@@ -1,11 +1,683 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>
+        Gadgets92 - your one-stop destination for viewing tech specs of electronic products
+    </title>
+    <meta name="description"
+        content="Gadgets92 is your one-stop shop for viewing all technical specifications of consumers electronic products like Smartphones, Laptops, Smartwatches etc.">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <!-- title icon -->
+    <link rel="shortcut icon" href="img/logo/logo.png" type="image/x-icon">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        .pdcm {
+            font-family: Inter, sans-serif !important;
+        }
+    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-    
+
+    <header>
+        <nav class="navbar navbar-expand-md bg-secondary">
+            <div class="container">
+                <!-- Logo and Brand -->
+                <a class="navbar-brand d-flex align-items-center" href="gadgets92.test">
+                    <img src="img/logo/logo.png" alt="Logo" height="50" class="d-inline-block align-text-top">
+                    <span class="fs-2" style="color: #122f42;">Gadgets<span style="color: #44a8eb;">92</span></span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#navbarOffcanvas" aria-controls="offcanvasWithBothOptions" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="search1">
+                    <!-- Centered Search Bar -->
+                    <form class="d-flex mx-auto position-relative" id="form-search" autocomplete="off">
+                        <input class="form-control me-2" onkeyup="fx_1(this.value)" name="search" type="search"
+                            placeholder="Search" aria-label="Search" id="qu">
+                        <ul class="search-results position-absolute top-100 start-0 d-none list-group list-unstyled"
+                            id="livesearch1"></ul>
+                        <button class="btn btn-success float-start" type="submit">Search</button>
+                    </form>
+                    <!-- Login/Signup Buttons -->
+                    <div class="d-flex">
+                        <a href="gadgets92.test/login.php" class="btn btn-info text-white me-2">Login</a>
+                        <a href="gadgets92.test/signup.php" class="btn btn-primary">Signup</a>
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- Search bar shown on mobile screens only -->
+        <form class="py-3 d-flex justify-content-end d-md-none custom-form position-relative"
+            style="background-color:#FFDB58;" method="get" autocomplete="off" id="search2">
+            <input class="form-control w-50 ms-auto" onkeyup="fx_2(this.value)" name="search" type="search"
+                placeholder="Search" aria-label="Search" id="mu">
+            <ul class="search-results d-none list-group list-unstyled bg-white" id="livesearch2"></ul>
+            <button class="btn btn-success custom-btn me-auto" type="submit">Search</button>
+        </form>
+
+        <nav class="navbar navbar-expand-md bg-md">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="gadgets92.test/mobiles/">Mobiles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="gadgets92.test/laptops/">Laptops</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="gadgets92.test/televisions/">Televisions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="gadgets92.test/watches/">Smart Watches</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="gadgets92.test/headsets/">Headsets</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Shown on mobile screens -->
+        <!-- Offcanvas nav menu -->
+        <div class="offcanvas offcanvas-start bg-secondary" data-bs-backdrop="true" data-bs-scroll="true" tabindex="-1"
+            id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title ms-3" id="navbarOffcanvasLabel">
+                    <a class="navbar-brand d-flex align-items-center" href="gadgets92.test">
+                        <img src="img/logo/logo.png" alt="Logo" height="50" class="d-inline-block align-text-top">
+                        <span class="fs-2" style="color: #122f42;">Gadgets<span style="color: #44a8eb;">92</span></span>
+                    </a>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Offcanvas menu items -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link ms-3 active" href="gadgets92.test/mobiles/">Mobiles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-3 text-white" href="gadgets92.test/laptops/">Laptops</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-3 text-white" href="gadgets92.test/televisions/">Televisions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-3 text-white" href="gadgets92.test/watches/">Smart Watches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-3 text-white" href="gadgets92.test/headsets/">Headsets</a>
+                    </li>
+                    <li class="nav-item mt-3 ms-3">
+                        <a href="gadgets92.test/login.php" class="btn btn-info text-white me-2">Login</a>
+                        <a href="gadgets92.test/signup.php" class="btn btn-primary">Signup</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Offcanvas nav menu ends-->
+    </header>
+
+    <main class="box pb-1 pdcm">
+        <div class="fp-box" style="border: 1px solid #dee2e6;">
+
+            <h4 class="fw-bold">Honor Play 8T Pro vs Nubia Red Magic 9 Pro 5G vs Nubia Red Magic 9 Pro Plus 5G </h4>
+
+            <p>Comparison of Honor Play 8T Pro, Nubia Red Magic 9 Pro 5G and Nubia Red Magic 9 Pro Plus 5G. </p>
+        </div>
+        <div class="container-lg mb-1" style="border: 1px solid #dee2e6;">
+            <div class="pdcm-box">
+                <div class="cmpr-spec-qlink hide-mobile">
+                    <div class="jump-specs whitebg padd10">
+                        <ul class="list-unstyled">
+                            <a class="greycolor font13 fontbold" href="#General">
+                                <li>General</li>
+                            </a>
+                            <a class="greycolor font13 fontbold" href="#Design">
+                                <li>Design</li>
+                            </a>
+                            <a class="greycolor font13 fontbold" href="#Display">
+                                <li>Display</li>
+                            </a>
+                            <a class="greycolor font13 fontbold" href="#Camera">
+                                <li>Camera</li>
+                            </a>
+                            <a class="greycolor font13 fontbold" href="#Performance">
+                                <li>Performance</li>
+                            </a>
+                            <a class="greycolor font13 fontbold" href="#Storage">
+                                <li>Storage</li>
+                            </a>
+                            <a class="greycolor font13 fontbold" href="#Battery">
+                                <li>Battery</li>
+                            </a>
+                            <a class="greycolor font13 fontbold" href="#NetworkandConnectivity">
+                                <li>Network and Connectivity</li>
+                            </a> <a class="greycolor font13 fontbold" href="#Features">
+                                <li>Features</li>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+                <div class="cmpr-spec-box">
+                    <div class="pros" pids="2755,109,129"></div>
+                    <div class="cmpr-spec-head">
+                        <div class="d-flex-center">
+                            <div
+                                class="text-center eq-col col-th-one pt10 pb10 pl10 pr10 hide-mobile position-relative">
+                            </div>
+                            <div class="text-center eq-col col-th-one pt10 pb10 pl10 pr10 position-relative">
+                                <figure class="pt10 pb10 pl10 pr10"> <a href="/mobiles/honor-play-8t-pro"><img
+                                            class=" lazyloaded"
+                                            data-src="https://cdn.findprix.com/media/mobiles/honor-play-8t-pro.webp"
+                                            src="https://cdn.findprix.com/media/mobiles/honor-play-8t-pro.webp"
+                                            width="50" alt="Honor Play 8T Pro"></a> </figure> <a class="blackcolor"
+                                    href="/mobiles/honor-play-8t-pro">
+                                    <h2 class="font13 fontnormal text-clamp text-clamp-1">Honor Play 8T Pro</h2>
+                                </a> <a class="blackcolor" href="/mobiles/honor-play-8t-pro">
+                                    <div class="fontbold mb5">Rs. 20,999</div>
+                                </a>
+                                <div class="blackcolor d-inline recmpr cursorpointer mt5" pid="2755"><span
+                                        class="d-flex-center position-absolute top-0 right-0 pt5 pb5 pl5 pr5"><svg
+                                            xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'
+                                            style="height: 20px;width: 20px;;">
+                                            <path
+                                                d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z'>
+                                            </path>
+                                        </svg></span></div>
+                            </div>
+                            <div class="text-center eq-col col-th-one pt10 pb10 pl10 pr10 position-relative">
+                                <figure class="pt10 pb10 pl10 pr10"> <a href="/mobiles/tecno-camon-19-pro-mondrian"><img
+                                            class=" lazyloaded"
+                                            data-src="https://cdn.findprix.com/media/mobiles/tecno-camon-19-pro-mondrian.webp"
+                                            src="https://cdn.findprix.com/media/mobiles/tecno-camon-19-pro-mondrian.webp"
+                                            width="50" alt="Tecno Camon 19 Pro Mondrian"></a> </figure> <a
+                                    class="blackcolor" href="/mobiles/tecno-camon-19-pro-mondrian">
+                                    <h2 class="font13 fontnormal text-clamp text-clamp-1">Tecno Camon 19 Pro Mondrian
+                                    </h2>
+                                </a> <a class="blackcolor" href="/mobiles/tecno-camon-19-pro-mondrian">
+                                    <div class="fontbold mb5">Rs. 12,999</div>
+                                </a>
+                                <div class="blackcolor d-inline recmpr cursorpointer mt5" pid="109"><span
+                                        class="d-flex-center position-absolute top-0 right-0 pt5 pb5 pl5 pr5"><svg
+                                            xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'
+                                            style="height: 20px;width: 20px;;">
+                                            <path
+                                                d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z'>
+                                            </path>
+                                        </svg></span></div>
+                            </div>
+                            <div class="text-center eq-col col-th-one pt10 pb10 pl10 pr10 position-relative">
+                                <figure class="pt10 pb10 pl10 pr10"> <a href="/mobiles/nokia-g60-5g"><img
+                                            class=" lazyloaded"
+                                            data-src="https://cdn.findprix.com/media/mobiles/nokia-g60-5g.webp"
+                                            src="https://cdn.findprix.com/media/mobiles/nokia-g60-5g.webp" width="50"
+                                            alt="Nokia G60 5G"></a> </figure> <a class="blackcolor"
+                                    href="/mobiles/nokia-g60-5g">
+                                    <h2 class="font13 fontnormal text-clamp text-clamp-1">Nokia G60 5G</h2>
+                                </a> <a class="blackcolor" href="/mobiles/nokia-g60-5g">
+                                    <div class="fontbold mb5">Rs. 29,499</div>
+                                </a>
+                                <div class="blackcolor d-inline recmpr cursorpointer mt5" pid="129"><span
+                                        class="d-flex-center position-absolute top-0 right-0 pt5 pb5 pl5 pr5"><svg
+                                            xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'
+                                            style="height: 20px;width: 20px;;">
+                                            <path
+                                                d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z'>
+                                            </path>
+                                        </svg></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="scroll-margin-top:9.5em;" id="General" class="text-center pl5 pr5 grey-bg pt10 pb5">
+                            <h3 class="blackcolor">General</h3>
+                        </div>
+                        <table class="cmpr-spec-tbl">
+                            <tbody>
+                                <tr>
+                                    <td class="spec-head">Brand</td>
+                                    <td>Honor</td>
+                                    <td>Tecno</td>
+                                    <td>Nokia</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Release Date</td>
+                                    <td>2023-12-12</td>
+                                    <td>2022-09-22</td>
+                                    <td>2022-11-01</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Device Type</td>
+                                    <td>Smartphone</td>
+                                    <td>Smartphone</td>
+                                    <td>Smartphone</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">SIM</td>
+                                    <td>Dual SIM (Nano + Nano)</td>
+                                    <td>Dual SIM (Nano + Nano)</td>
+                                    <td>Dual SIM (Nano + Nano), Hybrid slot</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Operating System</td>
+                                    <td>Android v13, Magic UI</td>
+                                    <td>Android v12, HiOS</td>
+                                    <td>Android v12</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div style="scroll-margin-top:9.5em;" id="Design" class="text-center pl5 pr5 grey-bg pt10 pb5">
+                            <h3 class="blackcolor">Design</h3>
+                        </div>
+                        <table class="cmpr-spec-tbl">
+                            <tbody>
+                                <tr>
+                                    <td class="spec-head">Dimensions</td>
+                                    <td>--</td>
+                                    <td>166.7 x 74.5 x 8.5 mm</td>
+                                    <td>165.9 x 75.9 x 8.6 mm</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Weight</td>
+                                    <td>--</td>
+                                    <td>204 g</td>
+                                    <td>190 g</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Waterproof</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td>Yes, Splash-proof, IP52</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Build Material</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td>Back: Plastic</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Colours</td>
+                                    <td>--</td>
+                                    <td>Mondrian</td>
+                                    <td>Black, Ice</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div style="scroll-margin-top:9.5em;" id="Display" class="text-center pl5 pr5 grey-bg pt10 pb5">
+                            <h3 class="blackcolor">Display</h3>
+                        </div>
+                        <table class="cmpr-spec-tbl">
+                            <tbody>
+                                <tr>
+                                    <td class="spec-head">Touch Screen</td>
+                                    <td>Yes, Capacitive Touchscreen, Multi-touch</td>
+                                    <td>Yes, Capacitive Touch Screen, Multi-touch</td>
+                                    <td>Yes, Capacitive Touch Screen, Multi-touch</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Display</td>
+                                    <td>IPS LCD, 90 Hz</td>
+                                    <td>IPS LCD, 120 Hz</td>
+                                    <td>IPS LCD, 400 nits, 120 Hz</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Screen Size</td>
+                                    <td>6.7 inches, Quad HD+</td>
+                                    <td>6.8 inches, Full HD+</td>
+                                    <td>6.58 inches, Full HD+</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Screen Resolution</td>
+                                    <td>1080 x 2388 pixels, ~391 ppi density</td>
+                                    <td>1080 x 2460 pixels, 20:9 ratio, ~395 ppi density</td>
+                                    <td>1080 x 2400 pixels, 20:9 ratio, ~400 ppi density</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Bezel-less Display</td>
+                                    <td>Yes, Punch hole</td>
+                                    <td>Yes, Punch hole</td>
+                                    <td>Yes, Waterdrop notch</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Screen Protection</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td>Yes, Corning Gorilla Glass 5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div style="scroll-margin-top:9.5em;" id="Camera" class="text-center pl5 pr5 grey-bg pt10 pb5">
+                            <h3 class="blackcolor">Camera</h3>
+                        </div>
+                        <table class="cmpr-spec-tbl">
+                            <tbody>
+                                <tr>
+                                    <td class="spec-head">Rear Camera</td>
+                                    <td>Dual <br> 108 MP Primary <br> 2 MP</td>
+                                    <td>Triple<br> 64 MP f/1.65 Primary (wide)<br> 50 MP f/1.9<br> 2 MP f/2.4 (depth)
+                                    </td>
+                                    <td>Triple<br> 50 MP f/1.8 Primary (wide)<br> 5 MP f/2.2 (ultra wide)<br> 2 MP f/2.4
+                                        (depth)</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Sensor</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Flash</td>
+                                    <td>Yes, LED Flash</td>
+                                    <td>Yes, Quad LED Flash</td>
+                                    <td>Yes, LED Flash</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Rear Video Recording</td>
+                                    <td>1080p @ 30 fps</td>
+                                    <td>1080p @ 30 fps</td>
+                                    <td>1080p @ 30 fps</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Rear Features</td>
+                                    <td>Digital Zoom, Auto Flash, Face detection, Touch to focus, Autofocus</td>
+                                    <td>Digital Zoom, Auto Flash, Face detection, Touch to focus, OIS, Autofocus</td>
+                                    <td>Digital Zoom, Auto Flash, Face detection, Touch to focus, Autofocus</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Front Camera</td>
+                                    <td>Single <br> 8 MP Primary</td>
+                                    <td>Single <br> 32 MP f/2.4 Primary (wide)</td>
+                                    <td>Single <br> 8 MP f/2.0 Primary (wide)</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Front Video Recording</td>
+                                    <td>--</td>
+                                    <td>1080p @ 30 fps</td>
+                                    <td>1080p @ 30 fps</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Front Features</td>
+                                    <td>--</td>
+                                    <td>Screen flash</td>
+                                    <td>--</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div style="scroll-margin-top:9.5em;" id="Performance"
+                            class="text-center pl5 pr5 grey-bg pt10 pb5">
+                            <h3 class="blackcolor">Performance</h3>
+                        </div>
+                        <table class="cmpr-spec-tbl">
+                            <tbody>
+                                <tr>
+                                    <td class="spec-head">RAM</td>
+                                    <td>6 GB</td>
+                                    <td>8 GB</td>
+                                    <td>6 GB</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Chipset</td>
+                                    <td>MediaTek Dimensity 7030, 6 nm</td>
+                                    <td>MediaTek Helio G96, 12 nm</td>
+                                    <td>Qualcomm Snapdragon 695, 6 nm</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">GPU</td>
+                                    <td>Mali-G610 MC3</td>
+                                    <td>Mali-G57 MC2</td>
+                                    <td>Adreno 619</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">CPU</td>
+                                    <td>Octa core (2 x 2.5 GHz Cortex A78 + 6 x 2 GHz Cortex A55)</td>
+                                    <td>Octa core (2 x 2.05 GHz Cortex A76 + 6 x 2 GHz Cortex-A55)</td>
+                                    <td>Octa core (2 x 2.2 GHz Kryo 660 + 6 x 1.7 GHz Kryo 660)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div style="scroll-margin-top:9.5em;" id="Storage" class="text-center pl5 pr5 grey-bg pt10 pb5">
+                            <h3 class="blackcolor">Storage</h3>
+                        </div>
+                        <table class="cmpr-spec-tbl">
+                            <tbody>
+                                <tr>
+                                    <td class="spec-head">Internal Storage</td>
+                                    <td>128 GB</td>
+                                    <td>128 GB, UFS 2.2</td>
+                                    <td>128 GB, UFS 2.2</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Memory Card Slot</td>
+                                    <td>No</td>
+                                    <td>Yes, up to 512 GB</td>
+                                    <td>Yes, up to 1 TB</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div style="scroll-margin-top:9.5em;" id="Battery" class="text-center pl5 pr5 grey-bg pt10 pb5">
+                            <h3 class="blackcolor">Battery</h3>
+                        </div>
+                        <table class="cmpr-spec-tbl">
+                            <tbody>
+                                <tr>
+                                    <td class="spec-head">Battery</td>
+                                    <td>4500 mAh, Li-Polymer</td>
+                                    <td>5000 mAh, Li-Polymer</td>
+                                    <td>4500 mAh, Li-Polymer</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Fast Charging</td>
+                                    <td>Yes, Fast, 35W</td>
+                                    <td>Yes, Flash, 33W</td>
+                                    <td>Yes, 20W</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Wireless Charging</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div style="scroll-margin-top:9.5em;" id="NetworkandConnectivity"
+                            class="text-center pl5 pr5 grey-bg pt10 pb5">
+                            <h3 class="blackcolor">Network and Connectivity</h3>
+                        </div>
+                        <table class="cmpr-spec-tbl">
+                            <tbody>
+                                <tr>
+                                    <td class="spec-head">Network Support</td>
+                                    <td>5G, 4G, 3G, 2G</td>
+                                    <td>4G, 3G, 2G, EDGE, GPRS</td>
+                                    <td>5G, 4G, 3G, 2G, EDGE, GPRS</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Bluetooth</td>
+                                    <td>Yes, v5.3</td>
+                                    <td>Yes, v5.0</td>
+                                    <td>Yes, v5.1</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Wi-Fi</td>
+                                    <td>Yes, Wi-Fi 4 (802.11 b/g/n)</td>
+                                    <td>Yes, Wi-Fi 802.11 ac/b/g/n/n, Dual-band, Hotspot</td>
+                                    <td>Yes, Wi-Fi 802.11 a/ac/ax/b/g/n/n, Dual-band, Hotspot</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">USB</td>
+                                    <td>USB Type-C, USB On-The-Go</td>
+                                    <td>USB Type-C 2.0, USB On-The-Go</td>
+                                    <td>USB Type-C, USB On-The-Go</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">GPS</td>
+                                    <td>Yes with A-GPS, Glonass</td>
+                                    <td>Yes with A-GPS, GLONASS</td>
+                                    <td>Yes with A-GPS, GLONASS</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">NFC</td>
+                                    <td>--</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div style="scroll-margin-top:9.5em;" id="Features"
+                            class="text-center pl5 pr5 grey-bg pt10 pb5">
+                            <h3 class="blackcolor">Features</h3>
+                        </div>
+                        <table class="cmpr-spec-tbl">
+                            <tbody>
+                                <tr>
+                                    <td class="spec-head">Audio Jack</td>
+                                    <td>Yes, 3.5 mm</td>
+                                    <td>Yes, 3.5 mm</td>
+                                    <td>Yes, 3.5 mm</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">FM Radio</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Loud Speaker</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Fingerprint Sensor</td>
+                                    <td>Yes, Side</td>
+                                    <td>Yes, Side</td>
+                                    <td>Yes, Side</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">Sensors</td>
+                                    <td>Light sensor, Proximity sensor, Accelerometer, Compass</td>
+                                    <td>Accelerometer, Compass, Gyroscope, Light Sensor, Proximity Sensor</td>
+                                    <td>Accelerometer, Compass, Gyroscope, Light Sensor, Proximity Sensor</td>
+                                </tr>
+                                <tr>
+                                    <td class="spec-head">More Features</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary bg-gradient text-white">
+        <div class="container">
+            <div class="pt-4">
+                <div class="row">
+                    <div class="col-6 col-md-5 mb-3">
+                        <h5>Gadgets92</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2 nav-link p-0 text-white">Uncover Excellence, Navigate Value:
+                                Gadgets92
+                                – Your Ultimate Destination for Mobile Marvels and Affordable Innovation!</li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-md-auto mb-3">
+                        <h5>Categories</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2"><a href="gadgets92.test/mobiles/"
+                                    class="nav-link p-0 text-white">Mobiles</a></li>
+                            <li class="nav-item mb-2"><a href="gadgets92.test/laptops/"
+                                    class="nav-link p-0 text-white">Laptops</a></li>
+                            <li class="nav-item mb-2"><a href="gadgets92.test/televisions/"
+                                    class="nav-link p-0 text-white">Televisions</a></li>
+                            <li class="nav-item mb-2"><a href="gadgets92.test/watches/"
+                                    class="nav-link p-0 text-white">Smart Watches</a></li>
+                            <li class="nav-item mb-2"><a href="gadgets92.test/headsets/"
+                                    class="nav-link p-0 text-white">Headsets</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-md-auto  mb-3">
+                        <h5>Quick Links</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2"><a href="gadgets92.test/index.php"
+                                    class="nav-link p-0 text-white">Home</a></li>
+                            <li class="nav-item mb-2"><a href="gadgets92.test/contact.php"
+                                    class="nav-link p-0 text-white">Contact Us</a></li>
+                            <li class="nav-item mb-2"><a href="gadgets92.test/about.php"
+                                    class="nav-link p-0 text-white">About</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="d-flex flex-column flex-sm-row justify-content-between pt-4 border-top">
+                    <p class="mt-1">&copy; 2024 Gadgets92 Company, Inc. All rights reserved.</p>
+                    <ul class="list-unstyled d-flex mt-1">
+                        <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="mt-1"
+                                    xmlns="http://www.w3.org/2000/svg" height="25" width="25" fill="#fff"
+                                    viewBox="0 0 512 512">
+                                    <path
+                                        d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
+                                </svg></i></a></li>
+                        <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="mt-1"
+                                    xmlns="http://www.w3.org/2000/svg" height="25" width="25" fill="#fff"
+                                    viewBox="0 0 448 512">
+                                    <path
+                                        d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-25.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-25.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 25.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 25.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                                </svg></i></a></li>
+                        <li class="ms-3"><a class="link-body-emphasis" href="#"><svg xmlns="http://www.w3.org/2000/svg"
+                                    height="30" width="30" fill="#fff" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z">
+                                    </path>
+                                </svg></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

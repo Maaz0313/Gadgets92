@@ -172,7 +172,7 @@ if (isset($_SESSION['fail_msg'])) {
                             </figure>
 
                             <div data-bs-toggle="modal" data-bs-target="#exampleModalCenter"
-                                class="modal-trg font90 cursorpointer d-flex align-items-center flex-row position-absolute top-0 right-0 m-3 "
+                                class="modal-trg font13 cursorpointer d-flex align-items-center flex-row position-absolute top-0 right-0 m-3 "
                                 data-popup="share_product">
                                 <svg fill="#888" width="20px" height="20px" viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">

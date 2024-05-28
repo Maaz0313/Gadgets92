@@ -81,7 +81,7 @@ INNER JOIN tv_specs ON products.product_id = tv_specs.product_id INNER JOIN bran
                                 <p class="card-text">
 
                                 <div class="pro-grid-specs pl10 pr10 pb10">
-                                    <div class="lineheight20 specs font90">
+                                    <div class="lineheight20 specs font13">
                                         <ul class="key-specs row row-cols-md-2 gx-5">
                                             <li> ' . $row['preloaded_apps'] . '</li>
                                             <li> ' . $row['display_tech'] . '</li>

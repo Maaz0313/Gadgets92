@@ -22,7 +22,7 @@
                     </ul>
                 </div>
 
-                <div class="col-6 col-md-auto  mb-3">
+                <div class="col-6 col-md-auto mb-3">
                     <h5>Quick Links</h5>
                     <ul class="nav flex-column">
                         <li class="nav-item mb-2"><a href="<?= $base_url ?>/index.php"
@@ -33,7 +33,14 @@
                                 class="nav-link p-0 text-white">About</a></li>
                     </ul>
                 </div>
-
+                <div class="col-6 col-md-auto mb-3">
+                    <h5>Contact Details</h5>
+                    <ul class="nav flex-column">
+                        <li>Mobile:<a class="text-white text-decoration-none ms-3" href="tel:+923102853602">+923102853602</a></li>
+                        <li>Email:<a class="text-white text-decoration-none ms-3" href="mailto:contact@gadgets92.com">contact@gadgets92.com</a></li>
+                        <li></li>
+                    </ul>
+                </div>
             </div>
 
             <div class="d-flex flex-column flex-sm-row justify-content-between pt-4 border-top">

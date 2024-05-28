@@ -127,4 +127,18 @@ function facebook_time_ago($timestamp)
        return "$years years ago";  
      }  
    }  
- }  
+ }
+
+ function getProductDetails($productIds)
+ {
+     global $con;
+     $ids = implode(',', $productIds);
+     $sql = "SELECT * FROM products INNER JOIN categories ON products.category_id = categories.cat_id
+      WHERE products.product_id IN ($ids)";
+     $result = $con->query($sql);
+     $products = [];
+     while ($row = $result->fetch_assoc()) {
+         $products[$row['product_id']] = $row;
+     }
+     return $products;
+ }

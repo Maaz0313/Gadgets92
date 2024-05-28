@@ -3,6 +3,7 @@ RewriteEngine On
 # Exclude "index.php" and "action.php" from rewriting in each directory
 RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/index\.php$
 RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/action\.php$
+RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/product_listing\.php$
 RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/submit_rating\.php$
 
 RewriteRule ^(mobiles|laptops|watches|televisions|headsets)/([^/]+)/?$ $1/product.php?slug=$2 [QSA,L]

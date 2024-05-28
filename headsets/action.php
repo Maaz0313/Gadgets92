@@ -84,7 +84,7 @@ if (isset($_POST['action'])) {
                                 <p class="card-text">
 
                                 <div class="pro-grid-specs pl10 pr10 pb10">
-                                    <div class="lineheight20 specs font90">
+                                    <div class="lineheight20 specs font13">
                                         <ul class="key-specs row row-cols-md-2 gx-5">
                                             <li> ' . $row['design'] . '</li>
                                             <li> ' . $row['type'] . '</li>

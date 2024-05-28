@@ -1,9 +1,13 @@
 RewriteEngine On
 
-# Exclude "index.php" and "action.php" from rewriting in each directory
+# Excluding Specific Files from Rewriting
 RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/index\.php$
 RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/action\.php$
 RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/product_listing\.php$
 RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/submit_rating\.php$
+# Temporary Excluding "compare.php"
+RewriteCond %{REQUEST_URI} !^/(mobiles|laptops|watches|televisions|headsets)/compare\.php$
 
+
+# For rewriting slug to product page
 RewriteRule ^(mobiles|laptops|watches|televisions|headsets)/([^/]+)/?$ $1/product.php?slug=$2 [QSA,L]

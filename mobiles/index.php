@@ -1008,7 +1008,6 @@ if (isset($_SESSION['fail_msg'])) {
             <a href="#" class="btn btn-primary d-none" id="compareNowBtn">Compare Now</a>
         </div>
     </div>
-
 </div>
 <?php
 require ('../inc/footer.php');

@@ -4,8 +4,8 @@ $description = "Ditch the decision fatigue. Find a laptop that suits your needs 
 require ('../dbcon.php');
 require ('../inc/header.php');
 require ('../inc/functions.inc.php');
-$json_pretty = json_encode($_SESSION, JSON_PRETTY_PRINT); 
-echo "<pre>" . $json_pretty . "</pre>";
+// $json_pretty = json_encode($_SESSION, JSON_PRETTY_PRINT); 
+// echo "<pre>" . $json_pretty . "</pre>";
 // Get comparison data from the session
 $compareProducts = isset($_SESSION['compare']['products']) ? $_SESSION['compare']['products'] : []; 
 $compareCategory = isset($_SESSION['compare']['category']) ? $_SESSION['compare']['category'] : null;
@@ -1168,4 +1168,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         populateOffcanvas(); // Initial update on page load
     });
+
 </script>

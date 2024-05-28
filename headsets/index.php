@@ -5,6 +5,18 @@ require ('../dbcon.php');
 require ('../inc/header.php');
 require ('../inc/functions.inc.php');
 
+// Get comparison data from the session
+$compareProducts = isset($_SESSION['compare']['products']) ? $_SESSION['compare']['products'] : []; 
+$compareCategory = isset($_SESSION['compare']['category']) ? $_SESSION['compare']['category'] : null;
+
+// Fetch product details (only names for this example)
+$productsData = [];
+if (!empty($compareProducts)) {
+    $products = getProductDetails($compareProducts);
+    foreach ($compareProducts as $productId) {
+        $productsData[$productId] = $products[$productId]; // Or any data you need 
+    }
+}
 
 $searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
 $brand = isset($_GET['brand']) ? mysqli_real_escape_string($con, $_GET['brand']) : '';
@@ -585,8 +597,11 @@ if (isset($_SESSION['fail_msg'])) {
                                             alt="<?= $row['product_name'] ?>"
                                             src="../admin/images/products/<?= $row['product_image'] ?>"
                                             style="width: auto; height:150px"></a>
-                                    <div class="row d-flex justify-content-center mt-3 fw-bold cmpr"
-                                        style="font-size: 13px;cursor: pointer;">+ Compare</div>
+                                            <div class="row d-flex justify-content-center mt-3 fw-bold add-to-compare"
+                                        data-product-id="<?= $row['product_id']; ?>"
+                                        data-category-id="<?= $row['category_id']; ?>"
+                                        style="font-size: 13px;cursor: pointer;">
+                                        + Compare</div>
                                 </div>
                                 <div class="col-9">
                                     <a class="text-decoration-none text-black"
@@ -699,6 +714,29 @@ if (isset($_SESSION['fail_msg'])) {
         </div>
     </div>
 </main>
+<div class="bx" id="compareToggler" data-bs-toggle="offcanvas" data-bs-target="#compareOffcanvas"
+    style="display: none;">
+    <span class="badge-container">
+        <i class="fas fa-balance-scale fa-xs"></i>
+        <span class="badge bg-primary text-white" id="compareCount">0</span>
+    </span>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="compareOffcanvas" aria-labelledby="compareOffcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="compareOffcanvasLabel">Compare Products</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" id="compareProducts">
+        <div id="productCardsContainer"> 
+            <!-- Products will be added here -->
+        </div>
+        <div id="compareFooter">
+            <div class="align-items-center" id="compareMessage">Add at least two products to compare.</div>
+            <a href="#" class="btn btn-primary d-none" id="compareNowBtn">Compare Now</a>
+        </div>
+    </div>
+</div>
 <?php
 require ('../inc/footer.php');
 ?>
@@ -795,4 +833,151 @@ require ('../inc/footer.php');
             window.location.href = "index.php?sort=" + sort_product;
         }
     });
+// logic for compare button
+document.addEventListener('DOMContentLoaded', function () {
+        const comparisonData = <?php echo json_encode([
+            'products' => $compareProducts,
+            'category' => $compareCategory,
+            'productsData' => $productsData,
+        ]); ?>; 
+        comparisonData.products = comparisonData.products || [];
+        const compareToggler = document.getElementById('compareToggler');
+    const compareCount = document.getElementById('compareCount');
+    const compareOffcanvas = document.getElementById('compareOffcanvas');
+        const compareProducts = document.getElementById('compareProducts');
+        const compareProductsContainer = $('#productCardsContainer');
+    const compareFooter = document.getElementById('compareFooter');
+                const compareMessage = document.getElementById('compareMessage');
+            const compareNowBtn = document.getElementById('compareNowBtn');
+
+                function populateOffcanvas() {
+                    compareProductsContainer.html('');
+
+                    if (comparisonData.products.length > 0) { 
+                        comparisonData.products.forEach(productId => {
+                            const productCard = `
+                                <div class="card product-card mb-3" data-product-id="${productId}">
+                                    <button type="button" class="btn-close position-absolute top-0 end-0 m-2 remove-from-compare" 
+                                            data-product-id="${productId}" aria-label="Close"></button> 
+                                    <div class="row g-0">
+                                        <div class="col-md-4 text-center">
+                                            <img class="bd-placeholder-img img-fluid rounded-start" 
+                                                alt="${comparisonData.productsData[productId].product_name}"
+                                                src="../admin/images/products/${comparisonData.productsData[productId].product_image}"
+                                                style="width: auto; height:150px">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                            <h6 class="card-title">${comparisonData.productsData[productId]['product_name']}</h6>
+                                            <div class="card-text">Rs.${comparisonData.productsData[productId]['price']}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                                compareProductsContainer.prepend(productCard);
+                                }); 
+                    }
+
+                    updateCompareUI(); // Update the UI (counter, button visibility)
+                }
+
+        function updateCompareUI() {
+            const productCount = document.querySelectorAll('#productCardsContainer .product-card').length;
+            compareCount.textContent = productCount;
+
+            if (productCount > 0) {
+                compareToggler.style.display = 'flex';
+            } else {
+                compareToggler.style.display = 'none';
+            }
+
+            if (productCount >= 2) {
+                compareNowBtn.classList.remove('d-none');
+                compareMessage.classList.add('d-none');
+                const productIds = Array.from(document.querySelectorAll('#compareProducts .product-card'))
+                    .map(card => card.dataset.productId)
+                    .join(',');
+                compareNowBtn.href = `/mobiles?pid=${productIds}`;
+            } else {
+                compareNowBtn.classList.add('d-none');
+                compareMessage.classList.remove('d-none');
+            }
+        }
+
+        // Add to Compare Event
+        $('.add-to-compare').click(function () {
+            const productId = $(this).data('product-id');
+            const categoryId = $(this).data('category-id');
+
+            $.ajax({
+                url: 'product_listing.php',
+                method: 'POST',
+                data: {
+                    action: 'add',
+                    productId: productId,
+                    categoryId: categoryId
+                },
+                success: function (data) {
+                    // console.log(data);
+                    data = JSON.parse(data);
+                    // Assuming data is returned as JSON
+                    if (data.error) {
+                        alert(data.error);
+                    } 
+                    if(data.success=="Product added.")
+                    {
+                        comparisonData.products.push(productId);
+                        comparisonData.productsData[productId] = { // Update the productsData array as well
+                            product_name: data.productName, // Assuming your response includes productName, etc.
+                            product_image: data.productImage,
+                            price: data.price
+                        };
+
+                        populateOffcanvas(comparisonData); // Repopulate offcanvas using updated data
+                        updateCompareUI();
+                        alert(data.success);
+                    }
+                },
+                error: function (error) {
+                    console.error('AJAX request failed:', error);
+                    // Handle the error more gracefully (e.g., display an error message to the user)
+                    alert("An error occurred. Please try again later.");
+                }
+            });
+        });
+
+        // Remove from Compare Event (using jQuery's event delegation)
+        $('#compareProducts').on('click', '.remove-from-compare', function (event) {
+            const productId = $(this).data('product-id');
+
+            $.ajax({
+                url: 'product_listing.php',
+                method: 'POST',
+                data: {
+                    action: 'remove',
+                    productId: productId
+                },
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data.success == 'Product removed.') {
+                        $(event.target).closest('.product-card').remove();
+                        updateCompareUI();
+                        alert(data.success);
+                        comparisonData.products = comparisonData.products.filter(id => id != productId);
+                        delete comparisonData.productsData[productId];
+
+                        // --- FIX: Call populateOffcanvas() only on success ---
+                        populateOffcanvas(comparisonData);
+                    }
+                },
+                error: function (error) {
+                    console.error('AJAX request failed:', error);
+                    // Handle the error 
+                    alert("An error occurred. Please try again later.");
+                }
+            });
+        });
+        populateOffcanvas(); // Initial update on page load
+    });
+
 </script>

@@ -24,6 +24,7 @@ if (session_status() === PHP_SESSION_NONE) {
         }
         ?>
     </title>
+    <meta name="keywords" content="<?= isset($keywords) ? $keywords : 'Gadgets92, mobile phones, laptops, smartwatches, headsets, televisions, smart tv, specs, specifications, technical specifications, comparison, device specs, compare devices, gadget comparison, electronics comparison, best gadgets, gadget reviews, mobile price in pakistan' ?>">
     <meta name="description"
         content="<?= isset($description) ? $description : 'Gadgets92 is your one-stop shop for viewing all technical specifications of consumers electronic products like Smartphones, Laptops, Smartwatches etc.' ?>">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"

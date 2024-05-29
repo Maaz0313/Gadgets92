@@ -740,12 +740,6 @@ ul.key-specs {
     }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
-.pdcm {
-    font-family: Inter, sans-serif !important;
-}
-
 .pdcm a, .pdcm abbr, .pdcm acronym, .pdcm address, .pdcm applet, .pdcm article, .pdcm aside, .pdcm audio, .pdcm b, .pdcm big, .pdcm blockquote, .pdcm body, .pdcm canvas, .pdcm caption, .pdcm center, .pdcm cite, .pdcm code, .pdcm dd, .pdcm del, .pdcm details, .pdcm dfn, .pdcm div, .pdcm dl, .pdcm dt, .pdcm em, .pdcm embed, .pdcm fieldset, .pdcm figcaption, .pdcm figure, .pdcm footer, .pdcm form, .pdcm h1, .pdcm h2, .pdcm h3, .pdcm h4, .pdcm h5, .pdcm h6, .pdcm header, .pdcm html, .pdcm i, .pdcm iframe, .pdcm img, .pdcm ins, .pdcm kbd, .pdcm label, .pdcm legend, .pdcm li, .pdcm mark, .pdcm menu, .pdcm nav, .pdcm object, .pdcm ol, .pdcm output, .pdcm p, .pdcm pre, .pdcm q, .pdcm ruby, .pdcm s, .pdcm samp, .pdcm section, .pdcm small, .pdcm span, .pdcm strike, .pdcm strong, .pdcm sub, .pdcm summary, .pdcm sup, .pdcm table, .pdcm tbody, .pdcm td, .pdcm tfoot, .pdcm th, .pdcm thead, .pdcm time, .pdcm tr, .pdcm tt, .pdcm u, .pdcm ul, .pdcm var, .pdcm video {
     margin: 0;
     padding: 0;
@@ -881,7 +875,9 @@ figure {
     vertical-align: top;
     border: 0;
 }
-
+.cmpr-spec-tbl{
+    width: 100%;
+}
 @media screen and (max-width: 767px) {
     .cmpr-spec-tbl tr {
         display: grid;

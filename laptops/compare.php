@@ -38,7 +38,7 @@ if (count($productIds) > 3) {
 $products = [];
 foreach ($productIds as $productId) {
     $sql = "SELECT * FROM products
-            INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id 
+            INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id 
             INNER JOIN brands ON products.brand_id = brands.brand_id
             WHERE products.product_id = ?"; // Fetch one product at a time
     $stmt = $con->prepare($sql);

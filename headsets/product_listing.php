@@ -57,11 +57,15 @@ if (isset($_POST['action'])) {
         }
     } elseif ($action == 'remove') {
         if (($key = array_search($productId, $_SESSION['compare']['products'])) !== false) {
-            unset($_SESSION['compare']['products'][$key],);
+            unset($_SESSION['compare']['products'][$key]);
+            $_SESSION['compare']['products'] = array_values($_SESSION['compare']['products']);
+        }
+        if (empty($_SESSION['compare']['products'])) {
+            unset($_SESSION['compare']);
         }
         echo json_encode([
             'success' => 'Product removed.'
-    ]);
+        ]);
         exit;
     }
     exit;

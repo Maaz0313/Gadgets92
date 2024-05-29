@@ -857,7 +857,7 @@ require ('../inc/footer.php');
                 const productIds = Array.from(document.querySelectorAll('#compareProducts .product-card'))
                     .map(card => card.dataset.productId)
                     .join(',');
-                compareNowBtn.href = `/mobiles?pid=${productIds}`;
+                compareNowBtn.href = `/televisions/compare.php?pid=${productIds}`;
             } else {
                 compareNowBtn.classList.add('d-none');
                 compareMessage.classList.remove('d-none');

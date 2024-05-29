@@ -1,9 +1,33 @@
 <?php
+require ('../dbcon.php');
+require ('../inc/functions.inc.php');
+// Get product IDs from the URL
+if (isset($_GET['pid'])) {
+    $productIds = explode(',', $_GET['pid']);
+
+    // Fetch product details
+    $ids = implode(',', $productIds);
+    $sql = "SELECT * FROM products
+    INNER JOIN mobile_specs ON products.product_id = mobile_specs.product_id 
+    INNER JOIN brands ON products.brand_id = brands.brand_id
+    WHERE products.product_id IN ($ids)";
+    $result = $con->query($sql);
+    $products = [];
+    while ($row = $result->fetch_assoc()) {
+        $products[$row['product_id']] = $row;
+    }
+} else {
+    // Handle cases where 'pid' is missing from the URL 
+    ?>
+    <script>
+        alert("Error: Missing product IDs");
+        window.location.href = "index.php";
+    </script>
+    <?php
+}
 $title = "Compare Mobiles";
 $description = "Ditch the decision fatigue. Find a mobile that suits your needs using our comprehensive mobile finder tool.";
-require ('../dbcon.php');
 require ('../inc/header.php');
-require ('../inc/functions.inc.php');
 
 ?>
 <main class="box pb-1 pdcm">

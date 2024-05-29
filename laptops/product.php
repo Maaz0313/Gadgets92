@@ -519,7 +519,7 @@ if (isset($_SESSION['fail_msg'])) {
             </table>
         </div>
         <div class="category">
-            <h3>Storage (4) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Storage (5) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>
@@ -552,6 +552,14 @@ if (isset($_SESSION['fail_msg'])) {
                         </th>
                         <td>
                             <?= $row['ssd_storage']; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            HDD Storage
+                        </th>
+                        <td>
+                            <?= $row['hdd_storage']; ?>
                         </td>
                     </tr>
                 </tbody>
@@ -617,7 +625,7 @@ if (isset($_SESSION['fail_msg'])) {
                     </tr>
                     <tr>
                         <th>
-                            USB Port
+                            USB Ports
                         </th>
                         <td>
                             <?= $row['usb_port']; ?>
@@ -628,7 +636,7 @@ if (isset($_SESSION['fail_msg'])) {
                             Headset Jack
                         </th>
                         <td>
-                            <?= $row['audio_jack']; ?>
+                            <?= $row['headset_jack'] ? 'Yes' : 'No'; ?>
                         </td>
                     </tr>
                     <tr>
@@ -675,14 +683,14 @@ if (isset($_SESSION['fail_msg'])) {
                             Headset Jack
                         </th>
                         <td>
-                            <?= $row['audio_jack']; ?>
+                            <?= $row['headset_jack'] ? 'Yes' : 'No'; ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="category">
-            <h3>Features (2) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Features (3) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <!-- Disk Drive -->

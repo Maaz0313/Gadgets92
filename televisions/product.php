@@ -366,7 +366,7 @@ if (isset($_SESSION['fail_msg'])) {
             </table>
         </div>
         <div class="category">
-            <h3>Display (6) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Display (4) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>

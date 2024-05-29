@@ -10,6 +10,7 @@ if (isset($_POST['submit'])) {
     $product_id = sanitize_data(mysqli_real_escape_string($con, $_POST['product_id']));
 
     // Display Information
+    $model = sanitize_data(mysqli_real_escape_string($con, $_POST['model']));
     $weight = sanitize_data(mysqli_real_escape_string($con, $_POST['weight']));
     $dial_shape = sanitize_data(mysqli_real_escape_string($con, $_POST['dial_shape']));
     $bluetooth = sanitize_data(mysqli_real_escape_string($con, $_POST['bluetooth']));
@@ -34,10 +35,10 @@ if (isset($_POST['submit'])) {
     $extra_features = sanitize_data(mysqli_real_escape_string($con, $_POST['extra_features']));
 
     // Perform the database insertion
-    $sql = "INSERT INTO sm_watch_specs (product_id, `weight`, dial_shape, bluetooth, gps, call_function, `notification`, display, screen_size, os, compatible_os, wifi, sensors, battery_type, battery_life, touchscreen, fitness_features, water_resistant, extra_features) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO sm_watch_specs (product_id, model, `weight`, dial_shape, bluetooth, gps, call_function, `notification`, display, screen_size, os, compatible_os, wifi, sensors, battery_type, battery_life, touchscreen, fitness_features, water_resistant, extra_features) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $params = [$product_id, $weight, $dial_shape, $bluetooth, $gps, $call_function, $notification, $display, $screen_size, $os, $compatible_os, $wifi, $sensors, $battery_type, $battery_life, $touchscreen, $fitness_features, $water_resistant, $extra_features];
+    $params = [$product_id, $model, $weight, $dial_shape, $bluetooth, $gps, $call_function, $notification, $display, $screen_size, $os, $compatible_os, $wifi, $sensors, $battery_type, $battery_life, $touchscreen, $fitness_features, $water_resistant, $extra_features];
 
     $result = mysqli_execute_query($con, $sql, $params);
     if ($result) {
@@ -96,6 +97,10 @@ if (isset($_POST['submit'])) {
 
                             <!-- Display Information -->
                             <h3>Display Information</h3>
+                            <div class="form-group">
+                                <label for="model">Model:</label>
+                                <input type="text" name="model" id="model" class="form-control" required>
+                            </div>
                             <div class="form-group">
                                 <label for="weight">Weight:</label>
                                 <input type="text" name="weight" id="weight" class="form-control" required>

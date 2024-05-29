@@ -38,7 +38,7 @@ if (count($productIds) > 3) {
 $products = [];
 foreach ($productIds as $productId) {
     $sql = "SELECT * FROM products
-            INNER JOIN laptop_specs ON products.product_id = laptop_specs.product_id 
+            INNER JOIN tv_specs ON products.product_id = tv_specs.product_id 
             INNER JOIN brands ON products.brand_id = brands.brand_id
             WHERE products.product_id = ?"; // Fetch one product at a time
     $stmt = $con->prepare($sql);
@@ -98,26 +98,20 @@ require ('../inc/header.php');
                         <a class="greycolor font13 fontbold" href="#Display">
                             <li>Display</li>
                         </a>
-                        <a class="greycolor font13 fontbold" href="#Performance">
-                            <li>Performance</li>
+                        <a class="greycolor font13 fontbold" href="#Video">
+                            <li>Video</li>
                         </a>
-                        <a class="greycolor font13 fontbold" href="#Storage">
-                            <li>Storage</li>
+                        <a class="greycolor font13 fontbold" href="#Audio">
+                            <li>Audio</li>
                         </a>
-                        <a class="greycolor font13 fontbold" href="#Battery">
-                            <li>Battery</li>
-                        </a>
-                        <a class="greycolor font13 fontbold" href="#NetworkandConnectivity">
-                            <li>Network and Connectivity</li>
+                        <a class="greycolor font13 fontbold" href="#SmartTVFeatures">
+                            <li>Smart TV Features</li>
                         </a>
                         <a class="greycolor font13 fontbold" href="#Ports">
                             <li>Ports</li>
                         </a>
-                        <a class="greycolor font13 fontbold" href="#Multimedia">
-                            <li>Multimedia</li>
-                        </a>
-                        <a class="greycolor font13 fontbold" href="#Features">
-                            <li>Features</li>
+                        <a class="greycolor font13 fontbold" href="#Power">
+                            <li>Power</li>
                         </a>
                     </ul>
                 </div>
@@ -210,26 +204,18 @@ require ('../inc/header.php');
                     <table class="cmpr-spec-tbl">
                         <tbody>
                             <tr>
-                                <td class="spec-head">Dimensions</td>
+                                <td class="spec-head">Weight with Stand</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['dimensions']; ?></td>
+                                        <td><?php echo $product['weight_with_stand']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
                             <tr>
-                                <td class="spec-head">Weight</td>
+                                <td class="spec-head">Weight without Stand</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['weight']; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td class="spec-head">Colours</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['colors']; ?></td>
+                                        <td><?php echo $product['weight_without_stand']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
@@ -243,18 +229,10 @@ require ('../inc/header.php');
                     <table class="cmpr-spec-tbl">
                         <tbody>
                             <tr>
-                                <td class="spec-head">Touch Screen</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['touch_screen'] == 1 ? "Yes" : "No"; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
                                 <td class="spec-head">Display</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['display']; ?></td>
+                                        <td><?php echo $product['display_tech']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
@@ -286,56 +264,16 @@ require ('../inc/header.php');
                     </table>
                 </div>
                 <div>
-                    <div style="scroll-margin-top:9.5em;" id="Performance" class="text-center pl5 pr5 grey-bg pt10 pb5">
-                        <h3 class="blackcolor">Performance</h3>
+                    <div style="scroll-margin-top:9.5em;" id="Video" class="text-center pl5 pr5 grey-bg pt10 pb5">
+                        <h3 class="blackcolor">Video</h3>
                     </div>
                     <table class="cmpr-spec-tbl">
                         <tbody>
                             <tr>
-                                <td class="spec-head">Processor</td>
+                                <td class="spec-head">Video Formats</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['processor']; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td class="spec-head">Processor Variant</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['processor_variant']; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td class="spec-head">Clock Speed</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['clock_speed']; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td class="spec-head">No. of Cores</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['cores']; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td class="spec-head">Graphics</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['graphics']; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td class="spec-head">System Architecture</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['sys_arch']; ?></td>
+                                        <td><?php echo $product['video_formats']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
@@ -343,48 +281,48 @@ require ('../inc/header.php');
                     </table>
                 </div>
                 <div>
-                    <div style="scroll-margin-top:9.5em;" id="Storage" class="text-center pl5 pr5 grey-bg pt10 pb5">
-                        <h3 class="blackcolor">Storage</h3>
+                    <div style="scroll-margin-top:9.5em;" id="Audio" class="text-center pl5 pr5 grey-bg pt10 pb5">
+                        <h3 class="blackcolor">Audio</h3>
                     </div>
                     <table class="cmpr-spec-tbl">
                         <tbody>
                             <tr>
-                                <td class="spec-head">RAM</td>
+                                <td class="spec-head">Audio Formats</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['ram_memory'] . ', ' . $product['ram_type']; ?></td>
+                                        <td><?php echo $product['audio_formats']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
                             <tr>
-                                <td class="spec-head">RAM Frequency</td>
+                                <td class="spec-head">No. of Speakers</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['ram_frequency']; ?></td>
+                                        <td><?php echo $product['no_of_speakers']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
                             <tr>
-                                <td class="spec-head">Cache</td>
+                                <td class="spec-head">Output Per Speaker</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['cache']; ?></td>
+                                        <td><?php echo $product['output_per_speaker']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
                             <tr>
-                                <td class="spec-head">SSD Storage</td>
+                                <td class="spec-head">Total Speaker Output</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['ssd_storage']; ?></td>
+                                        <td><?php echo $product['total_speaker_output']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
                             <tr>
-                                <td class="spec-head">HDD Storage</td>
+                                <td class="spec-head">Sound Technology</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['hdd_storage']; ?></td>
+                                        <td><?php echo $product['sound_tech']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
@@ -392,50 +330,73 @@ require ('../inc/header.php');
                     </table>
                 </div>
                 <div>
-                    <div style="scroll-margin-top:9.5em;" id="Battery" class="text-center pl5 pr5 grey-bg pt10 pb5">
-                        <h3 class="blackcolor">Battery</h3>
-                    </div>
-                    <table class="cmpr-spec-tbl">
-                        <tbody>
-                            <tr>
-                                <td class="spec-head">Battery</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['battery']; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td class="spec-head">Power Supply</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['power_supply']; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div>
-                    <div style="scroll-margin-top:9.5em;" id="NetworkandConnectivity"
+                    <div style="scroll-margin-top:9.5em;" id="SmartTVFeatures"
                         class="text-center pl5 pr5 grey-bg pt10 pb5">
-                        <h3 class="blackcolor">Network and Connectivity</h3>
+                        <h3 class="blackcolor">Smart TV Features</h3>
                     </div>
                     <table class="cmpr-spec-tbl">
                         <tbody>
+                            <tr>
+                                <td class="spec-head">Smart TV</td>
+                                <?php if (isset($products)): ?>
+                                    <?php foreach ($products as $product): ?>
+                                        <td><?php echo $product['smart_tv'] ? "Yes" : "No"; ?></td>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tr>
+                            <tr>
+                                <td class="spec-head">Operating System</td>
+                                <?php if (isset($products)): ?>
+                                    <?php foreach ($products as $product): ?>
+                                        <td><?php echo $product['os']; ?></td>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tr>
+                            <tr>
+                                <td class="spec-head">Internet Connectivity</td>
+                                <?php if (isset($products)): ?>
+                                    <?php foreach ($products as $product): ?>
+                                        <td><?php echo $product['internet_connectivity']; ?></td>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tr>
                             <tr>
                                 <td class="spec-head">Bluetooth</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['bluetooth']; ?></td>
+                                        <td><?php echo $product['bluetooth'] ? "Yes" : "No"; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
                             <tr>
-                                <td class="spec-head">Wi-Fi</td>
+                                <td class="spec-head">Screen Mirroring</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['wifi']; ?></td>
+                                        <td><?php echo $product['screen_mirroring'] ? "Yes" : "No"; ?></td>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tr>
+                            <tr>
+                                <td class="spec-head">Preloaded Apps</td>
+                                <?php if (isset($products)): ?>
+                                    <?php foreach ($products as $product): ?>
+                                        <td><?php echo $product['preloaded_apps']; ?></td>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tr>
+                            <tr>
+                                <td class="spec-head">Voice Assistant</td>
+                                <?php if (isset($products)): ?>
+                                    <?php foreach ($products as $product): ?>
+                                        <td><?php echo $product['voice_assistant']; ?></td>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tr>
+                            <tr>
+                                <td class="spec-head">More Features</td>
+                                <?php if (isset($products)): ?>
+                                    <?php foreach ($products as $product): ?>
+                                        <td><?php echo $product['more_features']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
@@ -449,42 +410,26 @@ require ('../inc/header.php');
                     <table class="cmpr-spec-tbl">
                         <tbody>
                             <tr>
-                                <td class="spec-head">Ethernet Port</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['ethernet_port']; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
                                 <td class="spec-head">USB Ports</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['usb_port']; ?></td>
+                                        <td><?php echo $product['usb']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
                             <tr>
-                                <td class="spec-head">Headset Jack</td>
+                                <td class="spec-head">HDMI Ports</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['headset_jack']; ?></td>
+                                        <td><?php echo $product['hdmi']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
                             <tr>
-                                <td class="spec-head">HDMI Port</td>
+                                <td class="spec-head">Ethernet Port</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['hdmi_port']; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td class="spec-head">Multi Card Slot</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['multi_card_slot']; ?></td>
+                                        <td><?php echo $product['ethernet'] ? "Yes" : "No"; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
@@ -492,65 +437,25 @@ require ('../inc/header.php');
                     </table>
                 </div>
                 <div>
-                    <div style="scroll-margin-top:9.5em;" id="Multimedia" class="text-center pl5 pr5 grey-bg pt10 pb5">
-                        <h3 class="blackcolor">Multimedia</h3>
+                    <div style="scroll-margin-top:9.5em;" id="Power"
+                        class="text-center pl5 pr5 grey-bg pt10 pb5">
+                        <h3 class="blackcolor">Power</h3>
                     </div>
                     <table class="cmpr-spec-tbl">
                         <tbody>
                             <tr>
-                                <td class="spec-head">Webcam</td>
+                                <td class="spec-head">Power Requirment</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?= $product['webcam']==1 ? "Yes" : "No"; ?></td>
+                                        <td><?php echo $product['power_requirement']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>
                             <tr>
-                                <td class="spec-head">Mic</td>
+                                <td class="spec-head">Power Consumption</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['mic'] ? "Yes" : "No"; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td class="spec-head">Headset Jack</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['headset_jack']==1 ? "Yes" : "No"; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div>
-                    <div style="scroll-margin-top:9.5em;" id="Features" class="text-center pl5 pr5 grey-bg pt10 pb5">
-                        <h3 class="blackcolor">Features</h3>
-                    </div>
-                    <table class="cmpr-spec-tbl">
-                        <tbody>
-                            <tr>
-                                <td class="spec-head">Disk Drive</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?= $product['disk_drive']==1 ? "Yes" : "No"; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td class="spec-head">Keyboard</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['keyboard']; ?></td>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td class="spec-head">Backlit Keyboard</td>
-                                <?php if (isset($products)): ?>
-                                    <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['backlit_keyboard']==1 ? "Yes" : "No"; ?></td>
+                                        <td><?php echo $product['power_consumption']; ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>

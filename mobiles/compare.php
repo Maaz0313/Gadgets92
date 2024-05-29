@@ -176,7 +176,7 @@ require ('../inc/header.php');
                                 <td class="spec-head">Release Date</td>
                                 <?php if (isset($products)): ?>
                                     <?php foreach ($products as $product): ?>
-                                        <td><?php echo $product['release_date']; ?></td>
+                                        <td><?= date("d M Y", strtotime($product['release_date'])); ?></td>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tr>

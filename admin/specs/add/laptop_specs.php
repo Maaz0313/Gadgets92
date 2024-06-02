@@ -63,10 +63,8 @@ if (isset($_POST['submit'])) {
     $disk_drive = isset($_POST['disk_drive']) ? 1 : 0;
 
     // Insert data into laptop_specs table
-    $sql = "INSERT INTO laptop_specs (product_id, model, os, dimensions, `weight`, colors, touch_screen, screen_size, screen_resolution, display, display_features, 
-            processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram_memory, ram_type, ram_frequency, ssd_storage, hdd_storage, battery, power_supply, 
-            bluetooth, wifi, ethernet_port, usb_port, hdmi_port, multi_card_slot, headset_jack, webcam, mic, speakers, disk_drive, keyboard, backlit_keyboard) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO laptop_specs (product_id, model, os, dimensions, `weight`, colors, touch_screen, screen_size, screen_resolution, display, display_features, processor, processor_variant, graphics, clock_speed, cores, cache, sys_arch, ram_memory, ram_type, ram_frequency, ssd_storage, hdd_storage, battery, power_supply, bluetooth, wifi, ethernet_port, usb_port, hdmi_port, multi_card_slot, headset_jack, webcam, mic, speakers, disk_drive, keyboard, backlit_keyboard) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $params = [$product_id, $model, $os, $dimensions, $weight, $colors, $touch_screen, $screen_size, $screen_resolution, $display, $display_features, $processor, $processor_variant, $graphics, $clock_speed, $cores, $cache, $sys_arch, $ram_memory, $ram_type, $ram_frequency, $ssd_storage, $hdd_storage, $battery, $power_supply, $bluetooth, $wifi, $ethernet_port, $usb_port, $hdmi_port, $multi_card_slot, $headset_jack, $webcam, $mic, $speakers, $disk_drive, $keyboard, $backlit_keyboard];
     $result = mysqli_execute_query($con, $sql, $params);
 
@@ -74,7 +72,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['success_msg'] = "Record inserted successfully";
         ?>
         <script>
-            window.location.href = "../products/index.php"
+            window.location.href = "../../products/index.php"
         </script><?php
         exit();
     } else {

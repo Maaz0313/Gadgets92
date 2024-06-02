@@ -92,7 +92,7 @@ $base_url = $protocol . $_SERVER['HTTP_HOST'];
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="<?= $title == 'Dashboard' ? 'active' : '' ?>">
-                        <a href="dashboard.php"><i class="menu-icon fa fa-gauge-high"></i>Dashboard </a>
+                        <a href="<?= $base_url ?>/admin/"><i class="menu-icon fa fa-gauge-high"></i>Dashboard </a>
                     </li>
                     <li class="menu-title">Users Management</li><!-- /.menu-title -->
                     <?php
@@ -165,7 +165,7 @@ $base_url = $protocol . $_SERVER['HTTP_HOST'];
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="dashboard.php"><img src="<?= $base_url ?>/admin/images/logo.png" alt="Logo"></a>
+                    <a class="navbar-brand" href="<?= $base_url ?>/admin/"><img src="<?= $base_url ?>/admin/images/logo.png" alt="Logo"></a>
                     <a class="navbar-brand hidden" href="./"><img src="<?= $base_url ?>/admin/images/logo2.png" alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>

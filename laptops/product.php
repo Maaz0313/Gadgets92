@@ -659,7 +659,7 @@ if (isset($_SESSION['fail_msg'])) {
             </table>
         </div>
         <div class="category">
-            <h3>Multimedia (3) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
+            <h3>Multimedia (4) <span class="icon"><i class="bi bi-chevron-down"></i></span></h3>
             <table>
                 <tbody>
                     <tr>
@@ -684,6 +684,14 @@ if (isset($_SESSION['fail_msg'])) {
                         </th>
                         <td>
                             <?= $row['headset_jack'] ? 'Yes' : 'No'; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Speakers
+                        </th>
+                        <td>
+                            <?= $row['speakers']; ?>
                         </td>
                     </tr>
                 </tbody>

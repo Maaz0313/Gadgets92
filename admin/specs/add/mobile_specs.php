@@ -55,14 +55,14 @@ $otherSensors = sanitize_data(mysqli_real_escape_string($con, $_POST['other_sens
 
 // Insert query
 $insertQuery = "INSERT INTO `mobile_specs` (`product_id`, `device_type`, `sim`, `os`, `dimensions`, `weight`, `waterproof`, `build_material`, `colors`, `touch_screen`, `display`, `screen_size`, `screen_resolution`, `bezel_less_display`, `screen_protection`, `rear_camera`, `sensor`, `flash`, `rear_video_recording`, `rear_features`, `front_camera`, `ram`, `chipset`, `gpu`, `cpu_cores`, `internal_storage`, `sd_card_slot`, `battery_capacity`, `battery_features`, `fast_charging`, `network_support`, `bluetooth`, `wifi`, `usb`, `gps`, `nfc`, `audio_jack`, `fm_radio`, `loud_speaker`, `fingerprint_sensor`, `other_sensors`) 
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $params = [$productId, $deviceType, $sim, $os, $dimensions, $weight, $waterproof, $buildMaterial, $colors, $touchScreen, $display, $screenSize, $screenResolution, $bezelLessDisplay, $screenProtection, $rearCamera, $sensor, $flash, $rearVideoRecording, $rearFeatures, $frontCamera, $ram, $chipset, $gpu, $cpuCores, $internalStorage, $sdCardSlot, $battery_capacity, $battery_features, $fastCharging, $networkSupport, $bluetooth, $wifi, $usb, $gps, $nfc, $audioJack, $fmRadio, $loudSpeaker, $fingerprintSensor, $otherSensors];
 
 $result = mysqli_execute_query($con, $insertQuery, $params); // Assuming you have a function called mysqli_execute_query 
     if ($result === TRUE) {
         $_SESSION['success_msg'] = "Mobile specs added successfully.";
-        ?><script>window.location.href = "../products/index.php";</script><?php
+        ?><script>window.location.href = "../../products/index.php";</script><?php
     }
     else {
         $_SESSION['error_msg'] = "Error: " . $insertQuery . "<br>" . $con->error;

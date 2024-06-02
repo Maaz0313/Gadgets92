@@ -6,7 +6,6 @@ if (isset($_POST['login_btn'])) {
     if (!empty(trim($_POST['email'])) && !empty(trim($_POST['pwd']))) {
         $email = mysqli_real_escape_string($con, $_POST['email']);
         $password = mysqli_real_escape_string($con, $_POST['pwd']);
-        // $password = password_hash($password, PASSWORD_DEFAULT);
         $login_query = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
         $login_query_run = mysqli_query($con, $login_query);
 
@@ -30,7 +29,7 @@ if (isset($_POST['login_btn'])) {
                     header('Location: index.php');
                     exit(0);
                 } else {
-                    $_SESSION['fail_msg'] = "Password is incorrect!";
+                    $_SESSION['fail_msg'] = "Incorrect Credentials!!";
                     header('Location: login.php');
                     exit(0);
                 }
@@ -40,7 +39,7 @@ if (isset($_POST['login_btn'])) {
                 exit(0);
             }
         } else {
-            $_SESSION['fail_msg'] = "Email or Password is Invalid!";
+            $_SESSION['fail_msg'] = "Incorrect Credentials!";
             header('Location: login.php');
             exit(0);
         }

@@ -18,10 +18,10 @@ function sanitize_data($data)
 if (isset($_POST['submit'])) {
     $username = sanitize_data(mysqli_real_escape_string($con, $_POST['username']));
     $password = sanitize_data(mysqli_real_escape_string($con, $_POST['password']));
-    $res = mysqli_execute_query($con, 'SELECT * FROM admin_users WHERE username=? AND password=?', [$username, $password]);
+    $res = mysqli_execute_query($con, 'SELECT * FROM admin_users WHERE username=?', [$username]);
     $row = $res->fetch_assoc();
     $count = $res->num_rows;
-    if ($count > 0) {
+    if ($count>0 && password_verify($password, $row['password'])==true) {
         $_SESSION['ADMIN_LOGIN'] = 'YES';
         $_SESSION['ADMIN_USERNAME'] = $username;
         $_SESSION['ROLE'] = $row['role'];

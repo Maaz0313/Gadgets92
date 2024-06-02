@@ -6,6 +6,8 @@ require 'functions/logic.php';
 if (isset($_POST['submit'])) {
     $username = sanitize_data(mysqli_real_escape_string($con, $_POST['username']));
     $password = sanitize_data(mysqli_real_escape_string($con, $_POST['password']));
+    // hash the password
+    $password = password_hash($password, PASSWORD_DEFAULT);
     $role = sanitize_data(mysqli_real_escape_string($con, $_POST['role']));
     $res = mysqli_execute_query($con, "INSERT INTO admin_users(username, `password`, `role`) VALUES(?, ?, ?)", [
         $username,
